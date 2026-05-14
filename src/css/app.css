@@ -1,0 +1,39 @@
+/* app global css */
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  max-width: 100%;
+  scrollbar-color: rgba(11, 195, 171, 0.75) rgba(26, 44, 51, 0.95);
+  scrollbar-width: thin;
+}
+
+body {
+  background-color: #1a2c33;
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+#q-app {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* Vertical scrollbar only — a fixed height on ::-webkit-scrollbar draws an empty horizontal bar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar:horizontal {
+  height: 0;
+  display: none;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(26, 44, 51, 0.95);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #0bc3ab, #0375cc);
+  border-radius: 999px;
+  border: 2px solid rgba(26, 44, 51, 0.95);
+}
