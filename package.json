@@ -10,13 +10,14 @@
   "scripts": {
     "test": "echo \"No test specified\" && exit 0",
     "dev": "quasar dev",
+    "prebuild": "node scripts/generate-favicons.mjs",
     "build": "quasar build",
     "postbuild": "node scripts/copy-spa-404.mjs",
     "postinstall": "quasar prepare"
   },
   "dependencies": {
-    "pinia": "^3.0.1",
     "@quasar/extras": "^1.16.4",
+    "pinia": "^3.0.1",
     "quasar": "^2.16.0",
     "vue": "^3.5.22",
     "vue-router": "^5.0.3"
@@ -24,7 +25,9 @@
   "devDependencies": {
     "@quasar/app-vite": "^2.5.1",
     "autoprefixer": "^10.4.27",
-    "postcss": "^8.5.8"
+    "postcss": "^8.5.8",
+    "sharp": "^0.34.5",
+    "to-ico": "^1.1.5"
   },
   "engines": {
     "node": "^28 || ^26 || ^24 || ^22.12",
