@@ -117,106 +117,31 @@
       </div>
     </section>
 
-    <section ref="galleryEl" class="gallery-block q-pt-xl q-mt-lg column items-center">
+    <section ref="faqEl" class="faq-block q-pt-xl q-mt-lg column items-center">
       <div
         class="gallery-heading text-center q-mb-lg reveal-on-scroll full-width"
-        :class="{ 'is-visible': galleryVisible }"
+        :class="{ 'is-visible': faqVisible }"
       >
-        <div class="text-overline pp-overline q-mb-xs">How we help</div>
-        <h2 class="text-h5 text-weight-bold pp-heading q-mb-xs">
-          How our project can help you
+        <div class="text-overline pp-overline q-mb-xs">Support</div>
+        <h2 class="text-h5 text-weight-bold pp-heading q-mb-none">
+          Frequently asked questions
         </h2>
-        <p class="text-caption pp-muted q-mb-none" style="max-width: 520px; margin: 0 auto">
-          A quick visual overview — each tile maps to a real outcome for your team.
-        </p>
       </div>
 
-      <div class="row q-col-gutter-lg justify-center full-width" style="max-width: 1000px">
-        <div
-          v-for="(item, i) in gallery"
-          :key="item.title"
-          class="col-12 col-sm-6"
+      <q-list class="faq-list reveal-on-scroll" :class="{ 'is-visible': faqVisible }">
+        <q-expansion-item
+          v-for="item in faqs"
+          :key="item.question"
+          expand-separator
+          :label="item.question"
+          header-class="faq-item__header"
+          class="faq-item"
         >
-          <q-card
-            flat
-            bordered
-            class="photo-card overflow-hidden reveal-on-scroll"
-            :class="{ 'is-visible': galleryVisible }"
-            :style="{ transitionDelay: galleryDelay(i) }"
-          >
-            <div class="photo-shine" aria-hidden="true" />
-            <q-img
-              :src="item.src"
-              :ratio="4 / 3"
-              class="photo-img"
-              spinner-color="primary"
-              loading="lazy"
-            >
-              <div class="absolute-bottom photo-gradient" />
-            </q-img>
-            <q-card-section class="q-pt-md">
-              <div class="text-subtitle1 text-weight-medium pp-title">
-                {{ item.title }}
-              </div>
-              <p class="text-caption pp-muted q-mb-none q-mt-xs">
-                {{ item.caption }}
-              </p>
-            </q-card-section>
-          </q-card>
-        </div>
-      </div>
-    </section>
-
-    <section ref="featuresEl" class="features-block column items-center full-width q-pt-xl q-mt-md">
-      <div
-        v-for="(fn, i) in appFunctions"
-        :key="fn.title"
-        class="feature-showcase column items-center full-width reveal-on-scroll"
-        :class="{ 'is-visible': featuresVisible }"
-        :style="{ transitionDelay: featureDelay(i) }"
-      >
-        <h2 class="feature-title text-h4 text-weight-bold pp-heading text-center q-mb-md">
-          {{ fn.title }}
-        </h2>
-
-        <div class="feature-video-outer row justify-center full-width q-mb-lg">
-          <q-card flat bordered class="video-card feature-video-card overflow-hidden">
-            <div v-if="fn.embedUrl?.trim()" class="video-ratio">
-              <iframe
-                :src="fn.embedUrl.trim()"
-                :title="fn.title"
-                class="video-iframe"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen
-              />
-            </div>
-            <div v-else class="video-ratio">
-              <div class="video-placeholder video-placeholder--compact column flex-center">
-                <div class="placeholder-inner column flex-center q-pa-md text-center">
-                  <q-btn
-                    round
-                    size="lg"
-                    color="primary"
-                    text-color="white"
-                    icon="play_arrow"
-                    class="play-btn-animated"
-                    @click="openFeatureVideoHint"
-                  />
-                  <div class="text-caption pp-muted q-mt-sm pp-hint">
-                    Add an embed URL for this clip in
-                    <code class="pp-code">appFunctions</code>
-                    in <code class="pp-code">ProjectPage.vue</code>.
-                  </div>
-                </div>
-              </div>
-            </div>
-          </q-card>
-        </div>
-
-        <p class="feature-copy pp-body text-body1 text-center q-mb-none">
-          {{ fn.description }}
-        </p>
-      </div>
+          <div class="faq-item__answer pp-body text-body2">
+            {{ item.answer }}
+          </div>
+        </q-expansion-item>
+      </q-list>
     </section>
 
     <q-dialog v-model="toolPreviewOpen" transition-show="scale" transition-hide="fade">
@@ -251,37 +176,44 @@
 
 <script setup>
 import { onMounted, onUnmounted, ref } from 'vue'
-import { useQuasar } from 'quasar'
 import heroWorkshopUrl from 'src/assets/hero-workshop.png'
 import { SITE } from 'src/constants/site'
-
-const $q = useQuasar()
 
 const heroEntered = ref(false)
 const screenshotsVisible = ref(false)
 const keyToolsVisible = ref(false)
-const galleryVisible = ref(false)
-const featuresVisible = ref(false)
+const faqVisible = ref(false)
 const selectedTool = ref(null)
 const toolPreviewOpen = ref(false)
 const screenshotsEl = ref(null)
 const keyToolsEl = ref(null)
-const galleryEl = ref(null)
-const featuresEl = ref(null)
+const faqEl = ref(null)
 
-/** Two product functions: set title, description, and optional embed URL per clip. */
-const appFunctions = [
+const faqs = [
   {
-    title: 'Live insight rollups',
-    description:
-      'Pulls the latest signals into one view so you can brief the room in minutes, not hours.',
-    embedUrl: ''
+    question: `What is ${SITE.projectName}?`,
+    answer:
+      'It is a research workspace that connects papers, PDFs, LaTeX, and project structure in one place, with AI to help you analyze and organize what you are working on.'
   },
   {
-    title: 'Decision trails',
-    description:
-      'Every recommendation keeps its sources attached — easy to audit, easy to trust when stakes are high.',
-    embedUrl: ''
+    question: 'What can I bring into a project?',
+    answer:
+      'You can work with common research materials such as PDFs, documents, and LaTeX sources. The workspace keeps them linked so you can move between reading, writing, and outlining without losing context.'
+  },
+  {
+    question: 'How does AI fit into the workflow?',
+    answer:
+      'AI helps surface themes, explain fragments, and connect related pieces of your project. You stay in control: outputs are tied to your sources so you can review, compare, and reuse them in your own work.'
+  },
+  {
+    question: 'Is my research data private?',
+    answer:
+      'Your project content is yours. We design the product so analysis and organization happen in your workspace; contact us if you need details on deployment, retention, or enterprise requirements.'
+  },
+  {
+    question: 'Who is this for?',
+    answer:
+      'Researchers, students, and teams who manage large or long-running projects and want one structured environment instead of scattered files and notes.'
   }
 ]
 
@@ -312,57 +244,17 @@ const keyTools = [
   }
 ]
 
-const gallery = [
-  {
-    title: 'See the full picture',
-    caption: 'Bring scattered updates into one calm view your stakeholders can trust.',
-    src: 'https://picsum.photos/seed/rac-a/960/720'
-  },
-  {
-    title: 'Turn insight into action',
-    caption: 'Move from signals to next steps without losing context in another thread.',
-    src: 'https://picsum.photos/seed/rac-b/960/720'
-  },
-  {
-    title: 'Work in the open',
-    caption: 'Shared language for teams and partners — fewer opaque status meetings.',
-    src: 'https://picsum.photos/seed/rac-c/960/720'
-  },
-  {
-    title: 'Stay close to reality',
-    caption: 'Field-ready views when decisions cannot wait until you are back at a desk.',
-    src: 'https://picsum.photos/seed/rac-d/960/720'
-  }
-]
-
 let keyToolsObserver
 let screenshotsObserver
-let galleryObserver
-let featuresObserver
+let faqObserver
 
 function keyToolsDelay (index) {
   return `${120 + index * 100}ms`
 }
 
-function galleryDelay (index) {
-  return `${120 + index * 100}ms`
-}
-
-function featureDelay (index) {
-  return `${100 + index * 140}ms`
-}
-
 function openToolPreview (item) {
   selectedTool.value = item
   toolPreviewOpen.value = true
-}
-
-function openFeatureVideoHint () {
-  $q.notify({
-    type: 'info',
-    message: 'Set embedUrl on each item in appFunctions (ProjectPage.vue) to show these clips.',
-    position: 'top'
-  })
 }
 
 onMounted(() => {
@@ -398,40 +290,25 @@ onMounted(() => {
     keyToolsObserver.observe(keyToolsEl.value)
   }
 
-  galleryObserver = new IntersectionObserver(
+  faqObserver = new IntersectionObserver(
     (entries) => {
       for (const e of entries) {
         if (e.isIntersecting) {
-          galleryVisible.value = true
+          faqVisible.value = true
         }
       }
     },
     { threshold: 0.1, rootMargin: '0px 0px -32px 0px' }
   )
-  if (galleryEl.value) {
-    galleryObserver.observe(galleryEl.value)
-  }
-
-  featuresObserver = new IntersectionObserver(
-    (entries) => {
-      for (const e of entries) {
-        if (e.isIntersecting) {
-          featuresVisible.value = true
-        }
-      }
-    },
-    { threshold: 0.08, rootMargin: '0px 0px -24px 0px' }
-  )
-  if (featuresEl.value) {
-    featuresObserver.observe(featuresEl.value)
+  if (faqEl.value) {
+    faqObserver.observe(faqEl.value)
   }
 })
 
 onUnmounted(() => {
   screenshotsObserver?.disconnect()
   keyToolsObserver?.disconnect()
-  galleryObserver?.disconnect()
-  featuresObserver?.disconnect()
+  faqObserver?.disconnect()
 })
 </script>
 
@@ -662,120 +539,53 @@ onUnmounted(() => {
   box-shadow: 0 16px 52px rgba(10, 24, 28, 0.5);
 }
 
-/* Center video block horizontally; clip glow overflow */
-.video-outer {
-  max-width: 920px;
+.gallery-block,
+.faq-block {
+  scroll-margin-top: 96px;
 }
 
-.video-demo-wrap {
-  position: relative;
+.faq-block {
   width: 100%;
-  max-width: 880px;
+  max-width: 720px;
   margin-left: auto;
   margin-right: auto;
 }
 
-.video-frame-glow {
-  position: absolute;
-  left: 50%;
-  top: -8px;
-  transform: translateX(-50%);
-  width: calc(100% + 4px);
-  max-width: 900px;
-  height: 120px;
-  border-radius: 22px;
-  background: radial-gradient(
-    65% 100% at 50% 0%,
-    rgba(11, 195, 171, 0.45) 0%,
-    rgba(3, 117, 204, 0.18) 45%,
-    transparent 70%
-  );
-  opacity: 0.9;
-  animation: glow-breathe 4s ease-in-out infinite;
-  pointer-events: none;
-  z-index: 0;
-}
-
-@keyframes glow-breathe {
-  0%,
-  100% {
-    opacity: 0.55;
-    transform: translateX(-50%) scale(0.98);
-  }
-  50% {
-    opacity: 1;
-    transform: translateX(-50%) scale(1);
-  }
-}
-
-.video-card {
-  position: relative;
-  z-index: 1;
+.faq-list {
   width: 100%;
-  margin: 0 auto;
   border-radius: 18px;
-  border-color: rgba(11, 195, 171, 0.35);
-  background: rgba(19, 48, 49, 0.72);
-}
-
-.video-ratio {
-  position: relative;
-  width: 100%;
-  padding-bottom: 56.25%;
-  height: 0;
+  border: 1px solid rgba(11, 195, 171, 0.22);
+  background: rgba(26, 44, 51, 0.55);
   overflow: hidden;
 }
 
-.video-iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: 0;
-  display: block;
+.faq-list :deep(.faq-item) {
+  color: var(--pp-body);
 }
 
-.video-placeholder {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  background: radial-gradient(
-      85% 65% at 50% 18%,
-      rgba(3, 117, 204, 0.28) 0%,
-      transparent 52%
-    ),
-    linear-gradient(168deg, rgba(26, 44, 51, 0.96) 0%, rgba(19, 48, 49, 0.98) 100%);
+.faq-list :deep(.faq-item__header) {
+  color: var(--pp-heading);
+  font-weight: 600;
+  padding: 1rem 1.15rem;
 }
 
-.placeholder-inner {
-  width: 100%;
-  max-width: 26rem;
+.faq-list :deep(.q-item__label) {
+  line-height: 1.45;
 }
 
-.play-btn-animated {
-  box-shadow: 0 12px 40px rgba(3, 117, 204, 0.45);
-  animation: play-pulse 2.2s ease-in-out infinite;
+.faq-list :deep(.q-expansion-item__toggle-icon) {
+  color: var(--pp-soft);
 }
 
-@keyframes play-pulse {
-  0%,
-  100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.06);
-  }
+.faq-list :deep(.q-separator) {
+  background: rgba(11, 195, 171, 0.15);
 }
 
-.gallery-block {
-  scroll-margin-top: 96px;
+.faq-item__answer {
+  padding: 0 1.15rem 1.1rem;
+  max-width: none;
+  margin: 0;
+  line-height: 1.65;
 }
 
 .reveal-on-scroll {
@@ -960,57 +770,12 @@ onUnmounted(() => {
   box-shadow: 0 18px 58px rgba(0, 0, 0, 0.38);
 }
 
-.features-block {
-  scroll-margin-top: 88px;
-  max-width: 1040px;
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.feature-showcase + .feature-showcase {
-  margin-top: 3.25rem;
-  padding-top: 3rem;
-  border-top: 1px solid rgba(11, 195, 171, 0.15);
-}
-
-.feature-title {
-  letter-spacing: -0.02em;
-  max-width: 22rem;
-}
-
-.feature-video-outer {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.feature-video-card {
-  max-width: 920px;
-  width: 100%;
-}
-
-.feature-copy {
-  max-width: 34rem;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.video-placeholder--compact .placeholder-inner {
-  max-width: 20rem;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .mega-title,
   .hero-stack .tagline,
   .hero-stack .hero-stagger-btn,
   .reveal-on-scroll {
     transition-duration: 0.01ms !important;
-    animation: none !important;
-  }
-
-  .video-frame-glow,
-  .play-btn-animated {
     animation: none !important;
   }
 
