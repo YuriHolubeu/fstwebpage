@@ -133,37 +133,34 @@
         :class="{ 'is-visible': teamVisible }"
       >
         <div class="text-overline pp-overline q-mb-xs">Team</div>
-        <h2 class="text-h5 text-weight-bold pp-heading q-mb-xs">
+        <h2 class="text-h5 text-weight-bold pp-heading q-mb-none">
           People behind the product
         </h2>
-        <p class="text-caption pp-muted q-mb-none" style="max-width: 520px; margin: 0 auto">
-          Lead with credibility: past companies, domain years, and the specific superpower each
-          person brings to GTM and engineering.
-        </p>
       </div>
 
       <div
-        class="row q-col-gutter-xl justify-center full-width team-grid reveal-on-scroll"
+        class="row no-wrap justify-center q-col-gutter-md full-width team-grid reveal-on-scroll"
         :class="{ 'is-visible': teamVisible }"
       >
         <div
           v-for="member in team"
           :key="member.name"
-          class="col-12 col-sm-6 col-md-4 team-grid__col"
+          class="team-grid__col"
         >
-          <q-card flat bordered class="team-card photo-card q-pa-lg text-center column items-center">
-            <q-avatar size="152px" class="q-mb-lg team-avatar text-weight-bold text-h5">
+          <div class="team-member text-center column items-center">
+            <q-avatar class="q-mb-md team-avatar text-weight-bold">
               <img
                 v-if="member.photo"
                 :src="member.photo"
                 :alt="member.name"
+                class="team-avatar__img"
               >
               <template v-else>{{ member.initials }}</template>
             </q-avatar>
-            <div class="text-h6 text-weight-medium pp-title">{{ member.name }}</div>
-            <div class="text-caption pp-soft q-mb-sm">{{ member.role }}</div>
-            <p class="text-caption pp-muted q-mb-none">{{ member.bio }}</p>
-          </q-card>
+            <div class="team-member__name text-h6 text-weight-medium">{{ member.name }}</div>
+            <div class="team-member__role text-caption q-mb-sm">{{ member.role }}</div>
+            <p class="team-member__bio text-caption q-mb-none">{{ member.bio }}</p>
+          </div>
         </div>
       </div>
     </section>
@@ -248,21 +245,21 @@ const team = [
     name: 'Yury Holubeu',
     role: 'Founder / CEO',
     photo: '/team/yury-holubeu.png',
-    bio: 'Replace with your background: markets built, teams led, technical depth.'
+    bio: 'Master of Physics'
+  },
+    {
+    initials: 'JP',
+    name: 'Jevgenij Posashkov',
+    role: 'Co-founder',
+    photo: '/team/jevgenij-posashkov.png',
+    bio: 'Master of Data Science'
   },
   {
     initials: 'ER',
     name: 'Egor Riter',
-    role: 'Co-founder / CEO',
+    role: 'Co-founder',
     photo: '/team/egor-riter.png',
-    bio: 'Replace with your background: markets built, teams led, technical depth.'
-  },
-  {
-    initials: 'JP',
-    name: 'Jevgenij Posashkov',
-    role: 'Co-founder / CEO',
-    photo: '/team/jevgenij-posashkov.png',
-    bio: 'Replace with your background: markets built, teams led, technical depth.'
+    bio: 'Software Engineer'
   }
 ]
 
@@ -666,30 +663,67 @@ onUnmounted(() => {
 }
 
 .team-grid {
-  max-width: 960px;
+  flex-wrap: nowrap !important;
+  width: 100%;
+  max-width: 1040px;
   margin-left: auto;
   margin-right: auto;
 }
 
 .team-grid__col {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 33.333%;
   display: flex;
   justify-content: center;
 }
 
-.team-card {
+.team-member {
   width: 100%;
-  max-width: 300px;
+  max-width: none;
+  padding: clamp(0.5rem, 1.5vw, 1rem);
+}
+
+.team-member__name {
+  color: #e0f2fe;
+  font-size: clamp(0.82rem, 1.8vw, 1.25rem);
+  line-height: 1.25;
+  text-shadow: 0 1px 14px rgba(3, 117, 204, 0.45);
+}
+
+.team-member__role {
+  color: #7dd3fc;
+  font-size: clamp(0.72rem, 1.45vw, 0.8rem);
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 12px rgba(3, 117, 204, 0.4);
+}
+
+.team-member__bio {
+  color: #bae6fd;
+  font-size: clamp(0.68rem, 1.35vw, 0.75rem);
+  line-height: 1.45;
+  text-shadow: 0 1px 10px rgba(3, 117, 204, 0.35);
 }
 
 .team-avatar {
+  width: clamp(72px, 14vw, 152px) !important;
+  height: clamp(72px, 14vw, 152px) !important;
+  font-size: clamp(0.9rem, 2vw, 1.35rem);
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
   background: linear-gradient(135deg, #0375cc, #0bc3ab);
   color: #133031;
 }
 
-.team-avatar img {
+.team-avatar__img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 50%;
 }
 
 .faq-block {
