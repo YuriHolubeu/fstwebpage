@@ -1,1 +1,0 @@
-import{Ct as e}from"./QBtn-HfvAwc73.js";import{o as t}from"./index-CvCP4R_L.js";var n=t(`contact-ui`,()=>{let t=e(!1);function n(){t.value=!0}function r(){t.value=!1}return{dialogOpen:t,openDialog:n,closeDialog:r}});export{n as t};
