@@ -49,7 +49,7 @@ export default defineConfig((ctx) => {
         node: 'node22'
       },
 
-      vueRouterMode: 'hash', // available values: 'hash', 'history'
+      vueRouterMode: 'history', // hash URLs (#/…) — history for clean paths on GitHub Pages (see postbuild 404.html)
       // vueRouterBase,
       // vueDevtools,
       // vueOptionsAPI: false,
