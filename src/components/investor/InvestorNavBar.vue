@@ -32,6 +32,57 @@
           <q-icon :name="item.icon" size="18px" class="q-mr-xs" />
           {{ item.label }}
         </q-btn>
+
+        <q-btn-dropdown
+          flat
+          dense
+          no-caps
+          rounded
+          auto-close
+          dropdown-icon="expand_more"
+          class="nav-btn ai-features-btn"
+          :class="{ 'nav-btn--active': isAiFeaturesActive }"
+          content-class="ai-features-menu"
+        >
+          <template #label>
+            <q-icon name="auto_awesome" size="18px" class="q-mr-xs" />
+            AI Features
+          </template>
+
+          <q-list dense class="ai-features-list">
+            <q-item
+              v-for="item in aiFeatures"
+              :key="item.to"
+              clickable
+              :to="item.to"
+              class="ai-feature-item"
+              :class="{ 'ai-feature-item--active': isActive(item.to) }"
+            >
+              <q-item-section avatar>
+                <q-icon :name="item.icon" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>{{ item.label }}</q-item-label>
+                <q-item-label caption>{{ item.caption }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
+
+        <q-btn
+          v-for="item in tailNav"
+          :key="item.to"
+          flat
+          dense
+          no-caps
+          rounded
+          class="nav-btn"
+          :class="{ 'nav-btn--active': isActive(item.to) }"
+          :to="item.to"
+        >
+          <q-icon :name="item.icon" size="18px" class="q-mr-xs" />
+          {{ item.label }}
+        </q-btn>
       </nav>
 
       <q-space class="gt-xs" />
@@ -50,6 +101,7 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import brandIconUrl from 'src/assets/app-icon.svg'
 import { SITE } from 'src/constants/site'
@@ -59,9 +111,35 @@ const route = useRoute()
 const contact = useContactUiStore()
 
 const nav = [
-  { to: '/invest', label: 'Invest', icon: 'trending_up' },
+  { to: '/invest', label: 'Invest', icon: 'trending_up' }
+]
+
+const tailNav = [
   { to: '/future', label: 'Roadmap', icon: 'map' }
 ]
+
+const aiFeatures = [
+  {
+    to: '/ai-groups',
+    label: 'AI Groups',
+    icon: 'hub',
+    caption: 'Semantic clustering for research themes'
+  },
+  {
+    to: '/explain-fragment',
+    label: 'Explain Fragment',
+    icon: 'psychology',
+    caption: 'Attach explanations to selected text'
+  },
+  {
+    to: '/save-ai-note',
+    label: 'Save AI Note',
+    icon: 'bookmark_add',
+    caption: 'Turn AI answers into project memory'
+  }
+]
+
+const isAiFeaturesActive = computed(() => aiFeatures.some((item) => isActive(item.to)))
 
 function isActive (path) {
   return route.path === path || route.path === `${path}/`
@@ -151,6 +229,34 @@ function isActive (path) {
 }
 .mail-icon-btn {
   color: #a5f3fc;
+}
+
+:global(.ai-features-menu) {
+  border: 1px solid rgba(94, 234, 212, 0.24);
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba(15, 55, 56, 0.98), rgba(10, 24, 28, 0.98)),
+    #0a181c;
+  box-shadow: 0 18px 48px rgba(3, 117, 204, 0.22);
+}
+
+:global(.ai-features-list) {
+  min-width: 250px;
+  padding: 6px;
+}
+
+:global(.ai-feature-item) {
+  border-radius: 6px;
+  color: rgba(204, 251, 241, 0.9);
+}
+
+:global(.ai-feature-item:hover),
+:global(.ai-feature-item--active) {
+  background: rgba(11, 195, 171, 0.14);
+}
+
+:global(.ai-feature-item .q-item__label--caption) {
+  color: rgba(94, 234, 212, 0.72);
 }
 
 @media (max-width: 599px) {
