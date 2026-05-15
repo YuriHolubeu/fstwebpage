@@ -4,10 +4,14 @@
 import { defineConfig } from '#q-app/wrappers'
 
 export default defineConfig((ctx) => {
-  // GitHub Pages project sites are served at https://<owner>.github.io/<repo-name>/
-  // Asset URLs must use that path segment (matches GitHub repo name, not local folder).
-  const ghPagesSegment =
-    process.env.GH_PAGES_SEGMENT ?? 'focus-structure-core-website'
+  // Custom domain (docs/CNAME): assets at /. Project site without CNAME: set
+  // GH_PAGES_SEGMENT to your GitHub repo name, e.g. GH_PAGES_SEGMENT=fstwebpage npm run build
+  const ghPagesSegment = process.env.GH_PAGES_SEGMENT
+  const publicPath = ctx.dev
+    ? '/'
+    : ghPagesSegment
+      ? `/${ghPagesSegment}/`
+      : '/'
 
   return {
     // https://v2.quasar.dev/quasar-cli-vite/prefetch-feature
@@ -52,7 +56,7 @@ export default defineConfig((ctx) => {
 
       // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
 
-      publicPath: ctx.dev ? '/' : `/${ghPagesSegment}/`,
+      publicPath,
       // analyze: true,
       // env: {},
       // rawDefine: {}
