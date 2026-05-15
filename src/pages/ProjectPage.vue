@@ -31,29 +31,39 @@
 
     <section
       ref="screenshotsEl"
-      class="screenshot-showcase q-pt-xl q-mt-lg reveal-on-scroll"
-      :class="{ 'is-visible': screenshotsVisible }"
+      class="screenshot-showcase q-pt-xl q-mt-lg"
     >
-      <div class="screenshot-copy text-center q-mb-lg">
+      <div
+        class="row q-col-gutter-xl items-center workspace-row reveal-on-scroll"
+        :class="{ 'is-visible': screenshotsVisible }"
+      >
+        <div class="col-12 workspace-copy">
         <div class="text-overline pp-overline q-mb-xs">Product preview</div>
         <h2 class="screenshot-title text-h4 text-weight-bold pp-heading q-mb-sm">
           Research workspace, fully connected
         </h2>
-        <p class="screenshot-caption pp-body text-body1 q-mb-none">
+        <p class="screenshot-caption pp-body text-body1 q-mb-lg">
           One workspace for papers, PDFs, LaTeX and research structure.
         </p>
-      </div>
 
-      <div class="screenshot-frame">
-        <img
-          src="/screenshots/screen1.png"
-          alt="Focus Structure Tool workspace with papers, PDF viewer, LaTeX editor, and research outline"
-          class="screenshot-image"
-          width="2912"
-          height="1814"
-          loading="lazy"
-          decoding="async"
-        />
+        <ul class="workspace-features q-pl-none q-ma-none">
+          <li
+            v-for="feature in workspaceFeatures"
+            :key="feature.title"
+            class="workspace-feature row no-wrap items-start"
+          >
+            <q-icon :name="feature.icon" size="22px" class="workspace-feature__icon q-mr-md" />
+            <div>
+              <div class="workspace-feature__title text-subtitle2 text-weight-medium pp-title q-mb-xs">
+                {{ feature.title }}
+              </div>
+              <p class="workspace-feature__text text-caption pp-muted q-mb-none">
+                {{ feature.description }}
+              </p>
+            </div>
+          </li>
+        </ul>
+        </div>
       </div>
     </section>
 
@@ -188,6 +198,29 @@ const toolPreviewOpen = ref(false)
 const screenshotsEl = ref(null)
 const keyToolsEl = ref(null)
 const faqEl = ref(null)
+
+const workspaceFeatures = [
+  {
+    icon: 'library_books',
+    title: 'Unified research library',
+    description: 'Keep papers, PDFs, and sources organized in one project library.'
+  },
+  {
+    icon: 'code',
+    title: 'Integrated LaTeX workflow',
+    description: 'Write and edit LaTeX alongside your outline without switching tools.'
+  },
+  {
+    icon: 'account_tree',
+    title: 'Structured outline',
+    description: 'See sections, arguments, and dependencies as a connected research map.'
+  },
+  {
+    icon: 'compare',
+    title: 'Side-by-side reading',
+    description: 'Open sources next to notes for comparison, citation, and explanation.'
+  }
+]
 
 const faqs = [
   {
@@ -485,10 +518,10 @@ onUnmounted(() => {
   content: '';
   position: absolute;
   left: 50%;
-  top: 9.5rem;
-  width: min(880px, 92vw);
+  top: 50%;
+  width: min(640px, 92vw);
   height: 220px;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   border-radius: 8px;
   background: radial-gradient(
     60% 100% at 50% 0%,
@@ -502,10 +535,16 @@ onUnmounted(() => {
   z-index: 0;
 }
 
-.screenshot-copy,
-.screenshot-frame {
+.workspace-row {
   position: relative;
   z-index: 1;
+}
+
+.workspace-copy {
+  text-align: left;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .screenshot-title {
@@ -514,29 +553,27 @@ onUnmounted(() => {
 }
 
 .screenshot-caption.pp-body {
-  max-width: 42rem;
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
 }
 
-.screenshot-frame {
-  overflow: hidden;
-  border-radius: 8px;
-  padding: 0.5rem;
-  border: 1px solid rgba(94, 234, 212, 0.28);
-  background:
-    linear-gradient(135deg, rgba(94, 234, 212, 0.16), rgba(56, 189, 248, 0.08)),
-    rgba(10, 24, 28, 0.78);
-  box-shadow:
-    0 26px 80px rgba(3, 117, 204, 0.22),
-    0 0 0 1px rgba(204, 251, 241, 0.06) inset;
+.workspace-features {
+  list-style: none;
 }
 
-.screenshot-image {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 6px;
-  border: 1px solid rgba(204, 251, 241, 0.1);
-  box-shadow: 0 16px 52px rgba(10, 24, 28, 0.5);
+.workspace-feature + .workspace-feature {
+  margin-top: 1rem;
+}
+
+.workspace-feature__icon {
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+  color: var(--pp-soft);
+}
+
+.workspace-feature__text {
+  line-height: 1.5;
 }
 
 .gallery-block,
