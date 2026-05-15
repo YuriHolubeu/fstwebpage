@@ -110,9 +110,7 @@ import { useContactUiStore } from 'src/stores/contact-ui'
 const route = useRoute()
 const contact = useContactUiStore()
 
-const nav = [
-  { to: '/invest', label: 'Invest', icon: 'trending_up' }
-]
+const nav = []
 
 const tailNav = [
   { to: '/future', label: 'Roadmap', icon: 'map' }

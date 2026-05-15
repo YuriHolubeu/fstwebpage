@@ -10,11 +10,6 @@ const routes = [
         component: () => import('pages/ProjectPage.vue')
       },
       {
-        path: 'invest',
-        name: 'investor-invest',
-        component: () => import('pages/InvestPage.vue')
-      },
-      {
         path: 'ai-groups',
         name: 'investor-ai-groups',
         component: () => import('pages/AiGroupsPage.vue')

@@ -127,6 +127,47 @@
       </div>
     </section>
 
+    <section ref="teamEl" class="team-block q-pt-xl q-mt-lg column items-center">
+      <div
+        class="gallery-heading text-center q-mb-lg reveal-on-scroll full-width"
+        :class="{ 'is-visible': teamVisible }"
+      >
+        <div class="text-overline pp-overline q-mb-xs">Team</div>
+        <h2 class="text-h5 text-weight-bold pp-heading q-mb-xs">
+          People behind the product
+        </h2>
+        <p class="text-caption pp-muted q-mb-none" style="max-width: 520px; margin: 0 auto">
+          Lead with credibility: past companies, domain years, and the specific superpower each
+          person brings to GTM and engineering.
+        </p>
+      </div>
+
+      <div
+        class="row q-col-gutter-xl justify-center full-width team-grid reveal-on-scroll"
+        :class="{ 'is-visible': teamVisible }"
+      >
+        <div
+          v-for="member in team"
+          :key="member.name"
+          class="col-12 col-sm-6 col-md-4 team-grid__col"
+        >
+          <q-card flat bordered class="team-card photo-card q-pa-lg text-center column items-center">
+            <q-avatar size="152px" class="q-mb-lg team-avatar text-weight-bold text-h5">
+              <img
+                v-if="member.photo"
+                :src="member.photo"
+                :alt="member.name"
+              >
+              <template v-else>{{ member.initials }}</template>
+            </q-avatar>
+            <div class="text-h6 text-weight-medium pp-title">{{ member.name }}</div>
+            <div class="text-caption pp-soft q-mb-sm">{{ member.role }}</div>
+            <p class="text-caption pp-muted q-mb-none">{{ member.bio }}</p>
+          </q-card>
+        </div>
+      </div>
+    </section>
+
     <section ref="faqEl" class="faq-block q-pt-xl q-mt-lg column items-center">
       <div
         class="gallery-heading text-center q-mb-lg reveal-on-scroll full-width"
@@ -192,12 +233,38 @@ import { SITE } from 'src/constants/site'
 const heroEntered = ref(false)
 const screenshotsVisible = ref(false)
 const keyToolsVisible = ref(false)
+const teamVisible = ref(false)
 const faqVisible = ref(false)
 const selectedTool = ref(null)
 const toolPreviewOpen = ref(false)
 const screenshotsEl = ref(null)
 const keyToolsEl = ref(null)
+const teamEl = ref(null)
 const faqEl = ref(null)
+
+const team = [
+  {
+    initials: 'YH',
+    name: 'Yury Holubeu',
+    role: 'Founder / CEO',
+    photo: '/team/yury-holubeu.png',
+    bio: 'Replace with your background: markets built, teams led, technical depth.'
+  },
+  {
+    initials: 'ER',
+    name: 'Egor Riter',
+    role: 'Co-founder / CEO',
+    photo: '/team/egor-riter.png',
+    bio: 'Replace with your background: markets built, teams led, technical depth.'
+  },
+  {
+    initials: 'JP',
+    name: 'Jevgenij Posashkov',
+    role: 'Co-founder / CEO',
+    photo: '/team/jevgenij-posashkov.png',
+    bio: 'Replace with your background: markets built, teams led, technical depth.'
+  }
+]
 
 const workspaceFeatures = [
   {
@@ -279,6 +346,7 @@ const keyTools = [
 
 let keyToolsObserver
 let screenshotsObserver
+let teamObserver
 let faqObserver
 
 function keyToolsDelay (index) {
@@ -323,6 +391,20 @@ onMounted(() => {
     keyToolsObserver.observe(keyToolsEl.value)
   }
 
+  teamObserver = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) {
+          teamVisible.value = true
+        }
+      }
+    },
+    { threshold: 0.1, rootMargin: '0px 0px -32px 0px' }
+  )
+  if (teamEl.value) {
+    teamObserver.observe(teamEl.value)
+  }
+
   faqObserver = new IntersectionObserver(
     (entries) => {
       for (const e of entries) {
@@ -341,6 +423,7 @@ onMounted(() => {
 onUnmounted(() => {
   screenshotsObserver?.disconnect()
   keyToolsObserver?.disconnect()
+  teamObserver?.disconnect()
   faqObserver?.disconnect()
 })
 </script>
@@ -577,8 +660,36 @@ onUnmounted(() => {
 }
 
 .gallery-block,
+.team-block,
 .faq-block {
   scroll-margin-top: 96px;
+}
+
+.team-grid {
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.team-grid__col {
+  display: flex;
+  justify-content: center;
+}
+
+.team-card {
+  width: 100%;
+  max-width: 300px;
+}
+
+.team-avatar {
+  background: linear-gradient(135deg, #0375cc, #0bc3ab);
+  color: #133031;
+}
+
+.team-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .faq-block {
