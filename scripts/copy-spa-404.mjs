@@ -1,9 +1,23 @@
 /**
- * GitHub Pages has no SPA fallback. Serving 404.html for unknown paths
- * lets Vue Router (history mode) handle /project, /invest, etc.
+ * GitHub Pages has no SPA fallback. For history-mode routes (/project, …),
+ * GitHub must serve docs/404.html (a copy of index.html) for missing paths.
  */
-import { copyFileSync } from 'node:fs'
+import { copyFileSync, existsSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
 import { join } from 'node:path'
 
-const dist = 'docs'
-copyFileSync(join(dist, 'index.html'), join(dist, '404.html'))
+export function copySpa404 (dist = 'docs') {
+  const index = join(dist, 'index.html')
+  const notFound = join(dist, '404.html')
+
+  if (!existsSync(index)) {
+    throw new Error(`[gh-pages] Missing ${index}. Build the app before copying 404.html.`)
+  }
+
+  copyFileSync(index, notFound)
+  console.log(`[gh-pages] Wrote ${notFound} — commit and push this file with each production build.`)
+}
+
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  copySpa404()
+}

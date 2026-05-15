@@ -2,6 +2,7 @@
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file
 
 import { defineConfig } from '#q-app/wrappers'
+import { copySpa404 } from './scripts/copy-spa-404.mjs'
 
 export default defineConfig((ctx) => {
   // Custom domain (docs/CNAME): assets at /. Project site without CNAME: set
@@ -63,9 +64,19 @@ export default defineConfig((ctx) => {
       // ignorePublicFolder: true,
       // minify: false,
       // polyfillModulePreload: true,
-      distDir: 'docs'
+      distDir: 'docs',
 
-      // extendViteConf (viteConf) {},
+      extendViteConf (viteConf) {
+        if (!ctx.prod) return
+
+        viteConf.plugins.push({
+          name: 'gh-pages-spa-404',
+          apply: 'build',
+          closeBundle () {
+            copySpa404('docs')
+          }
+        })
+      }
       // viteVuePluginOptions: {},
 
       // vitePlugins: [
