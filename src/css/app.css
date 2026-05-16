@@ -1,16 +1,89 @@
 /* app global css */
+:root {
+  --site-bg-base: #101c21;
+  --site-bg-mid: #0c1619;
+  --site-bg-deep: #0a1417;
+  --site-bg-rgb: 16, 28, 33;
+  --site-text-high: #ffffff;
+  --site-text-body: #f4fbfb;
+  --site-text-heading: #ffffff;
+  --site-text-muted: #7dceb8;
+  --site-text-soft: #c5e8e3;
+  --site-text-accent: #e4f2ff;
+  --site-text-accent-soft: #f0f8ff;
+}
+
 html {
+  font-size: 14px;
   scroll-behavior: smooth;
   overflow-x: hidden;
   max-width: 100%;
-  scrollbar-color: rgba(11, 195, 171, 0.75) rgba(26, 44, 51, 0.95);
+  scrollbar-color: rgba(11, 195, 171, 0.75) rgba(var(--site-bg-rgb), 0.95);
   scrollbar-width: auto;
 }
 
 body {
-  background-color: #1a2c33;
+  background-color: var(--site-bg-base);
+  color: var(--site-text-body);
+  font-size: 19px;
   overflow-x: hidden;
   max-width: 100%;
+}
+
+/* Body copy (+5px vs default); heading classes unchanged */
+.text-body1 {
+  font-size: 19px !important;
+}
+
+.text-body2 {
+  font-size: 17px !important;
+}
+
+.text-caption {
+  font-size: 16px !important;
+}
+
+.text-overline {
+  font-size: 15px !important;
+}
+
+.text-h1 {
+  font-size: 6rem !important;
+}
+
+.text-h2 {
+  font-size: 3.75rem !important;
+}
+
+.text-h3 {
+  font-size: 3rem !important;
+}
+
+.text-h4 {
+  font-size: 2.125rem !important;
+}
+
+.text-h5 {
+  font-size: 1.5rem !important;
+}
+
+.text-h6 {
+  font-size: 1.25rem !important;
+}
+
+.workspace-feature__title.text-subtitle2,
+.text-subtitle2.workspace-feature__title,
+.pp-title.text-subtitle2 {
+  font-size: 14px !important;
+}
+
+.q-page .text-grey-3,
+.q-page .text-grey-4 {
+  color: var(--site-text-muted) !important;
+}
+
+.q-page .text-white {
+  color: var(--site-text-heading) !important;
 }
 
 #q-app {
@@ -29,11 +102,11 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(26, 44, 51, 0.95);
+  background: rgba(var(--site-bg-rgb), 0.95);
 }
 
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, #0bc3ab, #0375cc);
   border-radius: 999px;
-  border: 1px solid rgba(26, 44, 51, 0.95);
+  border: 1px solid rgba(var(--site-bg-rgb), 0.95);
 }

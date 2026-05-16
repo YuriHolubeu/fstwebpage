@@ -5,26 +5,29 @@
       :class="{ 'hero-stack--ready': heroEntered }"
     >
       <div class="hero-headline-column">
-        <h1 class="mega-title">
-          {{ SITE.heroHeadline }}
-        </h1>
-        <p class="tagline pp-body text-body1 q-mt-sm q-mb-lg">
-          {{ SITE.tagline }}
-        </p>
-
-        <div class="hero-stagger-btn hero-workshop-slot">
-          <img
-            :src="heroWorkshopUrl"
-            alt="Scholar's study with desk, books, and chalkboard"
-            class="hero-workshop-img"
-            width="1024"
-            height="1024"
-            loading="eager"
-            decoding="async"
-          />
-          <p class="hero-image-caption text-body2 q-mt-md q-mb-none">
-            {{ SITE.heroImageCaption }}
-          </p>
+        <div class="hero-tagline-row row q-col-gutter-lg items-center q-mb-lg">
+          <div class="col-12 col-md-6 hero-tagline-copy">
+            <h1 class="mega-title q-mb-md">
+              {{ SITE.heroHeadline }}
+            </h1>
+            <p class="tagline pp-body text-body1 q-ma-none">
+              {{ SITE.tagline }}
+            </p>
+          </div>
+          <div class="col-12 col-md-6 flex flex-center">
+            <figure class="hero-tagline-figure">
+              <img
+                :src="heroTaglineVisualUrl"
+                alt="Researcher viewing a holographic data network"
+                class="hero-tagline-img"
+                width="960"
+                height="540"
+                loading="eager"
+                decoding="async"
+              />
+              <figcaption class="image-figure-caption">Film Iron Man 2</figcaption>
+            </figure>
+          </div>
         </div>
       </div>
     </section>
@@ -38,10 +41,12 @@
         :class="{ 'is-visible': screenshotsVisible }"
       >
         <div class="col-12 workspace-copy">
-        <div class="text-overline pp-overline q-mb-xs">Product preview</div>
         <h2 class="screenshot-title text-h4 text-weight-bold pp-heading q-mb-sm">
           Complete professional research environment
         </h2>
+        <p class="workspace-section-lead workspace-feature__text text-caption pp-muted q-mt-none q-mb-md">
+          We develop tools to make theoretical research faster and more efficient.
+        </p>
 
         <ul class="workspace-features q-pl-none q-ma-none">
           <li
@@ -60,6 +65,40 @@
             </div>
           </li>
         </ul>
+        </div>
+      </div>
+    </section>
+
+    <section
+      ref="applicationEl"
+      class="screenshot-showcase q-pt-xl q-mt-lg"
+    >
+      <div
+        class="row q-col-gutter-xl items-center workspace-row reveal-on-scroll"
+        :class="{ 'is-visible': applicationVisible }"
+      >
+        <div class="col-12 workspace-copy">
+          <h2 class="screenshot-title text-h4 text-weight-bold pp-heading q-mb-sm">
+            The application
+          </h2>
+
+          <ul class="workspace-features q-pl-none q-ma-none">
+            <li
+              v-for="feature in applicationFeatures"
+              :key="feature.title"
+              class="workspace-feature row no-wrap items-start"
+            >
+              <q-icon :name="feature.icon" size="22px" class="workspace-feature__icon q-mr-md" />
+              <div>
+                <div class="workspace-feature__title text-subtitle2 text-weight-medium pp-title q-mb-xs">
+                  {{ feature.title }}
+                </div>
+                <p class="workspace-feature__text text-caption pp-muted q-mb-none">
+                  {{ feature.description }}
+                </p>
+              </div>
+            </li>
+          </ul>
         </div>
       </div>
     </section>
@@ -238,6 +277,31 @@
       </q-list>
     </section>
 
+    <section ref="workshopEl" class="workshop-block q-pt-xl q-mt-lg column items-center">
+      <div
+        class="workshop-block__inner column items-center reveal-on-scroll"
+        :class="{ 'is-visible': workshopVisible }"
+      >
+        <p class="workshop-image-caption text-body1 q-mb-lg q-mt-none text-center">
+          {{ SITE.heroImageCaption }}
+        </p>
+        <figure class="workshop-figure">
+          <img
+            :src="heroWorkshopUrl"
+            alt="Scholar's study with desk, books, and chalkboard"
+            class="workshop-hero-img"
+            width="1024"
+            height="1024"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption class="image-figure-caption image-figure-caption--subtle">
+            Real photo of Albert Einstein's office. Photographer: Ralph Morse
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
     <section ref="contactsEl" class="contacts-block q-pt-xl q-mt-lg q-mb-md column items-center">
       <div
         class="gallery-heading text-center q-mb-lg reveal-on-scroll full-width"
@@ -306,6 +370,7 @@
 <script setup>
 import { onMounted, onUnmounted, ref } from 'vue'
 import heroWorkshopUrl from 'src/assets/hero-workshop.png'
+import heroTaglineVisualUrl from 'src/assets/hero-tagline-visual.png'
 import { SITE } from 'src/constants/site'
 import {
   BASIC_PHYSICS_PREVIEW_BASE,
@@ -314,20 +379,24 @@ import {
 
 const heroEntered = ref(false)
 const screenshotsVisible = ref(false)
+const applicationVisible = ref(false)
 const keyToolsVisible = ref(false)
 const previewsVisible = ref(false)
 const teamVisible = ref(false)
 const faqVisible = ref(false)
+const workshopVisible = ref(false)
 const contactsVisible = ref(false)
 const selectedTool = ref(null)
 const toolPreviewOpen = ref(false)
 let toolPreviewScrollY = 0
 let toolPreviewScrollBehavior = ''
 const screenshotsEl = ref(null)
+const applicationEl = ref(null)
 const keyToolsEl = ref(null)
 const previewsEl = ref(null)
 const teamEl = ref(null)
 const faqEl = ref(null)
+const workshopEl = ref(null)
 const contactsEl = ref(null)
 
 const contactMailto = `mailto:${SITE.contactEmail}`
@@ -388,6 +457,38 @@ const workspaceFeatures = [
   }
 ]
 
+const applicationFeatures = [
+    {
+    icon: 'library_books',
+    title: 'Enhances focus on the key information',
+    description: 'Hotkeys for instant extracting key information from books and articles and creation of summary.'
+  },  
+  {
+    icon: 'hub',
+    title: 'Structures information automatically',
+    description:
+      'Turn scattered readings into a connected map of concepts, claims, and dependencies.'
+  },
+  {
+    icon: 'psychology',
+    title: 'AI for deep analysis',
+    description:
+      'Use AI to summarize sources, compare arguments, and surface what matters in your project.'
+  },
+  {
+    icon: 'account_tree',
+    title: 'Research themes and outlines',
+    description:
+      'Organize hundreds of sections into meaningful themes and a navigable project outline.'
+  },
+  {
+    icon: 'picture_as_pdf',
+    title: 'Structured PDF output',
+    description:
+      'Export focused, reader-friendly PDF notes that stay compatible with standard PDF readers.'
+  }
+]
+
 const faqs = [
   {
     question: `What is ${SITE.projectName}?`,
@@ -445,9 +546,11 @@ const keyTools = [
 
 let keyToolsObserver
 let screenshotsObserver
+let applicationObserver
 let previewsObserver
 let teamObserver
 let faqObserver
+let workshopObserver
 let contactsObserver
 
 function keyToolsDelay (index) {
@@ -497,6 +600,20 @@ onMounted(() => {
   )
   if (screenshotsEl.value) {
     screenshotsObserver.observe(screenshotsEl.value)
+  }
+
+  applicationObserver = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) {
+          applicationVisible.value = true
+        }
+      }
+    },
+    { threshold: 0.12, rootMargin: '0px 0px -32px 0px' }
+  )
+  if (applicationEl.value) {
+    applicationObserver.observe(applicationEl.value)
   }
 
   keyToolsObserver = new IntersectionObserver(
@@ -555,6 +672,20 @@ onMounted(() => {
     faqObserver.observe(faqEl.value)
   }
 
+  workshopObserver = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) {
+          workshopVisible.value = true
+        }
+      }
+    },
+    { threshold: 0.1, rootMargin: '0px 0px -32px 0px' }
+  )
+  if (workshopEl.value) {
+    workshopObserver.observe(workshopEl.value)
+  }
+
   contactsObserver = new IntersectionObserver(
     (entries) => {
       for (const e of entries) {
@@ -572,10 +703,12 @@ onMounted(() => {
 
 onUnmounted(() => {
   screenshotsObserver?.disconnect()
+  applicationObserver?.disconnect()
   keyToolsObserver?.disconnect()
   previewsObserver?.disconnect()
   teamObserver?.disconnect()
   faqObserver?.disconnect()
+  workshopObserver?.disconnect()
   contactsObserver?.disconnect()
 })
 </script>
@@ -585,12 +718,12 @@ onUnmounted(() => {
  * Text on slate + teal surfaces: cool mint highlights (aligned with app icon palette).
  */
 .project-page {
-  --pp-high: #ecfeff;
-  --pp-body: #cffafe;
-  --pp-heading: #f0fdfa;
-  --pp-muted: #5eead4;
-  --pp-soft: #2dd4bf;
-  --pp-code-fg: #ecfeff;
+  --pp-high: var(--site-text-high);
+  --pp-body: var(--site-text-body);
+  --pp-heading: var(--site-text-heading);
+  --pp-muted: var(--site-text-muted);
+  --pp-soft: var(--site-text-soft);
+  --pp-code-fg: var(--site-text-high);
   --pp-code-bg: rgba(3, 117, 204, 0.28);
   --pp-code-border: rgba(11, 195, 171, 0.35);
 
@@ -627,7 +760,7 @@ onUnmounted(() => {
   display: inline;
   padding: 0.1rem 0.35rem;
   border-radius: 6px;
-  font-size: 0.75em;
+  font-size: 15px;
   color: var(--pp-code-fg);
   background: var(--pp-code-bg);
   border: 1px solid var(--pp-code-border);
@@ -640,7 +773,7 @@ onUnmounted(() => {
 
 .hero-headline-column {
   width: 100%;
-  max-width: 38rem;
+  max-width: min(920px, 100%);
   padding: 0 0.75rem;
   margin-left: auto;
   margin-right: auto;
@@ -649,8 +782,68 @@ onUnmounted(() => {
   align-items: stretch;
 }
 
+.hero-tagline-row {
+  width: 100%;
+  text-align: left;
+}
+
+.hero-tagline-figure {
+  position: relative;
+  margin: 0;
+  width: 100%;
+  max-width: 480px;
+}
+
+.hero-tagline-img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid rgba(11, 195, 171, 0.28);
+  box-shadow:
+    0 0 0 1px rgba(3, 117, 204, 0.12),
+    0 12px 40px rgba(6, 15, 20, 0.65);
+  object-fit: cover;
+}
+
+.image-figure-caption {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  margin: 0;
+  padding: 2px 6px;
+  max-width: 75%;
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-align: right;
+  color: rgba(255, 255, 255, 0.78);
+  background: rgba(6, 15, 20, 0.35);
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.image-figure-caption--subtle {
+  color: rgba(255, 255, 255, 0.48);
+  background: rgba(6, 15, 20, 0.2);
+}
+
+@media (min-width: 960px) {
+  .hero-tagline-figure {
+    max-width: min(100%, 36rem);
+  }
+}
+
+.hero-tagline-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 .mega-title {
-  font-size: clamp(1.2rem, 3.2vw, 1.85rem);
+  font-size: clamp(1.65rem, 4.8vw, 2.75rem);
   font-weight: 700;
   line-height: 1.25;
   letter-spacing: -0.02em;
@@ -694,8 +887,7 @@ onUnmounted(() => {
   }
 }
 
-.hero-stack .tagline,
-.hero-stack .hero-stagger-btn {
+.hero-stack .hero-tagline-row {
   opacity: 0;
   transform: translateY(22px);
   transition:
@@ -703,7 +895,7 @@ onUnmounted(() => {
     transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.hero-stack--ready .tagline {
+.hero-stack--ready .hero-tagline-row {
   opacity: 1;
   transform: translateY(0);
   transition-delay: 0.12s;
@@ -712,36 +904,66 @@ onUnmounted(() => {
 .hero-headline-column .tagline.pp-body {
   max-width: none;
   width: 100%;
+  text-align: left;
 }
 
-.hero-workshop-slot {
-  margin-bottom: 2.5rem;
+@media (max-width: 1023px) {
+  .hero-tagline-row {
+    text-align: center;
+  }
+
+  .hero-tagline-copy {
+    align-items: center;
+  }
+
+  .hero-headline-column .tagline.pp-body {
+    text-align: center;
+  }
+
+  .hero-headline-column .mega-title {
+    text-align: center;
+    width: 100%;
+  }
 }
 
-.hero-workshop-img {
-  display: block;
-  width: 50%;
-  height: auto;
+.workshop-block {
+  scroll-margin-top: 96px;
+  width: 100%;
+}
+
+.workshop-block__inner {
+  width: 100%;
+  max-width: 960px;
   margin-left: auto;
   margin-right: auto;
-  border-radius: 14px;
+  padding: 0 0.5rem;
+}
+
+.workshop-figure {
+  position: relative;
+  margin: 0;
+  width: min(62%, 920px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.workshop-hero-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
   border: 1px solid rgba(11, 195, 171, 0.28);
   box-shadow:
     0 0 0 1px rgba(3, 117, 204, 0.12),
-    0 16px 48px rgba(10, 24, 28, 0.55);
+    0 20px 56px rgba(10, 24, 28, 0.55);
 }
 
-.hero-image-caption {
+.workshop-image-caption {
   color: var(--pp-muted);
   line-height: 1.5;
   font-weight: 500;
   letter-spacing: 0.01em;
-}
-
-.hero-stack--ready .hero-stagger-btn {
-  opacity: 1;
-  transform: translateY(0);
-  transition-delay: 0.24s;
+  max-width: 36rem;
 }
 
 .screenshot-showcase {
@@ -813,6 +1035,10 @@ onUnmounted(() => {
   color: var(--pp-soft);
 }
 
+.workspace-section-lead {
+  max-width: none;
+}
+
 .workspace-feature__text {
   line-height: 1.5;
 }
@@ -821,7 +1047,7 @@ onUnmounted(() => {
 .results-preview-block {
   scroll-margin-top: 96px;
   width: 100%;
-  max-width: 640px;
+  max-width: 420px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -859,7 +1085,7 @@ onUnmounted(() => {
 
 .preview-pdf-item__size {
   color: #fbbf24;
-  font-size: 0.8rem;
+  font-size: 16px;
   font-weight: 500;
 }
 
@@ -894,14 +1120,14 @@ onUnmounted(() => {
 }
 
 .contacts-email {
-  color: #7dd3fc;
+  color: var(--site-text-accent);
   text-decoration: none;
   word-break: break-word;
   transition: color 0.2s ease;
 }
 
 .contacts-email:hover {
-  color: #bae6fd;
+  color: var(--site-text-accent-soft);
   text-decoration: underline;
 }
 
@@ -935,8 +1161,8 @@ onUnmounted(() => {
 }
 
 .team-member__role {
-  color: #7dd3fc;
-  font-size: clamp(0.72rem, 1.45vw, 0.8rem);
+  color: var(--site-text-accent);
+  font-size: clamp(15px, 1.45vw, 16px);
   font-weight: 600;
   line-height: 1.35;
   letter-spacing: 0.02em;
@@ -944,8 +1170,8 @@ onUnmounted(() => {
 }
 
 .team-member__bio {
-  color: #bae6fd;
-  font-size: clamp(0.68rem, 1.35vw, 0.75rem);
+  color: var(--site-text-accent-soft);
+  font-size: clamp(15px, 1.35vw, 16px);
   line-height: 1.45;
   text-shadow: 0 1px 10px rgba(3, 117, 204, 0.35);
 }
@@ -953,7 +1179,7 @@ onUnmounted(() => {
 .team-avatar {
   width: clamp(72px, 14vw, 152px) !important;
   height: clamp(72px, 14vw, 152px) !important;
-  font-size: clamp(0.9rem, 2vw, 1.35rem);
+  font-size: clamp(18px, 2vw, 24px);
   border-radius: 50%;
   overflow: hidden;
   flex-shrink: 0;
@@ -1116,11 +1342,11 @@ onUnmounted(() => {
 .tool-shot-card__chrome-title {
   flex: 1;
   min-width: 0;
-  font-size: 0.68rem;
+  font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: rgba(204, 251, 241, 0.55);
+  color: rgba(255, 255, 255, 0.72);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1146,7 +1372,7 @@ onUnmounted(() => {
   inset: 0;
   z-index: 1;
   gap: 0.55rem;
-  color: #ecfeff;
+  color: var(--site-text-high);
   background: rgba(6, 15, 20, 0.52);
   backdrop-filter: blur(2px);
   opacity: 0;
@@ -1154,11 +1380,11 @@ onUnmounted(() => {
 }
 
 .tool-shot-overlay__label {
-  font-size: 0.72rem;
+  font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(236, 254, 255, 0.92);
+  color: rgba(255, 255, 255, 0.96);
 }
 
 .tool-shot-overlay .q-icon {
@@ -1192,7 +1418,7 @@ onUnmounted(() => {
 .tool-shot-card__index {
   display: block;
   margin-bottom: 0.35rem;
-  font-size: 0.7rem;
+  font-size: 15px;
   font-weight: 700;
   letter-spacing: 0.14em;
   color: rgba(45, 212, 191, 0.72);
@@ -1209,7 +1435,7 @@ onUnmounted(() => {
 
 .tool-shot-card__caption {
   margin: 0;
-  font-size: 0.875rem;
+  font-size: 17px;
   line-height: 1.55;
   color: var(--pp-muted);
 }
@@ -1225,7 +1451,7 @@ onUnmounted(() => {
   max-width: none;
   max-height: calc(100vh - 32px);
   overflow: hidden;
-  color: #cffafe;
+  color: var(--site-text-body);
   border: 1px solid rgba(94, 234, 212, 0.28);
   border-radius: 8px;
   background:
@@ -1249,7 +1475,7 @@ onUnmounted(() => {
   grid-column: 2;
   margin: 0;
   text-align: center;
-  color: #f0fdfa;
+  color: var(--site-text-heading);
   font-size: clamp(1.15rem, 2.4vw, 1.55rem);
   font-weight: 700;
   line-height: 1.25;
@@ -1289,8 +1515,7 @@ onUnmounted(() => {
 
 @media (prefers-reduced-motion: reduce) {
   .mega-title,
-  .hero-stack .tagline,
-  .hero-stack .hero-stagger-btn,
+  .hero-stack .hero-tagline-row,
   .reveal-on-scroll {
     transition-duration: 0.01ms !important;
     animation: none !important;
@@ -1344,7 +1569,7 @@ onUnmounted(() => {
   }
 
   .tool-preview-title {
-    font-size: clamp(1.05rem, 4.5vw, 1.35rem);
+    font-size: clamp(1.15rem, 4.5vw, 1.55rem);
   }
 }
 </style>

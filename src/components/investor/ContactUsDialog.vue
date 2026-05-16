@@ -190,7 +190,7 @@ async function sendContactMessage () {
 <style scoped>
 .contact-card {
   --cd-high: #ecfeff;
-  --cd-body: #cffafe;
+  --cd-body: var(--site-text-body);
   --cd-muted: #5eead4;
   --cd-soft: #2dd4bf;
   --cd-field-bg: rgba(19, 48, 49, 0.55);
@@ -308,7 +308,7 @@ async function sendContactMessage () {
 .cd-btn-submit {
   padding: 8px 18px;
   font-weight: 600;
-  color: #ecfeff !important;
+  color: var(--site-text-high) !important;
   background: linear-gradient(135deg, #0bc3ab 0%, #0375cc 48%, #0660a8 100%) !important;
   border: 1px solid rgba(255, 255, 255, 0.22);
   box-shadow:
@@ -318,11 +318,11 @@ async function sendContactMessage () {
 }
 
 .cd-btn-submit :deep(.q-btn__wrapper) {
-  color: #ecfeff !important;
+  color: var(--site-text-high) !important;
 }
 
 .cd-btn-submit :deep(.q-icon) {
-  color: #cffafe !important;
+  color: var(--site-text-body) !important;
 }
 
 .cd-btn-submit:hover :deep(.q-focus-helper) {

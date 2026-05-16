@@ -208,13 +208,13 @@ function isActive (path) {
 .brand-text {
   font-size: 1.35rem;
   letter-spacing: 0.04em;
-  background: linear-gradient(90deg, #ccfbf1 0%, #5eead4 40%, #38bdf8 100%);
+  background: linear-gradient(90deg, #ffffff 0%, #d8faf4 40%, #7dd3fc 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 .nav-btn {
-  color: rgba(204, 251, 241, 0.88);
+  color: rgba(255, 255, 255, 0.9);
   font-weight: 600;
   padding: 6px 14px;
   transition:
@@ -232,7 +232,7 @@ function isActive (path) {
   box-shadow: 0 8px 28px rgba(3, 117, 204, 0.28);
 }
 .mail-icon-btn {
-  color: #a5f3fc;
+  color: var(--site-text-accent-soft);
 }
 
 :global(.ai-features-menu) {
@@ -251,7 +251,7 @@ function isActive (path) {
 
 :global(.ai-feature-item) {
   border-radius: 6px;
-  color: rgba(204, 251, 241, 0.9);
+  color: rgba(255, 255, 255, 0.92);
 }
 
 :global(.ai-feature-item:hover),
@@ -260,7 +260,7 @@ function isActive (path) {
 }
 
 :global(.ai-feature-item .q-item__label--caption) {
-  color: rgba(94, 234, 212, 0.72);
+  color: rgba(255, 255, 255, 0.72);
 }
 
 @media (max-width: 599px) {
@@ -270,7 +270,7 @@ function isActive (path) {
     max-width: 58vw;
   }
   .nav-btn {
-    font-size: 0.78rem;
+    font-size: 16px;
     padding: 4px 8px;
   }
   .brand-text {

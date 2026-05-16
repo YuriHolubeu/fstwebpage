@@ -38,7 +38,7 @@ const contact = useContactUiStore()
 
 .contact-inline-btn--solid {
   background: linear-gradient(135deg, #0bc3ab 0%, #0375cc 48%, #0660a8 100%) !important;
-  color: #ecfeff !important;
+  color: var(--site-text-high) !important;
   border: 1px solid rgba(255, 255, 255, 0.22);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.2),
@@ -47,11 +47,11 @@ const contact = useContactUiStore()
 }
 
 .contact-inline-btn--solid :deep(.q-btn__wrapper) {
-  color: #ecfeff !important;
+  color: var(--site-text-high) !important;
 }
 
 .contact-inline-btn--solid :deep(.q-icon) {
-  color: #cffafe !important;
+  color: var(--site-text-body) !important;
   opacity: 0.95;
 }
 
@@ -60,14 +60,14 @@ const contact = useContactUiStore()
 }
 
 .contact-inline-btn.q-btn--outline {
-  color: #cffafe !important;
+  color: var(--site-text-body) !important;
   border-color: rgba(11, 195, 171, 0.55) !important;
   background: rgba(3, 117, 204, 0.14) !important;
 }
 
 .contact-inline-btn.q-btn--outline :deep(.q-btn__wrapper),
 .contact-inline-btn.q-btn--outline :deep(.q-icon) {
-  color: #cffafe !important;
+  color: var(--site-text-body) !important;
 }
 
 .contact-inline-btn.q-btn--flat {
@@ -75,6 +75,6 @@ const contact = useContactUiStore()
 }
 
 .contact-inline-btn.q-btn--flat :deep(.q-icon) {
-  color: #5eead4 !important;
+  color: var(--site-text-muted) !important;
 }
 </style>

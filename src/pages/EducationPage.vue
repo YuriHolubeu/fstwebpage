@@ -94,11 +94,11 @@ const advantages = [
   max-width: 1100px;
   margin-left: auto;
   margin-right: auto;
-  color: #cffafe;
+  color: var(--site-text-body);
 }
 
 .edu-overline {
-  color: #5eead4;
+  color: var(--site-text-muted);
   letter-spacing: 0.12em;
 }
 
@@ -142,22 +142,22 @@ const advantages = [
   height: 3rem;
   margin-right: 1rem;
   border-radius: 12px;
-  color: #7dd3fc;
+  color: var(--site-text-accent);
   background: rgba(3, 117, 204, 0.2);
   border: 1px solid rgba(94, 234, 212, 0.2);
 }
 
 .advantage-card__title {
   margin: 0 0 0.35rem;
-  color: #f0fdfa;
+  color: var(--site-text-heading);
   font-size: 1.05rem;
   font-weight: 700;
   line-height: 1.3;
 }
 
 .advantage-card__text {
-  color: #bae6fd;
-  font-size: 0.92rem;
+  color: var(--site-text-accent-soft);
+  font-size: 18px;
   line-height: 1.55;
 }
 
@@ -169,7 +169,7 @@ const advantages = [
   }
 
   .advantage-card__title {
-    font-size: 0.98rem;
+    font-size: 19px;
   }
 }
 </style>

@@ -1,7 +1,7 @@
 /**
  * Copy Basic Physics preview PDFs into public/ and regenerate src/constants/basicPhysicsPreviews.js
  */
-import { copyFileSync, mkdirSync, readdirSync, statSync, writeFileSync } from 'node:fs'
+import { copyFileSync, mkdirSync, readdirSync, statSync, unlinkSync, writeFileSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -9,6 +9,15 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const sourceDir = join(root, 'basic physics')
 const destDir = join(root, 'public', 'previews', 'basic-physics')
 const manifestPath = join(root, 'src', 'constants', 'basicPhysicsPreviews.js')
+
+/** PDFs synced to the site (excluded from "Examples of research environments"). */
+const EXCLUDED_SLUGS = new Set([
+  'continuum-mechanics.pdf',
+  'electrodynamics.pdf',
+  'field-theory.pdf',
+  'gravity.pdf',
+  'kinetics.pdf'
+])
 
 function titleFromFilename (name) {
   const base = name.replace(/^_/, '').replace(/\.pdf$/i, '')
@@ -41,6 +50,9 @@ const previews = readdirSync(sourceDir, { withFileTypes: true })
   .map((entry) => {
     const sourcePath = join(sourceDir, entry.name)
     const slug = slugFromFilename(entry.name)
+    if (EXCLUDED_SLUGS.has(slug)) {
+      return null
+    }
     const destPath = join(destDir, slug)
     copyFileSync(sourcePath, destPath)
     const { size } = statSync(sourcePath)
@@ -51,7 +63,15 @@ const previews = readdirSync(sourceDir, { withFileTypes: true })
       sizeLabel: formatFileSize(size)
     }
   })
+  .filter(Boolean)
   .sort((a, b) => a.title.localeCompare(b.title))
+
+const syncedFiles = new Set(previews.map((p) => p.file))
+for (const name of readdirSync(destDir)) {
+  if (name.toLowerCase().endsWith('.pdf') && !syncedFiles.has(name)) {
+    unlinkSync(join(destDir, name))
+  }
+}
 
 const items = previews
   .map(

@@ -165,7 +165,7 @@ const knowledgeTypes = [
   max-width: 1120px;
   margin-left: auto;
   margin-right: auto;
-  color: #cffafe;
+  color: var(--site-text-body);
 }
 
 .hero-grid,
@@ -177,13 +177,13 @@ const knowledgeTypes = [
 }
 
 .page-overline {
-  color: #5eead4;
+  color: var(--site-text-muted);
   letter-spacing: 0.12em;
 }
 
 .hero-title {
   max-width: 44rem;
-  color: #f0fdfa;
+  color: var(--site-text-heading);
   font-size: clamp(2rem, 5vw, 4rem);
   font-weight: 850;
   line-height: 1.04;
@@ -192,8 +192,8 @@ const knowledgeTypes = [
 
 .hero-lead {
   max-width: 42rem;
-  color: #cffafe;
-  font-size: clamp(1rem, 2vw, 1.15rem);
+  color: var(--site-text-body);
+  font-size: clamp(19px, 2vw, 21px);
   line-height: 1.62;
 }
 
@@ -215,13 +215,13 @@ const knowledgeTypes = [
   align-items: center;
   gap: 0.55rem;
   padding: 0.75rem 0.9rem;
-  color: #ecfeff;
+  color: var(--site-text-high);
   font-weight: 800;
 }
 
 .memory-line .q-icon {
-  color: #5eead4;
-  font-size: 1.35rem;
+  color: var(--site-text-muted);
+  font-size: 24px;
 }
 
 .note-mock {
@@ -253,8 +253,8 @@ const knowledgeTypes = [
 
 .mock-path {
   margin-left: 0.3rem;
-  color: rgba(236, 254, 255, 0.74);
-  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 16px;
 }
 
 .note-card {
@@ -266,8 +266,8 @@ const knowledgeTypes = [
 }
 
 .note-type {
-  color: #5eead4;
-  font-size: 0.72rem;
+  color: var(--site-text-muted);
+  font-size: 15px;
   font-weight: 850;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -278,8 +278,8 @@ const knowledgeTypes = [
 .panel-head h2,
 .investor-line h2 {
   margin: 0.28rem 0 0;
-  color: #f0fdfa;
-  font-size: 1.08rem;
+  color: var(--site-text-heading);
+  font-size: 20px;
   font-weight: 850;
   line-height: 1.18;
   letter-spacing: 0;
@@ -292,7 +292,7 @@ const knowledgeTypes = [
   margin: 0.42rem 0 0;
   color: rgba(207, 250, 254, 0.76);
   line-height: 1.42;
-  font-size: 0.88rem;
+  font-size: 17px;
 }
 
 .attachment-grid {
@@ -305,14 +305,14 @@ const knowledgeTypes = [
 }
 
 .attachment-grid span {
-  color: #5eead4;
-  font-size: 0.78rem;
+  color: var(--site-text-muted);
+  font-size: 16px;
   font-weight: 800;
 }
 
 .attachment-grid strong {
-  color: #ecfeff;
-  font-size: 0.82rem;
+  color: var(--site-text-high);
+  font-size: 16px;
   line-height: 1.3;
 }
 
@@ -364,8 +364,8 @@ const knowledgeTypes = [
   align-items: center;
   justify-content: center;
   border-radius: 8px;
-  color: #ecfeff;
-  font-size: 1.25rem;
+  color: var(--site-text-high);
+  font-size: 23px;
   background: linear-gradient(135deg, rgba(11, 195, 171, 0.95), rgba(3, 117, 204, 0.92));
 }
 
@@ -403,14 +403,14 @@ const knowledgeTypes = [
   padding: 0.68rem;
   border: 1px solid rgba(94, 234, 212, 0.14);
   border-radius: 8px;
-  color: rgba(236, 254, 255, 0.86);
+  color: rgba(255, 255, 255, 0.94);
   font-weight: 800;
   background: rgba(5, 20, 28, 0.34);
 }
 
 .knowledge-type .q-icon {
-  color: #5eead4;
-  font-size: 1.2rem;
+  color: var(--site-text-muted);
+  font-size: 22px;
 }
 
 .json-card {

@@ -108,7 +108,7 @@ const roadmap = [
 }
 
 .roadmap-timeline :deep(.q-timeline__subtitle) {
-  font-size: 1rem;
+  font-size: 19px;
   opacity: 0.95;
 }
 

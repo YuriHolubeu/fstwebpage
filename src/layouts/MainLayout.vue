@@ -49,15 +49,20 @@ const { dialogOpen } = storeToRefs(contact)
   isolation: isolate;
   background: radial-gradient(
       120% 55% at 50% -8%,
-      rgba(11, 195, 171, 0.18) 0%,
+      rgba(11, 195, 171, 0.1) 0%,
       transparent 50%
     ),
     radial-gradient(
       90% 45% at 100% 20%,
-      rgba(3, 117, 204, 0.14) 0%,
+      rgba(3, 117, 204, 0.08) 0%,
       transparent 45%
     ),
-    linear-gradient(180deg, #1a2c33 0%, #15282d 38%, #133031 100%);
+    linear-gradient(
+      180deg,
+      var(--site-bg-base) 0%,
+      var(--site-bg-mid) 38%,
+      var(--site-bg-deep) 100%
+    );
   min-height: 100vh;
 }
 
@@ -183,10 +188,10 @@ const { dialogOpen } = storeToRefs(contact)
   gap: 12px;
 }
 .fab-contact-label {
-  font-size: 0.95rem;
+  font-size: 18px;
   font-weight: 600;
   letter-spacing: 0.02em;
-  color: #ccfbf1;
+  color: var(--site-text-body);
   text-shadow:
     0 0 12px rgba(10, 24, 28, 0.9),
     0 1px 2px rgba(19, 48, 49, 0.95);

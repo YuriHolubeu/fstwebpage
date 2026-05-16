@@ -29,7 +29,7 @@
       rgba(11, 195, 171, 0.28) 0%,
       transparent 55%
     ),
-    linear-gradient(180deg, #1a2c33 0%, #133031 100%);
+    linear-gradient(180deg, var(--site-bg-base) 0%, var(--site-bg-deep) 100%);
 }
 .code {
   font-size: clamp(4rem, 22vw, 12rem);

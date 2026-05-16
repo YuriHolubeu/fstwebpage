@@ -155,7 +155,7 @@ const flow = [
   max-width: 1120px;
   margin-left: auto;
   margin-right: auto;
-  color: #cffafe;
+  color: var(--site-text-body);
 }
 
 .hero-grid {
@@ -166,13 +166,13 @@ const flow = [
 }
 
 .page-overline {
-  color: #5eead4;
+  color: var(--site-text-muted);
   letter-spacing: 0.12em;
 }
 
 .hero-title {
   max-width: 44rem;
-  color: #f0fdfa;
+  color: var(--site-text-heading);
   font-size: clamp(2rem, 5vw, 4rem);
   font-weight: 850;
   line-height: 1.04;
@@ -181,8 +181,8 @@ const flow = [
 
 .hero-lead {
   max-width: 42rem;
-  color: #cffafe;
-  font-size: clamp(1rem, 2vw, 1.15rem);
+  color: var(--site-text-body);
+  font-size: clamp(19px, 2vw, 21px);
   line-height: 1.62;
 }
 
@@ -209,14 +209,14 @@ const flow = [
 }
 
 .difference-card .q-icon {
-  color: #5eead4;
-  font-size: 1.35rem;
+  color: var(--site-text-muted);
+  font-size: 24px;
 }
 
 .difference-card strong {
   display: block;
   margin-top: 0.42rem;
-  color: #f0fdfa;
+  color: var(--site-text-heading);
   line-height: 1.18;
 }
 
@@ -224,7 +224,7 @@ const flow = [
   display: block;
   margin-top: 0.28rem;
   color: rgba(207, 250, 254, 0.74);
-  font-size: 0.82rem;
+  font-size: 16px;
   line-height: 1.35;
 }
 
@@ -257,8 +257,8 @@ const flow = [
 
 .mock-path {
   margin-left: 0.3rem;
-  color: rgba(236, 254, 255, 0.74);
-  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 16px;
 }
 
 .source-anchor,
@@ -277,8 +277,8 @@ const flow = [
 
 .source-anchor span {
   display: block;
-  color: #5eead4;
-  font-size: 0.72rem;
+  color: var(--site-text-muted);
+  font-size: 15px;
   font-weight: 850;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -287,7 +287,7 @@ const flow = [
 .source-anchor strong {
   display: block;
   margin-top: 0.25rem;
-  color: #f0fdfa;
+  color: var(--site-text-heading);
   line-height: 1.2;
 }
 
@@ -316,14 +316,14 @@ const flow = [
 .tree-root .q-icon,
 .tree-branch .q-icon,
 .follow-up .q-icon {
-  color: #5eead4;
-  font-size: 1.3rem;
+  color: var(--site-text-muted);
+  font-size: 23px;
 }
 
 .tree-root strong,
 .tree-branch strong {
   display: block;
-  color: #f0fdfa;
+  color: var(--site-text-heading);
   line-height: 1.2;
 }
 
@@ -333,7 +333,7 @@ const flow = [
   display: block;
   margin-top: 0.22rem;
   color: rgba(207, 250, 254, 0.75);
-  font-size: 0.82rem;
+  font-size: 16px;
   line-height: 1.36;
 }
 
@@ -392,16 +392,16 @@ const flow = [
   align-items: center;
   justify-content: center;
   border-radius: 8px;
-  color: #ecfeff;
-  font-size: 1.25rem;
+  color: var(--site-text-high);
+  font-size: 23px;
   background: linear-gradient(135deg, rgba(11, 195, 171, 0.95), rgba(3, 117, 204, 0.92));
 }
 
 .map-node h2,
 .investor-line h2 {
   margin: 0;
-  color: #f0fdfa;
-  font-size: 1.08rem;
+  color: var(--site-text-heading);
+  font-size: 20px;
   font-weight: 850;
   line-height: 1.18;
   letter-spacing: 0;
@@ -412,7 +412,7 @@ const flow = [
   margin: 0.34rem 0 0;
   color: rgba(207, 250, 254, 0.76);
   line-height: 1.42;
-  font-size: 0.88rem;
+  font-size: 17px;
 }
 
 .investor-line {

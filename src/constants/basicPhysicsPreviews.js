@@ -11,36 +11,6 @@ export const basicPhysicsPreviews = [
     sizeLabel: "61.6 MB"
   },
   {
-    title: "Continuum Mechanics",
-    file: "continuum-mechanics.pdf",
-    sizeBytes: 11926713,
-    sizeLabel: "11.4 MB"
-  },
-  {
-    title: "Electrodynamics",
-    file: "electrodynamics.pdf",
-    sizeBytes: 30548976,
-    sizeLabel: "29.1 MB"
-  },
-  {
-    title: "Field Theory",
-    file: "field-theory.pdf",
-    sizeBytes: 15291718,
-    sizeLabel: "14.6 MB"
-  },
-  {
-    title: "Gravity",
-    file: "gravity.pdf",
-    sizeBytes: 34528264,
-    sizeLabel: "32.9 MB"
-  },
-  {
-    title: "Kinetics",
-    file: "kinetics.pdf",
-    sizeBytes: 14234399,
-    sizeLabel: "13.6 MB"
-  },
-  {
     title: "Mechanics",
     file: "mechanics.pdf",
     sizeBytes: 44596836,

@@ -38,19 +38,19 @@ const contactMailto = `mailto:${SITE.contactEmail}`
 }
 
 .get-in-touch__overline {
-  color: #2dd4bf;
+  color: var(--site-text-soft);
   letter-spacing: 0.12em;
 }
 
 .get-in-touch__heading h2 {
-  color: #f0fdfa;
+  color: var(--site-text-heading);
 }
 
 .get-in-touch__intro {
   max-width: 520px;
   margin-left: auto;
   margin-right: auto;
-  color: #5eead4;
+  color: var(--site-text-muted);
   line-height: 1.5;
 }
 
@@ -63,18 +63,18 @@ const contactMailto = `mailto:${SITE.contactEmail}`
 }
 
 .get-in-touch__icon {
-  color: #2dd4bf;
+  color: var(--site-text-soft);
 }
 
 .get-in-touch__email {
-  color: #7dd3fc;
+  color: var(--site-text-accent);
   text-decoration: none;
   word-break: break-word;
   transition: color 0.2s ease;
 }
 
 .get-in-touch__email:hover {
-  color: #bae6fd;
+  color: var(--site-text-accent-soft);
   text-decoration: underline;
 }
 </style>
