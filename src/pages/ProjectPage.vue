@@ -258,17 +258,24 @@
       </div>
     </section>
 
-    <q-dialog v-model="toolPreviewOpen" transition-show="scale" transition-hide="fade">
+    <q-dialog
+      v-model="toolPreviewOpen"
+      no-refocus
+      transition-show="scale"
+      transition-hide="fade"
+      content-class="tool-preview-dialog"
+      @before-hide="onToolPreviewBeforeHide"
+      @hide="onToolPreviewAfterHide"
+    >
       <q-card v-if="selectedTool" class="tool-preview-card">
-        <div class="tool-preview-bar row items-center justify-between no-wrap">
-          <div class="tool-preview-copy">
-            <div class="text-overline pp-overline q-mb-xs">Screenshot preview</div>
-            <h3 class="tool-preview-title q-mb-xs">{{ selectedTool.title }}</h3>
-            <p class="tool-preview-caption q-mb-none">{{ selectedTool.caption }}</p>
-          </div>
+        <div class="tool-preview-bar">
+          <h3 class="tool-preview-title q-mb-none">{{ selectedTool.title }}</h3>
           <q-btn
+            class="tool-preview-close"
+            dense
             round
             flat
+            size="sm"
             icon="close"
             text-color="white"
             aria-label="Close screenshot preview"
@@ -306,6 +313,8 @@ const faqVisible = ref(false)
 const contactsVisible = ref(false)
 const selectedTool = ref(null)
 const toolPreviewOpen = ref(false)
+let toolPreviewScrollY = 0
+let toolPreviewScrollBehavior = ''
 const screenshotsEl = ref(null)
 const keyToolsEl = ref(null)
 const previewsEl = ref(null)
@@ -438,8 +447,29 @@ function keyToolsDelay (index) {
 }
 
 function openToolPreview (item) {
+  toolPreviewScrollY = window.scrollY
   selectedTool.value = item
   toolPreviewOpen.value = true
+}
+
+function restoreToolPreviewScroll () {
+  window.scrollTo({ left: 0, top: toolPreviewScrollY, behavior: 'instant' })
+}
+
+function onToolPreviewBeforeHide () {
+  const html = document.documentElement
+  toolPreviewScrollBehavior = html.style.scrollBehavior
+  html.style.scrollBehavior = 'auto'
+  restoreToolPreviewScroll()
+}
+
+function onToolPreviewAfterHide () {
+  restoreToolPreviewScroll()
+  requestAnimationFrame(() => {
+    restoreToolPreviewScroll()
+    document.documentElement.style.scrollBehavior = toolPreviewScrollBehavior
+    toolPreviewScrollBehavior = ''
+  })
 }
 
 onMounted(() => {
@@ -1090,7 +1120,13 @@ onUnmounted(() => {
   background: linear-gradient(to top, rgba(19, 48, 49, 0.9), transparent);
 }
 
+:global(.tool-preview-dialog) {
+  max-height: 100vh;
+}
+
 .tool-preview-card {
+  display: flex;
+  flex-direction: column;
   width: min(1180px, calc(100vw - 32px));
   max-width: none;
   max-height: calc(100vh - 32px);
@@ -1107,32 +1143,37 @@ onUnmounted(() => {
 }
 
 .tool-preview-bar {
-  gap: 1rem;
-  padding: 1rem 1.1rem;
+  flex-shrink: 0;
+  display: grid;
+  grid-template-columns: 2.5rem 1fr 2.5rem;
+  align-items: center;
+  padding: 0.65rem 0.5rem;
   border-bottom: 1px solid rgba(94, 234, 212, 0.16);
 }
 
-.tool-preview-copy {
-  min-width: 0;
-}
-
 .tool-preview-title {
+  grid-column: 2;
+  margin: 0;
+  text-align: center;
   color: #f0fdfa;
-  font-size: clamp(1.05rem, 2vw, 1.45rem);
-  font-weight: 800;
-  line-height: 1.2;
+  font-size: clamp(1.15rem, 2.4vw, 1.55rem);
+  font-weight: 700;
+  line-height: 1.25;
 }
 
-.tool-preview-caption {
-  color: #cffafe;
-  font-size: 0.95rem;
-  line-height: 1.45;
+.tool-preview-close {
+  grid-column: 3;
+  justify-self: end;
 }
 
 .tool-preview-image-wrap {
-  max-height: calc(100vh - 9.5rem);
-  padding: 0.55rem;
-  overflow: auto;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem;
+  overflow: hidden;
   background:
     linear-gradient(rgba(204, 251, 241, 0.035) 1px, transparent 1px),
     linear-gradient(90deg, rgba(204, 251, 241, 0.035) 1px, transparent 1px),
@@ -1142,8 +1183,11 @@ onUnmounted(() => {
 
 .tool-preview-image {
   display: block;
-  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
   height: auto;
+  object-fit: contain;
   border-radius: 6px;
   border: 1px solid rgba(204, 251, 241, 0.12);
   box-shadow: 0 18px 58px rgba(0, 0, 0, 0.38);
@@ -1195,16 +1239,11 @@ onUnmounted(() => {
   }
 
   .tool-preview-bar {
-    align-items: flex-start;
-    padding: 0.85rem;
+    padding: 0.55rem 0.4rem;
   }
 
-  .tool-preview-caption {
-    font-size: 0.86rem;
-  }
-
-  .tool-preview-image-wrap {
-    max-height: calc(100vh - 8.5rem);
+  .tool-preview-title {
+    font-size: clamp(1.05rem, 4.5vw, 1.35rem);
   }
 }
 </style>
