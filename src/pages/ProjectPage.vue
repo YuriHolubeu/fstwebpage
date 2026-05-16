@@ -7,7 +7,7 @@
       <div class="hero-headline-column">
         <div class="hero-tagline-row row q-col-gutter-lg items-center q-mb-lg">
           <div class="col-12 col-md-6 hero-tagline-copy">
-            <h1 class="mega-title q-mb-md">
+            <h1 class="mega-title">
               {{ SITE.heroHeadline }}
             </h1>
             <p class="tagline pp-body text-body1 q-ma-none">
@@ -32,6 +32,15 @@
       </div>
     </section>
 
+
+
+
+
+
+
+
+
+
     <section
       ref="screenshotsEl"
       class="screenshot-showcase q-pt-xl q-mt-lg"
@@ -45,7 +54,7 @@
           Complete professional research environment
         </h2>
         <p class="workspace-section-lead workspace-feature__text text-caption pp-muted q-mt-none q-mb-md">
-          We develop tools to make theoretical research faster and more efficient.
+          Our application has tools that make theoretical research faster and more efficient. We promise:
         </p>
 
         <ul class="workspace-features q-pl-none q-ma-none">
@@ -69,19 +78,31 @@
       </div>
     </section>
 
+
+
+
+
+
+
+
+
+
     <section
       ref="applicationEl"
       class="screenshot-showcase q-pt-xl q-mt-lg"
     >
       <div
-        class="row q-col-gutter-xl items-center workspace-row reveal-on-scroll"
+        class="row q-col-gutter-lg items-start application-section-row workspace-row reveal-on-scroll"
         :class="{ 'is-visible': applicationVisible }"
       >
-        <div class="col-12 workspace-copy">
+        <div class="col-12 col-md-6 workspace-copy application-section-copy">
           <h2 class="screenshot-title text-h4 text-weight-bold pp-heading q-mb-sm">
             The application
           </h2>
 
+          <p class="workspace-section-lead workspace-feature__text text-caption pp-muted q-mt-none q-mb-md">
+            A special structure of the application is used to make such an environment possible. This format plays a key role in AI tools, as explained below.
+          </p>
           <ul class="workspace-features q-pl-none q-ma-none">
             <li
               v-for="feature in applicationFeatures"
@@ -100,8 +121,37 @@
             </li>
           </ul>
         </div>
+        <div class="col-12 col-md-6 application-screenshot-col">
+          <button
+            type="button"
+            class="application-screenshot-trigger"
+            aria-label="Open full-size application screenshot"
+            @click="openApplicationPreview"
+          >
+            <figure class="application-screenshot-figure">
+              <img
+                :src="applicationScreenshot.src"
+                alt="Focus Structure Tool workspace with structured outline and linked document views"
+                class="application-screenshot-img"
+                :width="applicationScreenshot.width"
+                :height="applicationScreenshot.height"
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+          </button>
+        </div>
       </div>
     </section>
+
+
+
+
+
+
+
+
+
 
     <section
       ref="keyToolsEl"
@@ -137,12 +187,6 @@
               :aria-label="`Open ${item.title} screenshot`"
               @click="openToolPreview(item)"
             >
-                <div class="tool-shot-card__chrome" aria-hidden="true">
-                  <span class="tool-shot-card__dots">
-                    <span /><span /><span />
-                  </span>
-                  <span class="tool-shot-card__chrome-title">Focus Structure Tool</span>
-                </div>
                 <div class="tool-shot-card__viewport">
                   <q-img
                     :src="item.src"
@@ -152,30 +196,64 @@
                     loading="lazy"
                   />
                   <div class="tool-shot-overlay column items-center justify-center">
-                    <span class="tool-shot-overlay__label">View screenshot</span>
                     <q-icon name="open_in_full" size="20px" />
                   </div>
                 </div>
             </button>
             </div>
             <div class="tool-shot-card__body">
-              <span class="tool-shot-card__index" aria-hidden="true">
-                {{ String(i + 1).padStart(2, '0') }}
-              </span>
               <h3 class="tool-shot-card__title">{{ item.title }}</h3>
-              <p class="tool-shot-card__caption">{{ item.caption }}</p>
             </div>
           </article>
         </div>
       </div>
     </section>
 
+
+
+    <section
+      ref="aiToolsEl"
+      class="screenshot-showcase q-pt-xl q-mt-lg"
+    >
+      <div
+        class="row q-col-gutter-xl items-center workspace-row reveal-on-scroll"
+        :class="{ 'is-visible': aiToolsVisible }"
+      >
+        <div class="col-12 workspace-copy">
+          <h2 class="screenshot-title text-h4 text-weight-bold pp-heading q-mb-sm">
+            AI tools
+          </h2>
+
+          <ul class="workspace-features q-pl-none q-ma-none">
+            <li
+              v-for="feature in aiToolsFeatures"
+              :key="feature.title"
+              class="workspace-feature row no-wrap items-start"
+            >
+              <q-icon :name="feature.icon" size="22px" class="workspace-feature__icon q-mr-md" />
+              <div>
+                <div class="workspace-feature__title text-subtitle2 text-weight-medium pp-title q-mb-xs">
+                  {{ feature.title }}
+                </div>
+                <p class="workspace-feature__text text-caption pp-muted q-mb-none">
+                  {{ feature.description }}
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+
+
+
+    
     <section ref="previewsEl" class="results-preview-block q-pt-xl q-mt-lg column items-center">
       <div
         class="gallery-heading text-center q-mb-lg reveal-on-scroll full-width"
         :class="{ 'is-visible': previewsVisible }"
       >
-        <div class="text-overline pp-overline q-mb-xs">Sample output</div>
         <h2 class="text-h5 text-weight-bold pp-heading q-mb-sm">
           Examples of research environments 
         </h2>
@@ -217,7 +295,6 @@
         class="gallery-heading text-center q-mb-lg reveal-on-scroll full-width"
         :class="{ 'is-visible': teamVisible }"
       >
-        <div class="text-overline pp-overline q-mb-xs">Team</div>
         <h2 class="text-h5 text-weight-bold pp-heading q-mb-none">
           People behind the product
         </h2>
@@ -242,7 +319,7 @@
               >
               <template v-else>{{ member.initials }}</template>
             </q-avatar>
-            <div class="team-member__name text-h6 text-weight-medium">{{ member.name }}</div>
+            <div class="team-member__name text-weight-medium">{{ member.name }}</div>
             <div class="team-member__role text-caption q-mb-sm">{{ member.role }}</div>
             <p class="team-member__bio text-caption q-mb-none">{{ member.bio }}</p>
           </div>
@@ -255,7 +332,6 @@
         class="gallery-heading text-center q-mb-lg reveal-on-scroll full-width"
         :class="{ 'is-visible': faqVisible }"
       >
-        <div class="text-overline pp-overline q-mb-xs">Support</div>
         <h2 class="text-h5 text-weight-bold pp-heading q-mb-none">
           Frequently asked questions
         </h2>
@@ -307,7 +383,6 @@
         class="gallery-heading text-center q-mb-lg reveal-on-scroll full-width"
         :class="{ 'is-visible': contactsVisible }"
       >
-        <div class="text-overline pp-overline q-mb-xs">Contact</div>
         <h2 class="text-h5 text-weight-bold pp-heading q-mb-sm">
           Get in touch
         </h2>
@@ -339,7 +414,12 @@
       @before-hide="onToolPreviewBeforeHide"
       @hide="onToolPreviewAfterHide"
     >
-      <q-card v-if="selectedTool" class="tool-preview-card">
+      <q-card
+        v-if="selectedTool"
+        class="tool-preview-card"
+        :class="{ 'tool-preview-card--native': selectedTool.nativeWidth }"
+        :style="nativePreviewStyle(selectedTool)"
+      >
         <div class="tool-preview-bar">
           <h3 class="tool-preview-title q-mb-none">{{ selectedTool.title }}</h3>
           <q-btn
@@ -355,11 +435,17 @@
           />
         </div>
 
-        <div class="tool-preview-image-wrap">
+        <div
+          class="tool-preview-image-wrap"
+          :class="{ 'tool-preview-image-wrap--native': selectedTool.nativeWidth }"
+        >
           <img
             :src="selectedTool.src"
-            :alt="selectedTool.caption"
+            :alt="selectedTool.title"
             class="tool-preview-image"
+            :class="{ 'tool-preview-image--native': selectedTool.nativeWidth }"
+            :width="selectedTool.nativeWidth"
+            :height="selectedTool.nativeHeight"
           />
         </div>
       </q-card>
@@ -377,9 +463,35 @@ import {
   basicPhysicsPreviews
 } from 'src/constants/basicPhysicsPreviews'
 
+const applicationScreenshot = {
+  title: 'Focus Structure Tool',
+  src: `${import.meta.env.BASE_URL}images/application-workspace.jpg`,
+  width: 1917,
+  height: 1132
+}
+
+const applicationScreenshotPreview = {
+  title: applicationScreenshot.title,
+  src: applicationScreenshot.src,
+  nativeWidth: applicationScreenshot.width,
+  nativeHeight: applicationScreenshot.height
+}
+
+function nativePreviewStyle (item) {
+  if (!item?.nativeWidth || !item?.nativeHeight) {
+    return undefined
+  }
+
+  return {
+    '--preview-native-width': `${item.nativeWidth}px`,
+    '--preview-native-height': `${item.nativeHeight}px`
+  }
+}
+
 const heroEntered = ref(false)
 const screenshotsVisible = ref(false)
 const applicationVisible = ref(false)
+const aiToolsVisible = ref(false)
 const keyToolsVisible = ref(false)
 const previewsVisible = ref(false)
 const teamVisible = ref(false)
@@ -392,6 +504,7 @@ let toolPreviewScrollY = 0
 let toolPreviewScrollBehavior = ''
 const screenshotsEl = ref(null)
 const applicationEl = ref(null)
+const aiToolsEl = ref(null)
 const keyToolsEl = ref(null)
 const previewsEl = ref(null)
 const teamEl = ref(null)
@@ -416,78 +529,99 @@ const team = [
     {
     initials: 'JP',
     name: 'Jevgenij Posashkov',
-    role: 'Co-founder',
+    role: 'Leader of AI developement',
     photo: '/team/jevgenij-posashkov.png',
-    bio: 'Master of Data Science'
+    bio: 'Master of Data Science '
   },
   {
     initials: 'ER',
     name: 'Egor Riter',
-    role: 'Co-founder',
+    role: 'Main Software Engineer',
     photo: '/team/egor-riter.png',
-    bio: 'Software Engineer'
+    bio: 'Experienced backend and frontend specialist'
   }
 ]
 
 const workspaceFeatures = [
   {
     icon: 'library_books',
-    title: 'Enhances focus on the key information',
-    description: 'Hotkeys for instant extracting key information from books and articles and creation of summary.'
-  },  
-  {
-    icon: 'library_books',
-    title: 'One PDF file for one topic',
-    description: 'Instantly create a thousand of page PDF file that has all needed information in a structured way.'
-  },
-  {
-    icon: 'code',
-    title: 'Integrated LaTeX workflow',
-    description: 'Write and edit LaTeX alongside your outline without switching tools.'
+    title: 'Enhances focus on key information',
+    description: 'Focusing on a right topic is key in science. Our tools allows one to instantly extract key information from books and articles and to create notes with them without LaTeX struggles.'
   },
   {
     icon: 'account_tree',
-    title: 'Structured outline',
-    description: 'See sections, arguments, and dependencies as a connected research map.'
+    title: 'Fast access and modification of information',
+    description: 'Storing hundhundreds of articles in one project in a structured way allows one to find any information inside of them in seconds.'
   },
   {
     icon: 'compare',
-    title: 'Side-by-side reading',
-    description: 'Open sources next to notes for comparison, citation, and explanation.'
+    title: 'Deeper understanding with special AI tools',
+    description: 'The main problem with ChatGPT is that information quickly becomes disorganized and hard to access. Our application solves this and adds a visual environment for discovering connections between topics.'
   }
 ]
 
 const applicationFeatures = [
     {
     icon: 'library_books',
-    title: 'Enhances focus on the key information',
-    description: 'Hotkeys for instant extracting key information from books and articles and creation of summary.'
+    title: 'Format of advanced PDF file, which is accessed by special graphical tool',
+    description: 'Our tools can extract LaTeX code from books and articles in seconds and combine them into a single PDF. Access to its sections is accelerated through an improved structure panel.'
+  },     
+  {
+    icon: 'library_books',
+    title: 'Tools for focusing and managing the project',
+    description: 'The PDF begins with a part of key information used to understand all other important content and solving problems for practice. After, there is a part with goals, progress, open questions, and ways forward to help avoid getting lost in information.'
   },  
   {
-    icon: 'hub',
-    title: 'Structures information automatically',
+    icon: 'library_books',
+    title: 'Tools for a really fast text modification',
+    description: 'Hotkeys for typical commands, addition comments in the graphical environment, extraction key information, restructuring books.'
+  },  
+  {
+    icon: 'library_books',
+    title: 'Downloading all cited papers',
+    description: 'It is impossible to fully understand a scientific paper without reading most of its cited works. Our tool lets one download them all at once, saving hours of time when studying only one article.'
+  },
+  {
+    icon: 'code',
+    title: 'Integrated LaTeX workflow',
+    description: 'All tools for LaTeX editing are profided, and tools for a fast work are added. Our tool can be used as the best PC LaTeX editor.'
+  }
+]
+
+
+
+
+const aiToolsFeatures = [
+  {
+    icon: 'auto_awesome',
+    title: 'AI for finding extra connections between articles',
     description:
-      'Turn scattered readings into a connected map of concepts, claims, and dependencies.'
+      'Suppose, one has used our application for downloading 200 cited articles from 10 relevant papers. It would take some weeks to grasp main ideas of them to make sure that non if the relevant information would be missed. Our AI tool can analyse it and give proposals for relevant connections in minutes.'
+  },
+  
+  {
+    icon: 'hub',
+    title: 'AI derivation guidence',
+    description:
+      'Our application will provide not only answers to the questions, but will also highlight parts of a book in the project, which could be used by a reseracher to get this answer by themselves.'
+  },
+  {
+    icon: 'hub',
+    title: 'AI explanation tree',
+    description:
+      'Format of chat is unusable for constant work with information because all information is stored just vertically. Our graphical envaironment provides a natural tool for storing inforamtion in a graph form, making way more comfortable to use AI.'
   },
   {
     icon: 'psychology',
-    title: 'AI for deep analysis',
+    title: 'AI for supervising research',
     description:
-      'Use AI to summarize sources, compare arguments, and surface what matters in your project.'
-  },
-  {
-    icon: 'account_tree',
-    title: 'Research themes and outlines',
-    description:
-      'Organize hundreds of sections into meaningful themes and a navigable project outline.'
-  },
-  {
-    icon: 'picture_as_pdf',
-    title: 'Structured PDF output',
-    description:
-      'Export focused, reader-friendly PDF notes that stay compatible with standard PDF readers.'
+      'Currenlty, there are a lot of historical books how famous scientists worked, but since they are dead, there is no way to be supervised by them. We will provide a platform for developing AI agents of such scientists which will be guiding a researcher.'
   }
 ]
+
+
+
+
 
 const faqs = [
   {
@@ -520,25 +654,21 @@ const faqs = [
 const keyTools = [
   {
     title: 'Interactive knowledge maps',
-    caption: 'Large research projects become interactive knowledge maps.',
     src: '/screenshots/screen2.png',
     ratio: 16 / 10
   },
   {
     title: 'AI research themes',
-    caption: 'AI automatically organizes hundreds of sections into meaningful research themes.',
     src: '/screenshots/screen3.png',
     ratio: 16 / 10
   },
   {
     title: 'Reusable project knowledge',
-    caption: 'AI explanations, formulas and claims become reusable project knowledge.',
     src: '/screenshots/screen4.png',
     ratio: 16 / 10
   },
   {
     title: 'Side-by-side comparison',
-    caption: 'Connected fragments open side-by-side for comparison and explanation.',
     src: '/screenshots/screen5.png',
     ratio: 16 / 10
   }
@@ -547,6 +677,7 @@ const keyTools = [
 let keyToolsObserver
 let screenshotsObserver
 let applicationObserver
+let aiToolsObserver
 let previewsObserver
 let teamObserver
 let faqObserver
@@ -561,6 +692,10 @@ function openToolPreview (item) {
   toolPreviewScrollY = window.scrollY
   selectedTool.value = item
   toolPreviewOpen.value = true
+}
+
+function openApplicationPreview () {
+  openToolPreview(applicationScreenshotPreview)
 }
 
 function restoreToolPreviewScroll () {
@@ -614,6 +749,20 @@ onMounted(() => {
   )
   if (applicationEl.value) {
     applicationObserver.observe(applicationEl.value)
+  }
+
+  aiToolsObserver = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) {
+          aiToolsVisible.value = true
+        }
+      }
+    },
+    { threshold: 0.12, rootMargin: '0px 0px -32px 0px' }
+  )
+  if (aiToolsEl.value) {
+    aiToolsObserver.observe(aiToolsEl.value)
   }
 
   keyToolsObserver = new IntersectionObserver(
@@ -704,6 +853,7 @@ onMounted(() => {
 onUnmounted(() => {
   screenshotsObserver?.disconnect()
   applicationObserver?.disconnect()
+  aiToolsObserver?.disconnect()
   keyToolsObserver?.disconnect()
   previewsObserver?.disconnect()
   teamObserver?.disconnect()
@@ -840,6 +990,7 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  gap: 2rem;
 }
 
 .mega-title {
@@ -976,18 +1127,18 @@ onUnmounted(() => {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: min(640px, 92vw);
-  height: 220px;
+  width: min(1040px, 100%);
+  height: min(360px, 70%);
   transform: translate(-50%, -50%);
-  border-radius: 8px;
+  border-radius: 50%;
   background: radial-gradient(
-    60% 100% at 50% 0%,
-    rgba(11, 195, 171, 0.36) 0%,
-    rgba(3, 117, 204, 0.2) 42%,
-    transparent 72%
+    ellipse 85% 75% at 50% 50%,
+    rgba(11, 195, 171, 0.18) 10%,
+    rgba(3, 117, 204, 0.1) 40%,
+    transparent 90%
   );
-  filter: blur(14px);
-  opacity: 0.9;
+  filter: blur(18px);
+  opacity: 0.65;
   pointer-events: none;
   z-index: 0;
 }
@@ -1002,6 +1153,66 @@ onUnmounted(() => {
   max-width: min(920px, 100%);
   margin-left: auto;
   margin-right: auto;
+}
+
+.application-section-row .workspace-copy {
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.application-section-copy,
+.application-screenshot-col {
+  min-width: 0;
+}
+
+.application-screenshot-col {
+  align-self: center;
+}
+
+.application-screenshot-trigger {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  text-align: inherit;
+  background: transparent;
+  cursor: zoom-in;
+  border-radius: 12px;
+}
+
+.application-screenshot-trigger:focus-visible {
+  outline: 2px solid rgba(94, 234, 212, 0.9);
+  outline-offset: 3px;
+}
+
+.application-screenshot-trigger:hover .application-screenshot-img {
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow:
+    0 0 0 1px rgba(3, 117, 204, 0.2),
+    0 16px 48px rgba(6, 15, 20, 0.75);
+}
+
+.application-screenshot-figure {
+  margin: 0;
+  width: 100%;
+}
+
+.application-screenshot-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 0 0 1px rgba(3, 117, 204, 0.12),
+    0 12px 40px rgba(6, 15, 20, 0.65);
+  object-fit: contain;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .screenshot-title {
@@ -1155,9 +1366,15 @@ onUnmounted(() => {
 
 .team-member__name {
   color: #e0f2fe;
-  font-size: clamp(0.82rem, 1.8vw, 1.25rem);
+  font-size: 22px;
   line-height: 1.25;
   text-shadow: 0 1px 14px rgba(3, 117, 204, 0.45);
+}
+
+@media (min-width: 600px) {
+  .team-member__name {
+    font-size: 26px;
+  }
 }
 
 .team-member__role {
@@ -1267,22 +1484,16 @@ onUnmounted(() => {
   border-radius: 20px;
   background:
     linear-gradient(155deg, rgba(26, 44, 51, 0.92), rgba(12, 28, 34, 0.98));
-  border: 1px solid rgba(94, 234, 212, 0.2);
-  box-shadow:
-    0 18px 48px rgba(0, 0, 0, 0.34),
-    0 0 0 1px rgba(204, 251, 241, 0.04) inset;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.34);
   transition:
     transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 0.35s ease,
     box-shadow 0.35s ease;
 }
 
 .tool-shot-card.is-visible:hover .tool-shot-card__shell {
   transform: translateY(-5px);
-  border-color: rgba(94, 234, 212, 0.42);
-  box-shadow:
-    0 26px 60px rgba(3, 117, 204, 0.26),
-    0 0 0 1px rgba(94, 234, 212, 0.14) inset;
+  box-shadow: 0 26px 60px rgba(0, 0, 0, 0.42);
 }
 
 .tool-shot-trigger {
@@ -1301,55 +1512,6 @@ onUnmounted(() => {
 .tool-shot-trigger:focus-visible {
   outline: 2px solid rgba(94, 234, 212, 0.9);
   outline-offset: 3px;
-}
-
-.tool-shot-card__chrome {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  padding: 0.5rem 0.75rem;
-  background: linear-gradient(180deg, rgba(8, 22, 28, 0.96), rgba(6, 16, 20, 0.98));
-  border-bottom: 1px solid rgba(94, 234, 212, 0.12);
-}
-
-.tool-shot-card__dots {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  flex-shrink: 0;
-}
-
-.tool-shot-card__dots span {
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 50%;
-  background: rgba(94, 234, 212, 0.35);
-  box-shadow: 0 0 0 1px rgba(204, 251, 241, 0.12);
-}
-
-.tool-shot-card__dots span:nth-child(1) {
-  background: rgba(248, 113, 113, 0.55);
-}
-
-.tool-shot-card__dots span:nth-child(2) {
-  background: rgba(251, 191, 36, 0.55);
-}
-
-.tool-shot-card__dots span:nth-child(3) {
-  background: rgba(52, 211, 153, 0.55);
-}
-
-.tool-shot-card__chrome-title {
-  flex: 1;
-  min-width: 0;
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.72);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .tool-shot-card__viewport {
@@ -1377,14 +1539,6 @@ onUnmounted(() => {
   backdrop-filter: blur(2px);
   opacity: 0;
   transition: opacity 0.28s ease;
-}
-
-.tool-shot-overlay__label {
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.96);
 }
 
 .tool-shot-overlay .q-icon {
@@ -1415,17 +1569,8 @@ onUnmounted(() => {
   padding: 1rem 0.35rem 0.25rem;
 }
 
-.tool-shot-card__index {
-  display: block;
-  margin-bottom: 0.35rem;
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  color: rgba(45, 212, 191, 0.72);
-}
-
 .tool-shot-card__title {
-  margin: 0 0 0.4rem;
+  margin: 0;
   font-size: 1.05rem;
   font-weight: 700;
   line-height: 1.3;
@@ -1433,15 +1578,13 @@ onUnmounted(() => {
   color: var(--pp-heading);
 }
 
-.tool-shot-card__caption {
-  margin: 0;
-  font-size: 17px;
-  line-height: 1.55;
-  color: var(--pp-muted);
-}
-
 :global(.tool-preview-dialog) {
   max-height: 100vh;
+  overflow: hidden;
+}
+
+:global(.tool-preview-dialog:has(.tool-preview-card--native)) {
+  overflow: hidden;
 }
 
 .tool-preview-card {
@@ -1452,14 +1595,10 @@ onUnmounted(() => {
   max-height: calc(100vh - 32px);
   overflow: hidden;
   color: var(--site-text-body);
-  border: 1px solid rgba(94, 234, 212, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
-  background:
-    linear-gradient(150deg, rgba(15, 55, 56, 0.96), rgba(8, 20, 29, 0.98)),
-    #0a181c;
-  box-shadow:
-    0 28px 90px rgba(0, 0, 0, 0.52),
-    0 0 80px rgba(3, 117, 204, 0.22);
+  background: #0a181c;
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.52);
 }
 
 .tool-preview-bar {
@@ -1468,7 +1607,7 @@ onUnmounted(() => {
   grid-template-columns: 2.5rem 1fr 2.5rem;
   align-items: center;
   padding: 0.65rem 0.5rem;
-  border-bottom: 1px solid rgba(94, 234, 212, 0.16);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .tool-preview-title {
@@ -1494,11 +1633,7 @@ onUnmounted(() => {
   justify-content: center;
   padding: 0.4rem;
   overflow: hidden;
-  background:
-    linear-gradient(rgba(204, 251, 241, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(204, 251, 241, 0.035) 1px, transparent 1px),
-    rgba(5, 20, 28, 0.9);
-  background-size: 32px 32px;
+  background: rgba(5, 20, 28, 0.9);
 }
 
 .tool-preview-image {
@@ -1509,8 +1644,36 @@ onUnmounted(() => {
   height: auto;
   object-fit: contain;
   border-radius: 6px;
-  border: 1px solid rgba(204, 251, 241, 0.12);
   box-shadow: 0 18px 58px rgba(0, 0, 0, 0.38);
+}
+
+.tool-preview-card--native {
+  width: fit-content;
+  max-width: min(var(--preview-native-width), calc(100vw - 32px));
+  max-height: calc(100vh - 32px);
+  border: none;
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.52);
+}
+
+.tool-preview-card--native .tool-preview-image-wrap {
+  flex: 0 0 auto;
+}
+
+.tool-preview-image-wrap--native {
+  padding: 0;
+  overflow: hidden;
+  background: transparent;
+}
+
+.tool-preview-image--native {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: min(var(--preview-native-width), calc(100vw - 32px));
+  max-height: calc(100vh - 3.25rem);
+  object-fit: contain;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1547,10 +1710,6 @@ onUnmounted(() => {
   .tool-shot-overlay {
     opacity: 1;
     background: linear-gradient(180deg, transparent 55%, rgba(6, 15, 20, 0.45));
-  }
-
-  .tool-shot-overlay__label {
-    display: none;
   }
 
   .tool-shot-overlay .q-icon {

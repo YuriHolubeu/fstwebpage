@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "A Quasar Project",
   "productName": "Focus Structure Tool",
-  "productDescription": "An application that structures information and uses AI for deep analysis to accelerate problem-solving.",
+  "productDescription": "The application keeps researchers focused, structures information, and uses AI for deeper insights",
   "author": "Egor Riter <egor.riter12@gmail.com>",
   "type": "module",
   "private": true,
