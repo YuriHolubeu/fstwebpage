@@ -25,6 +25,11 @@ const routes = [
         component: () => import('pages/SaveAiNotePage.vue')
       },
       {
+        path: 'education',
+        name: 'investor-education',
+        component: () => import('pages/EducationPage.vue')
+      },
+      {
         path: 'future',
         name: 'investor-future',
         component: () => import('pages/FuturePage.vue')

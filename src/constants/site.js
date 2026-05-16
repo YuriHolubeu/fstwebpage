@@ -10,7 +10,7 @@ export const SITE = {
   heroImageCaption: "Make at home your own version of Albert Einstein's office",
   /** Full YouTube embed URL, e.g. https://www.youtube.com/embed/VIDEO_ID — leave empty for placeholder */
   projectDemoVideoEmbedUrl: '',
-  contactEmail: 'hello@example.com',
+  contactEmail: 'focus.structure.tool@gmail.com',
   social: {
     linkedin: 'https://www.linkedin.com/',
     x: 'https://twitter.com/'

@@ -136,10 +136,14 @@
         </div>
       </q-card>
     </section>
+
+    <GetInTouchSection />
   </q-page>
 </template>
 
 <script setup>
+import GetInTouchSection from 'src/components/investor/GetInTouchSection.vue'
+
 const metrics = [
   { value: '459', label: 'visible sections' },
   { value: '5', label: 'research themes' },

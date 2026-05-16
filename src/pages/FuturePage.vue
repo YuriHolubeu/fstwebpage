@@ -41,18 +41,12 @@
       </q-card>
     </div>
 
-    <section class="q-mt-xl cta-strip row items-center justify-between q-pa-lg">
-      <div>
-        <div class="text-subtitle1 text-weight-bold text-white">Co-design the next milestone</div>
-        <div class="text-caption text-grey-5">We align roadmap depth with partner input.</div>
-      </div>
-      <ContactUsButton />
-    </section>
+    <GetInTouchSection />
   </q-page>
 </template>
 
 <script setup>
-import ContactUsButton from 'src/components/investor/ContactUsButton.vue'
+import GetInTouchSection from 'src/components/investor/GetInTouchSection.vue'
 
 const roadmap = [
   {
@@ -127,13 +121,4 @@ const roadmap = [
   max-width: 52rem;
 }
 
-.cta-strip {
-  border-radius: 16px;
-  border: 1px solid rgba(11, 195, 171, 0.25);
-  background: linear-gradient(
-    120deg,
-    rgba(3, 117, 204, 0.28) 0%,
-    rgba(19, 48, 49, 0.88) 100%
-  );
-}
 </style>

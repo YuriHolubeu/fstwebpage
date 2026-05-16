@@ -72,9 +72,8 @@
         class="gallery-heading text-center q-mb-lg reveal-on-scroll full-width"
         :class="{ 'is-visible': keyToolsVisible }"
       >
-        <div class="text-overline pp-overline q-mb-xs">Toolkit</div>
         <h2 class="text-h5 text-weight-bold pp-heading q-mb-xs">
-          Key tools that boost research
+          Product preview
         </h2>
         <p class="text-caption pp-muted q-mb-none" style="max-width: 520px; margin: 0 auto">
           Focused capabilities that keep context, speed synthesis, and make findings reusable.
@@ -125,6 +124,49 @@
           </q-card>
         </div>
       </div>
+    </section>
+
+    <section ref="previewsEl" class="results-preview-block q-pt-xl q-mt-lg column items-center">
+      <div
+        class="gallery-heading text-center q-mb-lg reveal-on-scroll full-width"
+        :class="{ 'is-visible': previewsVisible }"
+      >
+        <div class="text-overline pp-overline q-mb-xs">Sample output</div>
+        <h2 class="text-h5 text-weight-bold pp-heading q-mb-sm">
+          Preview of Results the Application Can Generate
+        </h2>
+        <p class="text-caption pp-muted q-mb-none" style="max-width: 560px; margin: 0 auto">
+          Download sample PDF notes from our Basic Physics collection — examples of structured
+          research the app can produce.
+        </p>
+      </div>
+
+      <q-list
+        class="preview-pdf-list reveal-on-scroll"
+        :class="{ 'is-visible': previewsVisible }"
+      >
+        <q-item
+          v-for="pdf in basicPhysicsPreviews"
+          :key="pdf.file"
+          tag="a"
+          :href="previewPdfUrl(pdf)"
+          class="preview-pdf-item"
+          target="_blank"
+          rel="noopener noreferrer"
+          :download="pdf.file"
+        >
+          <q-item-section avatar>
+            <q-icon name="picture_as_pdf" color="primary" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label class="preview-pdf-item__title">{{ pdf.title }}</q-item-label>
+            <q-item-label class="preview-pdf-item__size">{{ pdf.sizeLabel }}</q-item-label>
+          </q-item-section>
+          <q-item-section side>
+            <q-icon name="download" class="preview-pdf-item__download-icon" />
+          </q-item-section>
+        </q-item>
+      </q-list>
     </section>
 
     <section ref="teamEl" class="team-block q-pt-xl q-mt-lg column items-center">
@@ -192,6 +234,34 @@
       </q-list>
     </section>
 
+    <section ref="contactsEl" class="contacts-block q-pt-xl q-mt-lg q-mb-md column items-center">
+      <div
+        class="gallery-heading text-center q-mb-lg reveal-on-scroll full-width"
+        :class="{ 'is-visible': contactsVisible }"
+      >
+        <div class="text-overline pp-overline q-mb-xs">Contact</div>
+        <h2 class="text-h5 text-weight-bold pp-heading q-mb-sm">
+          Get in touch
+        </h2>
+        <p class="text-caption pp-muted q-mb-none" style="max-width: 520px; margin: 0 auto">
+          Questions, demos, or partnership inquiries — we are happy to hear from you.
+        </p>
+      </div>
+
+      <div
+        class="contacts-panel column items-center text-center reveal-on-scroll"
+        :class="{ 'is-visible': contactsVisible }"
+      >
+        <q-icon name="mail" size="28px" class="contacts-panel__icon q-mb-sm" />
+        <a
+          :href="contactMailto"
+          class="contacts-email text-body1 text-weight-medium"
+        >
+          {{ SITE.contactEmail }}
+        </a>
+      </div>
+    </section>
+
     <q-dialog v-model="toolPreviewOpen" transition-show="scale" transition-hide="fade">
       <q-card v-if="selectedTool" class="tool-preview-card">
         <div class="tool-preview-bar row items-center justify-between no-wrap">
@@ -226,18 +296,32 @@
 import { onMounted, onUnmounted, ref } from 'vue'
 import heroWorkshopUrl from 'src/assets/hero-workshop.png'
 import { SITE } from 'src/constants/site'
+import {
+  BASIC_PHYSICS_PREVIEW_BASE,
+  basicPhysicsPreviews
+} from 'src/constants/basicPhysicsPreviews'
 
 const heroEntered = ref(false)
 const screenshotsVisible = ref(false)
 const keyToolsVisible = ref(false)
+const previewsVisible = ref(false)
 const teamVisible = ref(false)
 const faqVisible = ref(false)
+const contactsVisible = ref(false)
 const selectedTool = ref(null)
 const toolPreviewOpen = ref(false)
 const screenshotsEl = ref(null)
 const keyToolsEl = ref(null)
+const previewsEl = ref(null)
 const teamEl = ref(null)
 const faqEl = ref(null)
+const contactsEl = ref(null)
+
+const contactMailto = `mailto:${SITE.contactEmail}`
+
+function previewPdfUrl (pdf) {
+  return `${BASIC_PHYSICS_PREVIEW_BASE}/${pdf.file}`
+}
 
 const team = [
   {
@@ -266,8 +350,8 @@ const team = [
 const workspaceFeatures = [
   {
     icon: 'library_books',
-    title: 'Unified research library',
-    description: 'Keep papers, PDFs, and sources organized in one project library.'
+    title: 'One PDF file for one topic',
+    description: 'Instantly create a thousand of page PDF file that has all needed information in a structured way.'
   },
   {
     icon: 'code',
@@ -343,8 +427,10 @@ const keyTools = [
 
 let keyToolsObserver
 let screenshotsObserver
+let previewsObserver
 let teamObserver
 let faqObserver
+let contactsObserver
 
 function keyToolsDelay (index) {
   return `${120 + index * 100}ms`
@@ -388,6 +474,20 @@ onMounted(() => {
     keyToolsObserver.observe(keyToolsEl.value)
   }
 
+  previewsObserver = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) {
+          previewsVisible.value = true
+        }
+      }
+    },
+    { threshold: 0.1, rootMargin: '0px 0px -32px 0px' }
+  )
+  if (previewsEl.value) {
+    previewsObserver.observe(previewsEl.value)
+  }
+
   teamObserver = new IntersectionObserver(
     (entries) => {
       for (const e of entries) {
@@ -415,13 +515,29 @@ onMounted(() => {
   if (faqEl.value) {
     faqObserver.observe(faqEl.value)
   }
+
+  contactsObserver = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) {
+          contactsVisible.value = true
+        }
+      }
+    },
+    { threshold: 0.1, rootMargin: '0px 0px -32px 0px' }
+  )
+  if (contactsEl.value) {
+    contactsObserver.observe(contactsEl.value)
+  }
 })
 
 onUnmounted(() => {
   screenshotsObserver?.disconnect()
   keyToolsObserver?.disconnect()
+  previewsObserver?.disconnect()
   teamObserver?.disconnect()
   faqObserver?.disconnect()
+  contactsObserver?.disconnect()
 })
 </script>
 
@@ -657,9 +773,83 @@ onUnmounted(() => {
 }
 
 .gallery-block,
-.team-block,
-.faq-block {
+.results-preview-block {
   scroll-margin-top: 96px;
+  width: 100%;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.preview-pdf-list {
+  width: 100%;
+  border-radius: 16px;
+  border: 1px solid rgba(11, 195, 171, 0.22);
+  background: rgba(26, 44, 51, 0.45);
+  overflow: hidden;
+}
+
+.preview-pdf-item {
+  color: var(--pp-body);
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.preview-pdf-item:hover {
+  background: rgba(11, 195, 171, 0.1);
+}
+
+.preview-pdf-item__title {
+  color: var(--pp-heading);
+  font-weight: 600;
+}
+
+.preview-pdf-item__size {
+  color: #fbbf24;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.preview-pdf-item__download-icon {
+  color: var(--pp-soft);
+  opacity: 0.85;
+}
+
+.team-block,
+.faq-block,
+.contacts-block {
+  scroll-margin-top: 96px;
+}
+
+.contacts-block {
+  width: 100%;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.contacts-panel {
+  width: 100%;
+  padding: 1.5rem 1.75rem;
+  border-radius: 18px;
+  border: 1px solid rgba(11, 195, 171, 0.22);
+  background: rgba(26, 44, 51, 0.55);
+}
+
+.contacts-panel__icon {
+  color: var(--pp-soft);
+}
+
+.contacts-email {
+  color: #7dd3fc;
+  text-decoration: none;
+  word-break: break-word;
+  transition: color 0.2s ease;
+}
+
+.contacts-email:hover {
+  color: #bae6fd;
+  text-decoration: underline;
 }
 
 .team-grid {

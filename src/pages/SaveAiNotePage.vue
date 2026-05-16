@@ -115,10 +115,14 @@
         </p>
       </div>
     </section>
+
+    <GetInTouchSection />
   </q-page>
 </template>
 
 <script setup>
+import GetInTouchSection from 'src/components/investor/GetInTouchSection.vue'
+
 const tags = ['core theory', 'CDW', 'formula', '1D systems']
 
 const actions = ['Open source', 'Edit note', 'Link section', 'Generate LaTeX']

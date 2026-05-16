@@ -113,6 +113,7 @@ const contact = useContactUiStore()
 const nav = []
 
 const tailNav = [
+  { to: '/education', label: 'Education', icon: 'school' },
   { to: '/future', label: 'Roadmap', icon: 'map' }
 ]
 

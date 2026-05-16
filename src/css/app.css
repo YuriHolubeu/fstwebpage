@@ -4,7 +4,7 @@ html {
   overflow-x: hidden;
   max-width: 100%;
   scrollbar-color: rgba(11, 195, 171, 0.75) rgba(26, 44, 51, 0.95);
-  scrollbar-width: thin;
+  scrollbar-width: auto;
 }
 
 body {
@@ -20,7 +20,7 @@ body {
 
 /* Vertical scrollbar only — a fixed height on ::-webkit-scrollbar draws an empty horizontal bar */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 14px;
 }
 
 ::-webkit-scrollbar:horizontal {
@@ -35,5 +35,5 @@ body {
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, #0bc3ab, #0375cc);
   border-radius: 999px;
-  border: 2px solid rgba(26, 44, 51, 0.95);
+  border: 1px solid rgba(26, 44, 51, 0.95);
 }

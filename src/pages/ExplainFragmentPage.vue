@@ -117,10 +117,14 @@
         </p>
       </div>
     </section>
+
+    <GetInTouchSection />
   </q-page>
 </template>
 
 <script setup>
+import GetInTouchSection from 'src/components/investor/GetInTouchSection.vue'
+
 const scenario = ['Open PDF/LaTeX', 'Select fragment', 'Explain', 'Save note']
 
 const modes = [

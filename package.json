@@ -10,7 +10,7 @@
   "scripts": {
     "test": "echo \"No test specified\" && exit 0",
     "dev": "quasar dev",
-    "prebuild": "node scripts/generate-favicons.mjs",
+    "prebuild": "node scripts/generate-favicons.mjs && node scripts/sync-basic-physics-previews.mjs",
     "build": "quasar build",
     "postbuild": "node scripts/copy-spa-404.mjs",
     "postinstall": "quasar prepare"
