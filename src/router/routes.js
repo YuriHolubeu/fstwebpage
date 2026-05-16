@@ -21,8 +21,12 @@ const routes = [
       },
       {
         path: 'save-ai-note',
-        name: 'investor-save-ai-note',
-        component: () => import('pages/SaveAiNotePage.vue')
+        redirect: { name: 'investor-explain-fragment' }
+      },
+      {
+        path: 'research-mentor',
+        name: 'investor-research-mentor',
+        component: () => import('pages/ResearchMentorPage.vue')
       },
       {
         path: 'education',

@@ -52,11 +52,11 @@
           <q-list dense class="ai-features-list">
             <q-item
               v-for="item in aiFeatures"
-              :key="item.to"
+              :key="item.label"
               clickable
               :to="item.to"
               class="ai-feature-item"
-              :class="{ 'ai-feature-item--active': isActive(item.to) }"
+              :class="{ 'ai-feature-item--active': isFeatureActive(item) }"
             >
               <q-item-section avatar>
                 <q-icon :name="item.icon" />
@@ -126,19 +126,24 @@ const aiFeatures = [
   },
   {
     to: '/explain-fragment',
-    label: 'Explain Fragment',
-    icon: 'psychology',
-    caption: 'Attach explanations to selected text'
+    matches: ['/explain-fragment', '/save-ai-note'],
+    label: 'Explanation Tree',
+    icon: 'psychology_alt',
+    caption: 'Source-anchored AI memory for formulas and follow-ups'
   },
   {
-    to: '/save-ai-note',
-    label: 'Save AI Note',
-    icon: 'bookmark_add',
-    caption: 'Turn AI answers into project memory'
+    to: '/research-mentor',
+    label: 'Research Mentor',
+    icon: 'school',
+    caption: 'AI suggests grounded next research moves'
   }
 ]
 
-const isAiFeaturesActive = computed(() => aiFeatures.some((item) => isActive(item.to)))
+const isAiFeaturesActive = computed(() => aiFeatures.some((item) => isFeatureActive(item)))
+
+function isFeatureActive (item) {
+  return (item.matches || [item.to]).some((path) => isActive(path))
+}
 
 function isActive (path) {
   return route.path === path || route.path === `${path}/`

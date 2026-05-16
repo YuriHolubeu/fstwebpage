@@ -3,10 +3,11 @@
     <section class="hero-grid q-pt-lg q-mb-lg">
       <div class="hero-copy">
         <div class="text-overline ai-overline q-mb-sm">AI Features / Groups</div>
-        <h1 class="hero-title q-mb-md">AI semantic clustering for research projects</h1>
+        <h1 class="hero-title q-mb-md">AI Groups: from papers to a connected research map</h1>
         <p class="hero-lead q-mb-lg">
-          AI Groups reads the project outline, classifies section-level units, and proposes
-          reviewable research themes.
+          Researchers can import papers from arXiv or upload their own PDFs and LaTeX files. The
+          AI analyzes titles, abstracts, sections, formulas and key terms, then turns scattered
+          research files into an organized knowledge map.
         </p>
 
         <div class="hero-metrics">
@@ -29,27 +30,23 @@
         </div>
 
         <div class="mock-summary">
-          <div>
-            <span>Suggested grouping</span>
-            <strong>459 sections</strong>
-          </div>
-          <p>organized into 5 research themes</p>
+          <span>Connected knowledge map</span>
+          <strong>The product does not just store papers.</strong>
+          <p>It helps users understand how papers, formulas and ideas are organized and connected.</p>
         </div>
 
-        <div class="theme-list">
-          <article
-            v-for="theme in themes"
-            :key="theme.name"
-            class="theme-card"
-            :style="{ '--accent': theme.color }"
-          >
-            <div class="row items-center justify-between no-wrap">
-              <strong>{{ theme.name }}</strong>
-              <span>{{ theme.count }}</span>
+        <div class="research-map-preview">
+          <article v-for="node in previewNodes" :key="node.title" class="preview-node">
+            <q-icon :name="node.icon" />
+            <div>
+              <strong>{{ node.title }}</strong>
+              <span>{{ node.text }}</span>
             </div>
-            <p>{{ theme.signals }}</p>
-            <div class="meter"><span :style="{ width: theme.width }" /></div>
           </article>
+          <div class="preview-link">
+            <q-icon name="functions" />
+            <span>Formula source, reused method and related claim are linked across documents</span>
+          </div>
         </div>
       </q-card>
     </section>
@@ -64,74 +61,63 @@
       </article>
     </section>
 
-    <section class="compact-grid q-mb-lg">
-      <q-card flat bordered class="panel term-panel">
+    <section class="value-grid q-mb-lg">
+      <q-card v-for="benefit in benefits" :key="benefit.title" flat bordered class="panel value-panel">
         <div class="panel-head">
-          <div class="text-overline ai-overline">Core objects</div>
-          <h2>What AI Groups classifies</h2>
-        </div>
-        <div class="object-list">
-          <div v-for="term in terms" :key="term.title" class="object-row">
-            <q-icon :name="term.icon" />
-            <div>
-              <strong>{{ term.title }}</strong>
-              <span>{{ term.text }}</span>
-            </div>
+          <q-icon :name="benefit.icon" class="value-icon" />
+          <div>
+            <div class="text-overline ai-overline">{{ benefit.kicker }}</div>
+            <h2>{{ benefit.title }}</h2>
           </div>
         </div>
-      </q-card>
-
-      <q-card flat bordered class="panel pipeline-panel">
-        <div class="panel-head">
-          <div class="text-overline ai-overline">Technical pipeline</div>
-          <h2>Batch-based, explainable output</h2>
-        </div>
-        <div class="pipeline-rail">
-          <div v-for="(item, index) in pipeline" :key="item" class="rail-step">
-            <span>{{ index + 1 }}</span>
-            {{ item }}
-          </div>
-        </div>
+        <p>{{ benefit.text }}</p>
       </q-card>
     </section>
 
-    <section class="bottom-grid">
-      <q-card flat bordered class="panel schema-panel">
+    <section class="story-grid">
+      <q-card flat bordered class="panel import-panel">
         <div class="panel-head">
-          <div class="text-overline ai-overline">Data model</div>
-          <h2>Minimal MVP schema</h2>
+          <div class="text-overline ai-overline">Why it matters</div>
+          <h2>From scattered files to research memory</h2>
         </div>
-        <div class="schema-stack">
-          <div v-for="model in models" :key="model.name" class="schema-card">
-            <strong>{{ model.name }}</strong>
-            <code>{{ model.fields }}</code>
-          </div>
+        <div class="story-copy">
+          <p>
+            Researchers often collect papers, books, notes and LaTeX files for one project. Over
+            time, the project becomes difficult to navigate: important ideas are hidden across
+            PDFs, formulas are reused without context, and related papers stay disconnected.
+          </p>
+          <p>
+            AI Groups gives the user a structured view of the project: core theory, methods,
+            experiments, applications, open questions and related results. The researcher can
+            review suggestions, rename groups, move materials manually and keep control.
+          </p>
         </div>
       </q-card>
 
-      <q-card flat bordered class="panel review-panel">
+      <q-card flat bordered class="panel relation-panel">
         <div class="panel-head">
-          <div class="text-overline ai-overline">User control</div>
-          <h2>AI suggests, researcher decides</h2>
+          <div class="text-overline ai-overline">AI research layer</div>
+          <h2>More than a PDF reader or LaTeX editor</h2>
         </div>
         <p>
-          Grouping is never applied blindly. Users can inspect signals, move sections,
-          rename groups, reject output, or regenerate.
+          The next layer is connection discovery. AI can show where a concept was introduced, where
+          it is reused, which methods are shared, and how different results support or extend each
+          other.
         </p>
-        <div class="action-chips row q-gutter-sm">
-          <q-chip v-for="action in actions" :key="action" outline color="cyan-4" text-color="grey-3">
-            {{ action }}
+        <div class="tech-tags">
+          <q-chip v-for="tech in technologies" :key="tech" outline color="cyan-4" text-color="grey-3">
+            {{ tech }}
           </q-chip>
         </div>
         <div class="review-buttons row q-col-gutter-sm q-mt-md">
           <div class="col-12 col-sm-4">
-            <q-btn unelevated no-caps class="full-width action-primary" label="Apply" />
+            <q-btn unelevated no-caps class="full-width action-primary" label="Import papers" />
           </div>
           <div class="col-12 col-sm-4">
-            <q-btn outline no-caps color="cyan-4" class="full-width" label="Review" />
+            <q-btn outline no-caps color="cyan-4" class="full-width" label="Explore groups" />
           </div>
           <div class="col-12 col-sm-4">
-            <q-btn outline no-caps color="purple-4" class="full-width" label="Regenerate" />
+            <q-btn outline no-caps color="purple-4" class="full-width" label="Trace sources" />
           </div>
         </div>
       </q-card>
@@ -145,113 +131,94 @@
 import GetInTouchSection from 'src/components/investor/GetInTouchSection.vue'
 
 const metrics = [
-  { value: '459', label: 'visible sections' },
-  { value: '5', label: 'research themes' },
-  { value: 'JSON', label: 'LLM output' }
+  { value: 'Import', label: 'arXiv, PDFs and LaTeX files' },
+  { value: 'Organize', label: 'themes, methods and questions' },
+  { value: 'Connect', label: 'papers, formulas and ideas' }
 ]
 
-const themes = [
+const previewNodes = [
   {
-    name: 'Open Questions',
-    count: '313',
-    signals: 'problem, question, puzzle',
-    width: '86%',
-    color: '#ef4444'
+    title: 'Core theory',
+    text: 'Foundational concepts and assumptions',
+    icon: 'hub'
   },
   {
-    name: 'Core Theory',
-    count: '89',
-    signals: 'theory, model, hamiltonian',
-    width: '58%',
-    color: '#8b5cf6'
+    title: 'Methods',
+    text: 'Models, derivations and shared techniques',
+    icon: 'schema'
   },
   {
-    name: 'Experiments',
-    count: '32',
-    signals: 'measurement, material, sample',
-    width: '35%',
-    color: '#38bdf8'
+    title: 'Experiments',
+    text: 'Measurements, datasets and evidence',
+    icon: 'science'
   },
   {
-    name: 'Methods',
-    count: '14',
-    signals: 'derivation, formula, equation',
-    width: '24%',
-    color: '#22c55e'
+    title: 'Open questions',
+    text: 'Gaps, contradictions and next steps',
+    icon: 'psychology'
   }
 ]
 
 const flow = [
   {
-    title: 'Input',
-    text: 'LaTeX files, PDF pages, folder structure, headings.',
+    title: 'Import research materials',
+    text: 'Users can download papers from arXiv or upload PDFs, books, notes and LaTeX sources.',
     icon: 'description'
   },
   {
-    title: 'Semantic units',
-    text: 'Section objects with title, level, source, preview, formulas.',
+    title: 'AI groups by meaning',
+    text: 'The AI analyzes titles, abstracts, sections, formulas and key terms to form themes.',
     icon: 'segment'
   },
   {
-    title: 'AI classifier',
-    text: 'Batched LLM classification into stable predefined themes.',
+    title: 'AI reveals connections',
+    text: 'The system suggests links between formulas, concepts, methods, claims and sources.',
     icon: 'auto_awesome'
   },
   {
-    title: 'Reviewable groups',
-    text: 'Themes with counts, confidence, signals, examples, actions.',
+    title: 'Research becomes memory',
+    text: 'Users navigate a searchable map instead of a folder of disconnected files.',
     icon: 'hub'
   }
 ]
 
-const terms = [
+const benefits = [
   {
-    title: 'Document Unit',
-    text: 'A meaningful section-level piece of the project.',
-    icon: 'article'
+    kicker: 'User problem',
+    title: 'Research projects become hard to navigate',
+    text: 'Important ideas, formulas and notes are spread across PDFs, folders and LaTeX files, so users lose context while working.',
+    icon: 'folder_open'
   },
   {
-    title: 'Section Index',
-    text: 'Machine-readable outline of all extracted sections.',
-    icon: 'account_tree'
+    kicker: 'AI solution',
+    title: 'The AI creates meaningful structure',
+    text: 'Materials are grouped into core theory, methods, experiments, applications, open questions and related results.',
+    icon: 'travel_explore'
   },
   {
-    title: 'Research Theme',
-    text: 'A high-level AI grouping such as Core Theory or Experiments.',
-    icon: 'category'
-  },
-  {
-    title: 'Classification Signal',
-    text: 'The reason behind the assignment: theory, model, measurement.',
+    kicker: 'Connection layer',
+    title: 'Ideas become linked, not isolated',
+    text: 'AI can suggest where a formula came from, where a method is reused, and which articles support or extend each other.',
     icon: 'verified'
+  },
+  {
+    kicker: 'Product value',
+    title: 'A stronger AI workspace',
+    text: 'The product becomes more than storage: it helps researchers understand, revisit and write about their project faster.',
+    icon: 'tune'
   }
 ]
 
-const pipeline = [
-  'Parse project',
-  'Build section objects',
-  'Classify in batches',
-  'Aggregate themes',
-  'Save results',
-  'Show review UI'
+const technologies = [
+  'LLMs',
+  'NLP',
+  'Text embeddings',
+  'Semantic clustering',
+  'Information extraction',
+  'Citation and formula linking',
+  'Knowledge graph',
+  'RAG'
 ]
-
-const models = [
-  {
-    name: 'Section',
-    fields: 'section_id, title, level, source_file, parent_id, preview, pdf_page'
-  },
-  {
-    name: 'AI Group',
-    fields: 'group_id, name, description, section_count, signals'
-  },
-  {
-    name: 'Classification',
-    fields: 'section_id, group_id, confidence, reason, signals, model'
-  }
-]
-
-const actions = ['Move section', 'Rename group', 'Reject group', 'Regenerate']
 </script>
 
 <style scoped>
@@ -377,8 +344,10 @@ const actions = ['Move section', 'Rename group', 'Reject group', 'Regenerate']
 .mock-summary strong {
   display: block;
   color: #f0fdfa;
-  font-size: 2.35rem;
-  line-height: 1.05;
+  max-width: 26rem;
+  margin-top: 0.22rem;
+  font-size: clamp(1.55rem, 3vw, 2.15rem);
+  line-height: 1.12;
 }
 
 .mock-summary p {
@@ -386,46 +355,74 @@ const actions = ['Move section', 'Rename group', 'Reject group', 'Regenerate']
   color: rgba(207, 250, 254, 0.72);
 }
 
-.theme-list {
+.research-map-preview {
+  position: relative;
   display: grid;
-  gap: 0.6rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
   padding: 0.5rem 1rem 1rem;
 }
 
-.theme-card {
-  padding: 0.72rem;
-  border: 1px solid rgba(94, 234, 212, 0.14);
-  border-left: 4px solid var(--accent);
-  border-radius: 8px;
-  background: rgba(5, 20, 28, 0.36);
-}
-
-.theme-card strong {
-  color: #f0fdfa;
-}
-
-.theme-card span,
-.theme-card p {
-  color: rgba(207, 250, 254, 0.75);
-}
-
-.theme-card p {
-  margin: 0.2rem 0 0.52rem;
-  font-size: 0.82rem;
-}
-
-.meter {
-  height: 0.4rem;
-  overflow: hidden;
+.research-map-preview::before {
+  content: '';
+  position: absolute;
+  inset: 17% 18% 28%;
+  border: 1px solid rgba(94, 234, 212, 0.18);
   border-radius: 999px;
-  background: rgba(204, 251, 241, 0.1);
+  transform: rotate(-8deg);
 }
 
-.meter span {
+.preview-node {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.62rem;
+  min-height: 5.7rem;
+  padding: 0.78rem;
+  border: 1px solid rgba(94, 234, 212, 0.14);
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba(7, 35, 39, 0.9), rgba(5, 20, 28, 0.82)),
+    rgba(5, 20, 28, 0.36);
+}
+
+.preview-node .q-icon {
+  color: #5eead4;
+  font-size: 1.35rem;
+}
+
+.preview-node strong {
   display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, #0bc3ab, #38bdf8);
+  color: #f0fdfa;
+  line-height: 1.2;
+}
+
+.preview-node span {
+  display: block;
+  margin-top: 0.24rem;
+  color: rgba(207, 250, 254, 0.75);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.preview-link {
+  position: relative;
+  z-index: 1;
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.78rem;
+  border: 1px solid rgba(216, 180, 254, 0.34);
+  border-radius: 8px;
+  color: rgba(236, 254, 255, 0.86);
+  background: linear-gradient(135deg, rgba(11, 195, 171, 0.16), rgba(168, 85, 247, 0.18));
+}
+
+.preview-link .q-icon {
+  color: #d8b4fe;
+  font-size: 1.35rem;
 }
 
 .system-map {
@@ -479,19 +476,22 @@ const actions = ['Move section', 'Rename group', 'Reject group', 'Regenerate']
   letter-spacing: 0;
 }
 
-.map-node p,
-.review-panel p {
+.map-node p {
   margin: 0.34rem 0 0;
   color: rgba(207, 250, 254, 0.76);
   line-height: 1.42;
   font-size: 0.88rem;
 }
 
-.compact-grid,
-.bottom-grid {
+.value-grid,
+.story-grid {
   display: grid;
   grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
   gap: 1rem;
+}
+
+.value-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .panel {
@@ -502,97 +502,51 @@ const actions = ['Move section', 'Rename group', 'Reject group', 'Regenerate']
   margin-bottom: 0.85rem;
 }
 
-.object-list {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.65rem;
-}
-
-.object-row {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: 0.65rem;
-  padding: 0.72rem;
-  border: 1px solid rgba(94, 234, 212, 0.14);
-  border-radius: 8px;
-  background: rgba(5, 20, 28, 0.34);
-}
-
-.object-row .q-icon {
-  color: #5eead4;
-  font-size: 1.35rem;
-}
-
-.object-row strong {
-  display: block;
-  color: #f0fdfa;
-  font-size: 0.9rem;
-  line-height: 1.2;
-}
-
-.object-row span {
-  display: block;
-  margin-top: 0.22rem;
-  color: rgba(207, 250, 254, 0.72);
-  font-size: 0.8rem;
-  line-height: 1.35;
-}
-
-.pipeline-rail {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.55rem;
-}
-
-.rail-step {
+.value-panel .panel-head {
   display: flex;
-  align-items: center;
-  gap: 0.55rem;
-  min-height: 3.2rem;
-  padding: 0.65rem;
-  border: 1px solid rgba(94, 234, 212, 0.14);
-  border-radius: 8px;
-  color: rgba(236, 254, 255, 0.88);
-  font-size: 0.84rem;
-  font-weight: 750;
-  background: rgba(5, 20, 28, 0.34);
+  align-items: flex-start;
+  gap: 0.75rem;
 }
 
-.rail-step span {
-  width: 1.6rem;
-  height: 1.6rem;
+.value-icon {
+  width: 2.25rem;
+  height: 2.25rem;
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 999px;
-  color: #133031;
-  font-weight: 850;
-  background: #5eead4;
+  border-radius: 8px;
+  color: #102c2d;
+  font-size: 1.25rem;
+  background: linear-gradient(135deg, #ccfbf1, #5eead4);
 }
 
-.schema-stack {
+.value-panel p,
+.story-copy p,
+.relation-panel p {
+  margin: 0;
+  color: rgba(207, 250, 254, 0.76);
+  line-height: 1.5;
+  font-size: 0.9rem;
+}
+
+.story-copy {
   display: grid;
-  gap: 0.55rem;
+  gap: 0.8rem;
 }
 
-.schema-card {
-  padding: 0.72rem;
+.story-copy p {
+  padding: 0.82rem;
   border: 1px solid rgba(94, 234, 212, 0.14);
   border-radius: 8px;
   background: rgba(5, 20, 28, 0.34);
 }
 
-.schema-card strong {
-  display: block;
-  color: #f0fdfa;
-  margin-bottom: 0.35rem;
-}
-
-.schema-card code {
-  color: #a7f3d0;
-  white-space: normal;
-  line-height: 1.45;
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 1rem;
 }
 
 .action-primary {
@@ -603,8 +557,8 @@ const actions = ['Move section', 'Rename group', 'Reject group', 'Regenerate']
 
 @media (max-width: 920px) {
   .hero-grid,
-  .compact-grid,
-  .bottom-grid {
+  .value-grid,
+  .story-grid {
     grid-template-columns: 1fr;
   }
 
@@ -633,9 +587,12 @@ const actions = ['Move section', 'Rename group', 'Reject group', 'Regenerate']
   }
 
   .hero-metrics,
-  .object-list,
-  .pipeline-rail {
+  .research-map-preview {
     grid-template-columns: 1fr;
+  }
+
+  .research-map-preview::before {
+    display: none;
   }
 
   .mock-top {
