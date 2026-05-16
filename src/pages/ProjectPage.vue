@@ -40,11 +40,8 @@
         <div class="col-12 workspace-copy">
         <div class="text-overline pp-overline q-mb-xs">Product preview</div>
         <h2 class="screenshot-title text-h4 text-weight-bold pp-heading q-mb-sm">
-          Research workspace, fully connected
+          Complete professional research environment
         </h2>
-        <p class="screenshot-caption pp-body text-body1 q-mb-lg">
-          One workspace for papers, PDFs, LaTeX and research structure.
-        </p>
 
         <ul class="workspace-features q-pl-none q-ma-none">
           <li
@@ -133,11 +130,10 @@
       >
         <div class="text-overline pp-overline q-mb-xs">Sample output</div>
         <h2 class="text-h5 text-weight-bold pp-heading q-mb-sm">
-          Preview of Results the Application Can Generate
+          Examples of research environments 
         </h2>
         <p class="text-caption pp-muted q-mb-none" style="max-width: 560px; margin: 0 auto">
-          Download sample PDF notes from our Basic Physics collection — examples of structured
-          research the app can produce.
+          The environments are simple to convert into PDFs compatible with all PDF readers.
         </p>
       </div>
 
@@ -348,6 +344,11 @@ const team = [
 ]
 
 const workspaceFeatures = [
+  {
+    icon: 'library_books',
+    title: 'Enhances focus on the key information',
+    description: 'Hotkeys for instant extracting key information from books and articles and creation of summary.'
+  },  
   {
     icon: 'library_books',
     title: 'One PDF file for one topic',
@@ -738,7 +739,7 @@ onUnmounted(() => {
 
 .workspace-copy {
   text-align: left;
-  max-width: 640px;
+  max-width: min(920px, 100%);
   margin-left: auto;
   margin-right: auto;
 }
@@ -746,6 +747,12 @@ onUnmounted(() => {
 .screenshot-title {
   letter-spacing: 0;
   line-height: 1.14;
+}
+
+@media (min-width: 600px) {
+  .screenshot-title {
+    white-space: nowrap;
+  }
 }
 
 .screenshot-caption.pp-body {
