@@ -30,9 +30,11 @@
           v-model="name"
           outlined
           dense
-          label="Your name"
+          label="Your name and surname"
           class="cd-field"
           color="primary"
+          :error="Boolean(nameError)"
+          :error-message="nameError"
         />
         <q-input
           v-model="email"
@@ -40,8 +42,11 @@
           dense
           type="email"
           label="Work email"
+          hint="yourmail@mail.com"
           class="cd-field"
           color="primary"
+          :error="Boolean(emailError)"
+          :error-message="emailError"
         />
         <q-input
           v-model="message"
@@ -51,6 +56,8 @@
           label="How can we help?"
           class="cd-field"
           color="primary"
+          :error="Boolean(messageError)"
+          :error-message="messageError"
         />
       </q-card-section>
 
@@ -68,9 +75,11 @@
           no-caps
           rounded
           class="cd-btn-submit"
-          label="Open email"
-          icon="mail"
-          @click="sendMail"
+          label="Send"
+          icon="send"
+          :loading="isSubmitting"
+          :disable="isSubmitting"
+          @click="sendContactMessage"
         />
       </q-card-actions>
     </q-card>
@@ -80,7 +89,10 @@
 <script setup>
 import { ref } from 'vue'
 import { useQuasar } from 'quasar'
-import { SITE } from 'src/constants/site'
+import {
+  isContactStorageConfigured,
+  saveContactMessage
+} from 'src/services/contact-messages'
 
 defineProps({
   modelValue: { type: Boolean, required: true }
@@ -93,20 +105,85 @@ const $q = useQuasar()
 const name = ref('')
 const email = ref('')
 const message = ref('')
+const nameError = ref('')
+const emailError = ref('')
+const messageError = ref('')
+const isSubmitting = ref(false)
 
-function sendMail () {
-  const subject = encodeURIComponent(`${SITE.projectName} — investor inquiry`)
-  const body = encodeURIComponent(
-    `Name: ${name.value}\nEmail: ${email.value}\n\n${message.value}\n`
-  )
-  const mailto = `mailto:${SITE.contactEmail}?subject=${subject}&body=${body}`
-  window.location.href = mailto
-  emit('update:modelValue', false)
-  $q.notify({
-    type: 'positive',
-    message: 'Your mail client should open shortly.',
-    position: 'top'
-  })
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const fullNamePattern = /^[A-Za-z]+(?:[ '-][A-Za-z]+)*\s+[A-Za-z]+(?:[ '-][A-Za-z]+)*$/
+
+function validateForm () {
+  nameError.value = ''
+  emailError.value = ''
+  messageError.value = ''
+
+  if (!name.value.trim()) {
+    nameError.value = 'Name and surname are required.'
+  } else if (!fullNamePattern.test(name.value.trim())) {
+    nameError.value = 'Use Name Surname format.'
+  }
+
+  if (!email.value.trim()) {
+    emailError.value = 'Email is required.'
+  } else if (!emailPattern.test(email.value.trim())) {
+    emailError.value = 'Use email format yourmail@mail.com.'
+  }
+
+  if (!message.value.trim()) {
+    messageError.value = 'Message is required.'
+  }
+
+  return !nameError.value && !emailError.value && !messageError.value
+}
+
+function resetForm () {
+  name.value = ''
+  email.value = ''
+  message.value = ''
+  nameError.value = ''
+  emailError.value = ''
+  messageError.value = ''
+}
+
+async function sendContactMessage () {
+  if (!validateForm()) return
+
+  if (!isContactStorageConfigured()) {
+    $q.notify({
+      type: 'negative',
+      message: 'Supabase is not configured yet.',
+      position: 'top'
+    })
+    return
+  }
+
+  isSubmitting.value = true
+
+  try {
+    await saveContactMessage({
+      name: name.value,
+      email: email.value,
+      message: message.value
+    })
+
+    resetForm()
+    emit('update:modelValue', false)
+    $q.notify({
+      type: 'positive',
+      message: 'Thanks, your message was sent.',
+      position: 'top'
+    })
+  } catch (error) {
+    console.error(error)
+    $q.notify({
+      type: 'negative',
+      message: 'Could not send your message. Please try again.',
+      position: 'top'
+    })
+  } finally {
+    isSubmitting.value = false
+  }
 }
 </script>
 
