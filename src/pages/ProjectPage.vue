@@ -64,7 +64,10 @@
       </div>
     </section>
 
-    <section ref="keyToolsEl" class="gallery-block q-pt-xl q-mt-lg column items-center">
+    <section
+      ref="keyToolsEl"
+      class="gallery-block gallery-block--tools q-pt-xl q-mt-lg column items-center"
+    >
       <div
         class="gallery-heading text-center q-mb-lg reveal-on-scroll full-width"
         :class="{ 'is-visible': keyToolsVisible }"
@@ -77,48 +80,53 @@
         </p>
       </div>
 
-      <div class="row q-col-gutter-lg justify-center full-width" style="max-width: 1000px">
+      <div class="tool-shot-grid row q-col-gutter-xl justify-center full-width">
         <div
           v-for="(item, i) in keyTools"
           :key="item.title"
           class="col-12 col-sm-6"
         >
-          <q-card
-            flat
-            bordered
-            class="photo-card overflow-hidden reveal-on-scroll"
+          <article
+            class="tool-shot-card reveal-on-scroll"
             :class="{ 'is-visible': keyToolsVisible }"
             :style="{ transitionDelay: keyToolsDelay(i) }"
           >
-            <div class="photo-shine" aria-hidden="true" />
+            <div class="tool-shot-card__shell">
             <button
               type="button"
               class="tool-shot-trigger"
               :aria-label="`Open ${item.title} screenshot`"
               @click="openToolPreview(item)"
             >
-              <q-img
-                :src="item.src"
-                :ratio="item.ratio || 4 / 3"
-                class="photo-img tool-shot-img"
-                spinner-color="primary"
-                loading="lazy"
-              >
-                <div class="absolute-bottom photo-gradient" />
-                <div class="tool-shot-overlay row items-center justify-center">
-                  <q-icon name="open_in_full" size="22px" />
+                <div class="tool-shot-card__chrome" aria-hidden="true">
+                  <span class="tool-shot-card__dots">
+                    <span /><span /><span />
+                  </span>
+                  <span class="tool-shot-card__chrome-title">Focus Structure Tool</span>
                 </div>
-              </q-img>
+                <div class="tool-shot-card__viewport">
+                  <q-img
+                    :src="item.src"
+                    :ratio="item.ratio || 16 / 10"
+                    class="tool-shot-card__img"
+                    spinner-color="primary"
+                    loading="lazy"
+                  />
+                  <div class="tool-shot-overlay column items-center justify-center">
+                    <span class="tool-shot-overlay__label">View screenshot</span>
+                    <q-icon name="open_in_full" size="20px" />
+                  </div>
+                </div>
             </button>
-            <q-card-section class="q-pt-md">
-              <div class="text-subtitle1 text-weight-medium pp-title">
-                {{ item.title }}
-              </div>
-              <p class="text-caption pp-muted q-mb-none q-mt-xs">
-                {{ item.caption }}
-              </p>
-            </q-card-section>
-          </q-card>
+            </div>
+            <div class="tool-shot-card__body">
+              <span class="tool-shot-card__index" aria-hidden="true">
+                {{ String(i + 1).padStart(2, '0') }}
+              </span>
+              <h3 class="tool-shot-card__title">{{ item.title }}</h3>
+              <p class="tool-shot-card__caption">{{ item.caption }}</p>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -818,6 +826,14 @@ onUnmounted(() => {
   margin-right: auto;
 }
 
+.gallery-block--tools {
+  max-width: 1080px;
+}
+
+.tool-shot-grid {
+  width: 100%;
+}
+
 .preview-pdf-list {
   width: 100%;
   border-radius: 16px;
@@ -1013,51 +1029,34 @@ onUnmounted(() => {
   filter: blur(0);
 }
 
-.photo-card {
+.tool-shot-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.tool-shot-card__shell {
   position: relative;
-  border-radius: 18px;
-  border-color: rgba(11, 195, 171, 0.22);
-  background: rgba(26, 44, 51, 0.55);
-  transition:
-    transform 0.35s ease,
-    border-color 0.35s ease,
-    box-shadow 0.35s ease,
-    background 0.35s ease;
-}
-
-.photo-card.is-visible:hover {
-  transform: translateY(-6px);
-  border-color: rgba(94, 234, 212, 0.4);
-  background: rgba(26, 44, 51, 0.68);
+  padding: 0.65rem;
+  border-radius: 20px;
+  background:
+    linear-gradient(155deg, rgba(26, 44, 51, 0.92), rgba(12, 28, 34, 0.98));
+  border: 1px solid rgba(94, 234, 212, 0.2);
   box-shadow:
-    0 20px 50px rgba(3, 117, 204, 0.28),
-    0 0 0 1px rgba(94, 234, 212, 0.12) inset;
+    0 18px 48px rgba(0, 0, 0, 0.34),
+    0 0 0 1px rgba(204, 251, 241, 0.04) inset;
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
 }
 
-.photo-shine {
-  pointer-events: none;
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  background: linear-gradient(
-    115deg,
-    transparent 40%,
-    rgba(255, 255, 255, 0.06) 48%,
-    rgba(255, 255, 255, 0.12) 50%,
-    rgba(255, 255, 255, 0.06) 52%,
-    transparent 60%
-  );
-  transform: translateX(-100%);
-  transition: transform 0s;
-}
-
-.photo-card.is-visible:hover .photo-shine {
-  transform: translateX(100%);
-  transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.photo-img {
-  border-radius: 0;
+.tool-shot-card.is-visible:hover .tool-shot-card__shell {
+  transform: translateY(-5px);
+  border-color: rgba(94, 234, 212, 0.42);
+  box-shadow:
+    0 26px 60px rgba(3, 117, 204, 0.26),
+    0 0 0 1px rgba(94, 234, 212, 0.14) inset;
 }
 
 .tool-shot-trigger {
@@ -1069,55 +1068,150 @@ onUnmounted(() => {
   background: transparent;
   cursor: zoom-in;
   text-align: inherit;
+  border-radius: 14px;
+  overflow: hidden;
 }
 
 .tool-shot-trigger:focus-visible {
   outline: 2px solid rgba(94, 234, 212, 0.9);
-  outline-offset: -4px;
+  outline-offset: 3px;
 }
 
-.tool-shot-img {
-  transform: translateZ(0);
+.tool-shot-card__chrome {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.5rem 0.75rem;
+  background: linear-gradient(180deg, rgba(8, 22, 28, 0.96), rgba(6, 16, 20, 0.98));
+  border-bottom: 1px solid rgba(94, 234, 212, 0.12);
+}
+
+.tool-shot-card__dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
+}
+
+.tool-shot-card__dots span {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: rgba(94, 234, 212, 0.35);
+  box-shadow: 0 0 0 1px rgba(204, 251, 241, 0.12);
+}
+
+.tool-shot-card__dots span:nth-child(1) {
+  background: rgba(248, 113, 113, 0.55);
+}
+
+.tool-shot-card__dots span:nth-child(2) {
+  background: rgba(251, 191, 36, 0.55);
+}
+
+.tool-shot-card__dots span:nth-child(3) {
+  background: rgba(52, 211, 153, 0.55);
+}
+
+.tool-shot-card__chrome-title {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(204, 251, 241, 0.55);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tool-shot-card__viewport {
+  position: relative;
+  overflow: hidden;
+  background: #060f14;
+}
+
+.tool-shot-card__img {
+  display: block;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.tool-shot-card.is-visible:hover .tool-shot-card__img {
+  transform: scale(1.02);
 }
 
 .tool-shot-overlay {
   position: absolute;
   inset: 0;
+  z-index: 1;
+  gap: 0.55rem;
   color: #ecfeff;
-  background:
-    radial-gradient(circle at 50% 44%, rgba(11, 195, 171, 0.22), transparent 32%),
-    linear-gradient(180deg, rgba(10, 24, 28, 0.04), rgba(10, 24, 28, 0.34));
+  background: rgba(6, 15, 20, 0.52);
+  backdrop-filter: blur(2px);
   opacity: 0;
   transition: opacity 0.28s ease;
 }
 
+.tool-shot-overlay__label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(236, 254, 255, 0.92);
+}
+
 .tool-shot-overlay .q-icon {
-  width: 3.1rem;
-  height: 3.1rem;
-  border: 1px solid rgba(204, 251, 241, 0.32);
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid rgba(204, 251, 241, 0.35);
   border-radius: 999px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: rgba(10, 24, 28, 0.72);
-  box-shadow: 0 14px 34px rgba(3, 117, 204, 0.35);
-  transform: translateY(8px);
+  background: rgba(10, 24, 28, 0.82);
+  box-shadow: 0 12px 28px rgba(3, 117, 204, 0.32);
+  transform: translateY(6px);
   transition: transform 0.28s ease;
 }
 
-.photo-card.is-visible:hover .tool-shot-overlay,
+.tool-shot-card.is-visible:hover .tool-shot-overlay,
 .tool-shot-trigger:focus-visible .tool-shot-overlay {
   opacity: 1;
 }
 
-.photo-card.is-visible:hover .tool-shot-overlay .q-icon,
+.tool-shot-card.is-visible:hover .tool-shot-overlay .q-icon,
 .tool-shot-trigger:focus-visible .tool-shot-overlay .q-icon {
   transform: translateY(0);
 }
 
-.photo-gradient {
-  height: 40%;
-  background: linear-gradient(to top, rgba(19, 48, 49, 0.9), transparent);
+.tool-shot-card__body {
+  padding: 1rem 0.35rem 0.25rem;
+}
+
+.tool-shot-card__index {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: rgba(45, 212, 191, 0.72);
+}
+
+.tool-shot-card__title {
+  margin: 0 0 0.4rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--pp-heading);
+}
+
+.tool-shot-card__caption {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--pp-muted);
 }
 
 :global(.tool-preview-dialog) {
@@ -1206,13 +1300,12 @@ onUnmounted(() => {
     filter: none;
   }
 
-  .photo-card.is-visible:hover {
+  .tool-shot-card.is-visible:hover .tool-shot-card__shell {
     transform: none;
   }
 
-  .photo-card.is-visible:hover .photo-shine {
+  .tool-shot-card.is-visible:hover .tool-shot-card__img {
     transform: none;
-    transition: none;
   }
 
   .tool-shot-overlay,
@@ -1222,14 +1315,22 @@ onUnmounted(() => {
 }
 
 @media (max-width: 620px) {
+  .tool-shot-card__shell {
+    padding: 0.5rem;
+  }
+
   .tool-shot-overlay {
     opacity: 1;
-    background: linear-gradient(180deg, transparent 48%, rgba(10, 24, 28, 0.28));
+    background: linear-gradient(180deg, transparent 55%, rgba(6, 15, 20, 0.45));
+  }
+
+  .tool-shot-overlay__label {
+    display: none;
   }
 
   .tool-shot-overlay .q-icon {
-    width: 2.45rem;
-    height: 2.45rem;
+    width: 2.35rem;
+    height: 2.35rem;
     transform: none;
   }
 
