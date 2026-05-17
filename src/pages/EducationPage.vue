@@ -1,20 +1,25 @@
 <template>
-  <q-page class="education-page q-pa-md q-pb-xl">
+  <q-page class="education-page q-pa-md q-pb-xl column items-center">
     <section class="hero q-mb-xl text-center column items-center">
-      <div class="text-overline edu-overline q-mb-sm">Education</div>
       <h1 class="text-h3 text-weight-bold text-white q-mb-md">
-        Built for learning and research
+        Solution for schoolkids and students
       </h1>
       <p class="text-body1 text-grey-4 hero-lead">
-        {{ SITE.projectName }} helps students and educators turn scattered readings into
-        structured understanding — from first sources to final arguments.
+        We propose a revolutionary approach to education that solves many current problems at once.
       </p>
     </section>
 
-    <section class="advantages-wrap column items-center">
+    <section
+      v-for="group in previewGroups"
+      :key="group.title"
+      class="education-group education-group--green-answers column items-center text-center q-mb-xl"
+    >
+      <h2 class="education-group__title text-h5 text-weight-bold q-mb-md">
+        {{ group.title }}
+      </h2>
       <div class="advantages-list">
         <article
-          v-for="item in advantages"
+          v-for="item in group.items"
           :key="item.title"
           class="advantage-card row no-wrap items-start"
         >
@@ -22,96 +27,167 @@
             <q-icon :name="item.icon" size="26px" />
           </div>
           <div class="advantage-card__copy">
-            <h2 class="advantage-card__title">{{ item.title }}</h2>
+            <h3 class="advantage-card__title">{{ item.title }}</h3>
             <p class="advantage-card__text q-mb-none">{{ item.text }}</p>
           </div>
         </article>
       </div>
     </section>
 
+    <section class="education-preview column items-center text-center">
+      <h2 class="education-preview__heading text-h5 text-weight-bold q-mb-md text-center">
+        Preview of the education with FST
+      </h2>
+      <p class="education-preview__text text-body1 q-ma-none text-center">
+        (later, we'll add here screenshots of how it will work exactly for education)
+      </p><br>
+      <p class="education-preview__text text-body1 q-ma-none text-center">
+        This educational direction remains under active development. Our current priority is
+        the core research workflow; a dedicated offering for schools and universities will
+        follow in a later release.
+      </p>
+      <p class="education-preview__text text-body1 q-mt-md q-mb-none text-center">
+        If you represent an institution or are personally interested in the educational use of
+        {{ SITE.projectName }}, we invite you to contact us at
+        <a :href="contactMailto" class="education-preview__email">{{ SITE.contactEmail }}</a>.
+        We will review your inquiry with care and take it into account when planning future
+        development priorities.
+      </p>
+    </section>
   </q-page>
 </template>
 
 <script setup>
 import { SITE } from 'src/constants/site'
 
-const advantages = [
+const contactMailto = `mailto:${SITE.contactEmail}`
+
+const generalIdeas = [
+  {
+    icon: 'school',
+    title: 'Increasing motivation by reducing the mess in information',
+    text:
+      'Often, students can not work because all the information feels so dense that there is no way to understand in general what is going on. The structuring of information and the ability to fast edit it will increase motivation drastically.'
+  },
+  {
+    icon: 'lightbulb',
+    title: 'Studying within approach that will be really used after studies',
+    text:
+      'There is no sense in learning in school an approach of studies that is unusable in real life. We propose to instead use a format that is guaranteed to work for the hardest university subjects.'
+  },
+  {
+    icon: 'lightbulb',
+    title: 'Make a real check of the progress easier',
+    text:
+      'One file with comments allows us to easily see if a student thought about some information or not. It will be easier not to fly in fantasies that there is progress, if actually there are only problems and imitation.'
+  }
+]
+
+const particularRealizations = [
   {
     icon: 'menu_book',
-    title: 'One PDF file for one topic',
+    title: 'One PDF file for many years of study',
     text:
-      'Keep each reading assignment in its own workspace so students stay focused on a single subject instead of mixing unrelated sources.'
+      'Keep materials for a subject in a single workspace so progress accumulates across terms and topics remain easy to revisit. Each new year of studying a subject is an addition of a new book to this PDF file, which then the student can edit as they want to sharpen their knowledge. No more stored paper notebooks and mess in information.'
   },
   {
     icon: 'account_tree',
-    title: 'See the structure of long papers',
+    title: 'Graphical tool for restructuring and quick access',
     text:
-      'Outlines and knowledge maps reveal how arguments are built — ideal for theses, review papers, and seminar prep.'
+      'Our application gives the key section of the book for finding answers way faster. Thus, students will save time and always be focused as much as they can.'
   },
   {
-    icon: 'code',
-    title: 'LaTeX and notes in one place',
+    icon: 'account_tree',
+    title: 'Adding comments and questions to focus on',
     text:
-      'Write, cite, and revise without jumping between a PDF viewer, editor, and separate note app.'
-  },
-  {
-    icon: 'psychology',
-    title: 'AI explanations on demand',
-    text:
-      'Highlight a difficult paragraph or formula and get an explanation tied to the source, so learning stays grounded in the text.'
-  },
-  {
-    icon: 'compare',
-    title: 'Compare sources side by side',
-    text:
-      'Open related passages next to each other to contrast methods, definitions, or claims — useful for essays and literature reviews.'
-  },
-  {
-    icon: 'bookmark_add',
-    title: 'Notes that stay with the project',
-    text:
-      'AI answers and your own comments become reusable project knowledge for exams, presentations, and group work.'
-  },
-  {
-    icon: 'hub',
-    title: 'Themes across many sections',
-    text:
-      'AI groups hundreds of outline sections into research themes so students can navigate large reading lists faster.'
-  },
-  {
-    icon: 'groups',
-    title: 'Shared language for teams',
-    text:
-      'Groups and advisors work from the same structured view of sources, notes, and open questions.'
+      'Students often stop studying if they feel that there will be no answers to their questions. Here, one can add them and create a section for an answer in a few clicks.'
   }
+]
+
+const previewGroups = [
+  { id: 'general', title: 'General idea and solved problems', items: generalIdeas },
+  { id: 'particular', title: 'Particular realization', items: particularRealizations }
 ]
 </script>
 
 <style scoped>
 .education-page {
+  width: 100%;
   max-width: 1100px;
   margin-left: auto;
   margin-right: auto;
   color: var(--site-text-body);
 }
 
-.edu-overline {
-  color: var(--site-text-muted);
-  letter-spacing: 0.12em;
+.hero {
+  width: 100%;
+  max-width: 820px;
 }
 
 .hero-lead {
   max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
   line-height: 1.62;
 }
 
-.advantages-wrap {
+.education-group {
   width: 100%;
+  max-width: 820px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.education-group__title {
+  width: 100%;
+  color: var(--site-text-heading);
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+
+.education-preview {
+  width: 100%;
+  max-width: 820px;
+  margin-top: 2rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.education-preview__heading {
+  color: var(--site-text-heading);
+  letter-spacing: -0.01em;
+}
+
+.education-preview__text {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+  color: var(--site-text-muted);
+  line-height: 1.62;
+}
+
+.advantage-card__copy {
+  text-align: left;
+}
+
+.education-group--green-answers .advantage-card__text {
+  color: var(--site-text-muted);
+}
+
+.education-preview__email {
+  color: var(--site-text-accent);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.education-preview__email:hover {
+  color: var(--site-text-accent-soft);
+  text-decoration: underline;
 }
 
 .advantages-list {
   width: 100%;
-  max-width: 820px;
   display: flex;
   flex-direction: column;
   gap: 1rem;

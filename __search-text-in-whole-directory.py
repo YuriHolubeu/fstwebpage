@@ -9,7 +9,7 @@ import os
 import fnmatch
 
 
-search_text = r"Answers on other "
+search_text = r"tructure Tool helps student"
 
 def search_in_file(file_path, search_text, search_output_lines):
     """Search for search_text in the specified file and collect lines containing the search_text."""
@@ -29,7 +29,7 @@ def search_in_directory(root_dir, search_text):
     """Walk through all directories in root_dir and search for search_text in .tex files."""
     search_output_lines = []
     for root, _, files in os.walk(root_dir):
-        for filename in fnmatch.filter(files, '*.vue'):
+        for filename in fnmatch.filter(files, '*.js'):
             file_path = os.path.join(root, filename)
             search_in_file(file_path, search_text, search_output_lines)
     
