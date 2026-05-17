@@ -1,5 +1,5 @@
 <template>
-  <q-header class="investor-header" elevated reveal reveal-offset="80">
+  <q-header class="investor-header" elevated reveal :reveal-offset="80">
     <div class="header-glow" aria-hidden="true" />
 
     <q-toolbar class="toolbar-inner q-px-md q-py-sm">
