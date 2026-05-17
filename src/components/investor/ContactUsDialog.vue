@@ -53,12 +53,38 @@
           outlined
           type="textarea"
           autogrow
-          label="How can we help?"
+          label="How can we help? (optional for newsletter)"
           class="cd-field"
           color="primary"
           :error="Boolean(messageError)"
           :error-message="messageError"
         />
+        <div class="subscription-panel">
+          <div class="subscription-title">I want to</div>
+          <div class="subscription-options">
+            <q-checkbox
+              v-model="selectedInterests"
+              val="waitlist"
+              class="cd-checkbox subscription-option"
+              color="primary"
+              label="Join the app waitlist"
+            />
+            <q-checkbox
+              v-model="selectedInterests"
+              val="vip"
+              class="cd-checkbox subscription-option subscription-option--vip"
+              color="primary"
+              label="Become a VIP user"
+            />
+            <q-checkbox
+              v-model="selectedInterests"
+              val="newsletter"
+              class="cd-checkbox subscription-option"
+              color="primary"
+              label="Subscribe to the newsletter"
+            />
+          </div>
+        </div>
       </q-card-section>
 
       <q-card-actions align="right" class="contact-actions q-px-lg q-pb-lg q-pt-sm">
@@ -93,6 +119,11 @@ import {
   isContactStorageConfigured,
   saveContactMessage
 } from 'src/services/contact-messages'
+import {
+  isAudienceStorageConfigured,
+  notifyAudienceSignup,
+  saveAudienceSubscriptions
+} from 'src/services/audience-subscriptions'
 
 defineProps({
   modelValue: { type: Boolean, required: true }
@@ -105,6 +136,7 @@ const $q = useQuasar()
 const name = ref('')
 const email = ref('')
 const message = ref('')
+const selectedInterests = ref(['waitlist'])
 const nameError = ref('')
 const emailError = ref('')
 const messageError = ref('')
@@ -130,7 +162,7 @@ function validateForm () {
     emailError.value = 'Use email format yourmail@mail.com.'
   }
 
-  if (!message.value.trim()) {
+  if (!message.value.trim() && selectedInterests.value.length === 0) {
     messageError.value = 'Message is required.'
   }
 
@@ -141,6 +173,7 @@ function resetForm () {
   name.value = ''
   email.value = ''
   message.value = ''
+  selectedInterests.value = ['waitlist']
   nameError.value = ''
   emailError.value = ''
   messageError.value = ''
@@ -158,20 +191,51 @@ async function sendContactMessage () {
     return
   }
 
+  if (selectedInterests.value.length > 0 && !isAudienceStorageConfigured()) {
+    $q.notify({
+      type: 'negative',
+      message: 'Subscription storage is not configured yet.',
+      position: 'top'
+    })
+    return
+  }
+
   isSubmitting.value = true
 
   try {
-    await saveContactMessage({
+    if (message.value.trim()) {
+      await saveContactMessage({
+        name: name.value,
+        email: email.value,
+        message: message.value
+      })
+    }
+
+    const savedInterests = selectedInterests.value.length
+      ? await saveAudienceSubscriptions({
+        name: name.value,
+        email: email.value,
+        message: message.value,
+        sourcePath: window.location.pathname,
+        interests: selectedInterests.value
+      })
+      : []
+
+    await notifyAudienceSignup({
       name: name.value,
       email: email.value,
-      message: message.value
+      message: message.value,
+      sourcePath: window.location.pathname,
+      interests: savedInterests
     })
 
     resetForm()
     emit('update:modelValue', false)
     $q.notify({
       type: 'positive',
-      message: 'Thanks, your message was sent.',
+      message: savedInterests.length
+        ? 'Thanks, your subscription was saved.'
+        : 'Thanks, your message was sent.',
       position: 'top'
     })
   } catch (error) {
@@ -282,17 +346,62 @@ async function sendContactMessage () {
 }
 
 .cd-field :deep(.q-field--outlined.q-field--focused .q-field__control:before) {
-  border-color: rgba(3, 117, 204, 0.55) !important;
-  box-shadow: 0 0 0 1px rgba(3, 117, 204, 0.22);
+  border-color: #0bc3ab !important;
 }
 
 .cd-field :deep(.q-field--outlined.q-field--focused .q-field__control:after) {
-  border-width: 2px !important;
-  border-color: #0bc3ab !important;
+  border-color: transparent !important;
 }
 
 .cd-field :deep(textarea.q-field__native) {
   min-height: 88px;
+}
+
+.subscription-panel {
+  padding: 0.85rem;
+  border-radius: 12px;
+  background: rgba(5, 20, 28, 0.28);
+}
+
+.subscription-title {
+  margin-bottom: 0.45rem;
+  color: var(--cd-muted);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.subscription-options {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.cd-checkbox {
+  color: var(--cd-high);
+  font-weight: 700;
+}
+
+.subscription-option {
+  min-height: 2.4rem;
+  padding: 0.25rem 0.45rem;
+  border: 1px solid rgba(94, 234, 212, 0.12);
+  border-radius: 10px;
+  background: rgba(204, 251, 241, 0.04);
+}
+
+.subscription-option--vip {
+  border-color: rgba(216, 180, 254, 0.34);
+  background: linear-gradient(120deg, rgba(15, 118, 110, 0.16), rgba(88, 28, 135, 0.2));
+}
+
+.cd-checkbox :deep(.q-checkbox__label) {
+  color: var(--cd-high);
+  line-height: 1.35;
+}
+
+.cd-checkbox :deep(.q-checkbox__inner) {
+  color: var(--cd-soft);
 }
 
 /* ---- Buttons ---- */
