@@ -87,14 +87,10 @@
         </p>
       </div>
     </section>
-
-    <GetInTouchSection />
   </q-page>
 </template>
 
 <script setup>
-import GetInTouchSection from 'src/components/investor/GetInTouchSection.vue'
-
 const heroPoints = [
   'group uploaded articles by research meaning',
   'surface hidden links between formulas and papers',
