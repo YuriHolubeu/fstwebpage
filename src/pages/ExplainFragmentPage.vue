@@ -1,19 +1,18 @@
 <template>
   <q-page class="tree-page q-pa-md q-pb-xl">
-    <section class="hero-grid q-pt-lg q-mb-lg">
+    <section class="hero-section q-pt-lg q-mb-lg">
       <div class="hero-copy">
         <div class="text-overline page-overline q-mb-sm">AI Features / Explanation Tree</div>
-        <h1 class="hero-title q-mb-md">Source-Anchored AI Explanation Tree</h1>
-        <p class="hero-lead q-mb-lg">
-          AI explanations are not lost in chat. They stay anchored to exact formulas, sections and
-          papers, while follow-up questions grow into a branching tree of understanding.
+        <h1 class="hero-title">AI explanations anchored to the exact source</h1>
+        <p class="hero-lead">
+          Instead of copying formulas into a separate chatbot, users explain a selected fragment
+          directly inside the paper. Every answer stays attached to the formula, page and section
+          where the question started.
         </p>
-
-        <div class="difference-grid">
-          <div v-for="item in differences" :key="item.title" class="difference-card">
-            <q-icon :name="item.icon" />
-            <strong>{{ item.title }}</strong>
-            <span>{{ item.text }}</span>
+        <div class="hero-points">
+          <div v-for="point in heroPoints" :key="point" class="hero-point">
+            <q-icon name="check_circle" />
+            <span>{{ point }}</span>
           </div>
         </div>
       </div>
@@ -24,19 +23,22 @@
             <span class="dot" />
             <span class="dot" />
             <span class="dot" />
-            <span class="mock-path">Formula / Understanding Tree</span>
+            <span class="mock-path">Formula Understanding Tree</span>
           </div>
           <q-chip dense outline color="cyan-4" text-color="grey-3">source anchored</q-chip>
         </div>
 
-        <div class="source-anchor">
-          <span>Anchor</span>
-          <strong>χ(q) response function</strong>
-          <p>Gruner.tex · The One-Dimensional Electron Gas · page 11</p>
+        <div class="source-card">
+          <div>
+            <span>Selected source</span>
+            <strong>χ(q) response function</strong>
+            <p>Gruner.tex · The One-Dimensional Electron Gas · page 11</p>
+          </div>
+          <q-btn outline no-caps dense color="cyan-4" label="Back to source" />
         </div>
 
-        <div class="tree-view">
-          <div class="tree-root">
+        <div class="tree-body">
+          <div class="root-node">
             <q-icon name="functions" />
             <div>
               <strong>AI explanation</strong>
@@ -44,8 +46,8 @@
             </div>
           </div>
 
-          <div class="tree-branches">
-            <div v-for="branch in branches" :key="branch.title" class="tree-branch">
+          <div class="branch-grid">
+            <div v-for="branch in branches" :key="branch.title" class="branch-node">
               <q-icon :name="branch.icon" />
               <div>
                 <strong>{{ branch.title }}</strong>
@@ -54,32 +56,44 @@
             </div>
           </div>
 
-          <div class="follow-up">
+          <div class="follow-up-path">
             <q-icon name="account_tree" />
-            <span>Follow-up grows sideways: Fermi surface clarification → usage in Paper B → open related fragment</span>
+            <span>Follow-up questions grow as branches, not as a lost chat history.</span>
           </div>
         </div>
       </q-card>
     </section>
 
-    <section class="compact-map q-mb-lg">
-      <article v-for="step in flow" :key="step.title" class="map-node">
-        <q-icon :name="step.icon" class="map-icon" />
-        <div>
-          <h2>{{ step.title }}</h2>
-          <p>{{ step.text }}</p>
+    <section class="value-grid q-mb-lg">
+      <article v-for="item in values" :key="item.title" class="value-card">
+        <div class="value-head">
+          <span>{{ item.number }}</span>
+          <q-icon :name="item.icon" />
+        </div>
+        <h2>{{ item.title }}</h2>
+        <p>{{ item.text }}</p>
+        <div class="value-example">
+          <strong>{{ item.exampleTitle }}</strong>
+          <span>{{ item.example }}</span>
         </div>
       </article>
     </section>
 
-    <section class="investor-line q-mt-lg q-pa-lg">
-      <q-icon name="psychology_alt" class="investor-icon" />
-      <div>
-        <h2>This is not another AI chat.</h2>
+    <section class="compare-section q-pa-lg q-mb-lg">
+      <div class="compare-copy">
+        <div class="text-overline page-overline q-mb-sm">Why it beats normal chat</div>
+        <h2>This is research memory, not another conversation</h2>
         <p>
-          It becomes project memory: searchable, source-linked, reusable in notes, and easy to
-          return to from the original formula, page or section.
+          ChatGPT answers drift down a linear thread. Here, every explanation knows the selected
+          text, formula, paper, section and page. Users can return to the original place, continue
+          a branch, or reuse the answer inside notes and drafts.
         </p>
+      </div>
+      <div class="compare-list">
+        <div v-for="item in compare" :key="item" class="compare-item">
+          <q-icon name="keyboard_return" />
+          <span>{{ item }}</span>
+        </div>
       </div>
     </section>
 
@@ -88,22 +102,10 @@
 
 <script setup>
 
-const differences = [
-  {
-    title: 'Anchored to source',
-    text: 'Every answer knows the paper, page, section and selected formula.',
-    icon: 'push_pin'
-  },
-  {
-    title: 'Branching, not linear',
-    text: 'Follow-ups become a tree around the original research fragment.',
-    icon: 'account_tree'
-  },
-  {
-    title: 'Project memory',
-    text: 'Explanations stay inside the workspace and can be reused later.',
-    icon: 'bookmark_added'
-  }
+const heroPoints = [
+  'explanations stay tied to the exact formula or paragraph',
+  'follow-up questions become a branching understanding tree',
+  'answers become searchable project memory, not lost chat'
 ]
 
 const branches = [
@@ -118,33 +120,49 @@ const branches = [
     icon: 'priority_high'
   },
   {
-    title: 'Where used later',
-    text: 'Links to related sections and papers',
+    title: 'Used later',
+    text: 'Links to related fragments and papers',
     icon: 'link'
+  },
+  {
+    title: 'Next question',
+    text: 'How is this connected to Fermi surface?',
+    icon: 'help'
   }
 ]
 
-const flow = [
+const values = [
   {
-    title: 'Highlight',
-    text: 'User selects a formula, paragraph or claim directly inside PDF/LaTeX.',
-    icon: 'select_all'
+    number: '01',
+    icon: 'push_pin',
+    title: 'Anchored to the source',
+    text: 'Every AI explanation is attached to the selected formula, paragraph, paper, page and section.',
+    exampleTitle: 'User value',
+    example: 'A week later, the user can jump back to the exact place where the question started.'
   },
   {
-    title: 'Explain',
-    text: 'AI explains with nearby project context instead of a detached chat prompt.',
-    icon: 'auto_awesome'
+    number: '02',
+    icon: 'account_tree',
+    title: 'Research thinking is branching',
+    text: 'Follow-ups grow as a tree around the original source instead of disappearing inside a linear chat.',
+    exampleTitle: 'Product value',
+    example: 'The interface follows how researchers actually explore ideas: symbols, intuition, proof, usage.'
   },
   {
-    title: 'Branch',
-    text: 'Each follow-up grows as a connected clarification from the same source.',
-    icon: 'account_tree'
-  },
-  {
-    title: 'Return',
-    text: 'Back to source opens the exact paper, page, section and selected fragment.',
-    icon: 'keyboard_return'
+    number: '03',
+    icon: 'bookmark_added',
+    title: 'Answers become project memory',
+    text: 'Explanations can be searched, reopened, linked to notes and reused in LaTeX drafts later.',
+    exampleTitle: 'Research value',
+    example: 'The workspace accumulates understanding instead of producing disposable AI answers.'
   }
+]
+
+const compare = [
+  'Back to source fragment',
+  'Continue a specific branch',
+  'Save as note or LaTeX paragraph',
+  'Link to related formulas and papers'
 ]
 </script>
 
@@ -156,10 +174,10 @@ const flow = [
   color: var(--site-text-body);
 }
 
-.hero-grid {
+.hero-section {
   display: grid;
-  grid-template-columns: minmax(0, 0.95fr) minmax(20rem, 0.86fr);
-  gap: clamp(1rem, 3vw, 2rem);
+  grid-template-columns: minmax(0, 0.92fr) minmax(24rem, 0.9fr);
+  gap: clamp(1rem, 4vw, 2.5rem);
   align-items: center;
 }
 
@@ -170,60 +188,52 @@ const flow = [
 
 .hero-title {
   max-width: 44rem;
+  margin: 0;
   color: var(--site-text-heading);
-  font-size: clamp(2rem, 5vw, 4rem);
+  font-size: clamp(2.3rem, 5.4vw, 4.4rem);
   font-weight: 850;
-  line-height: 1.04;
+  line-height: 1.02;
   letter-spacing: 0;
 }
 
 .hero-lead {
   max-width: 42rem;
-  color: var(--site-text-body);
-  font-size: clamp(19px, 2vw, 21px);
-  line-height: 1.62;
+  margin: 1.15rem 0 0;
+  color: rgba(207, 250, 254, 0.76);
+  font-size: clamp(1rem, 1.8vw, 1.18rem);
+  line-height: 1.6;
 }
 
-.difference-grid {
+.hero-points {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.65rem;
+  gap: 0.55rem;
+  margin-top: 1.25rem;
+  max-width: 38rem;
 }
 
-.difference-card,
+.hero-point {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: rgba(236, 254, 255, 0.88);
+  font-size: 0.92rem;
+  font-weight: 750;
+}
+
+.hero-point .q-icon {
+  color: #5eead4;
+  font-size: 1.1rem;
+}
+
 .tree-mock,
-.compact-map,
-.investor-line {
+.value-card,
+.compare-section {
   border: 1px solid rgba(94, 234, 212, 0.22);
   border-radius: 8px;
   background:
     linear-gradient(145deg, rgba(15, 55, 56, 0.82), rgba(10, 24, 28, 0.88)),
     rgba(26, 44, 51, 0.6);
   box-shadow: 0 22px 70px rgba(10, 24, 28, 0.28);
-}
-
-.difference-card {
-  padding: 0.85rem;
-}
-
-.difference-card .q-icon {
-  color: var(--site-text-muted);
-  font-size: 24px;
-}
-
-.difference-card strong {
-  display: block;
-  margin-top: 0.42rem;
-  color: var(--site-text-heading);
-  line-height: 1.18;
-}
-
-.difference-card span {
-  display: block;
-  margin-top: 0.28rem;
-  color: rgba(207, 250, 254, 0.74);
-  font-size: 16px;
-  line-height: 1.35;
 }
 
 .tree-mock {
@@ -255,189 +265,234 @@ const flow = [
 
 .mock-path {
   margin-left: 0.3rem;
-  color: rgba(255, 255, 255, 0.88);
-  font-size: 16px;
+  color: rgba(236, 254, 255, 0.74);
+  font-size: 0.82rem;
 }
 
-.source-anchor,
-.tree-root,
-.tree-branch,
-.follow-up {
+.source-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin: 1rem;
+  padding: 0.85rem;
   border: 1px solid rgba(94, 234, 212, 0.16);
   border-radius: 8px;
   background: rgba(5, 20, 28, 0.42);
 }
 
-.source-anchor {
-  margin: 1rem;
-  padding: 0.85rem;
-}
-
-.source-anchor span {
+.source-card span {
   display: block;
-  color: var(--site-text-muted);
-  font-size: 15px;
+  color: #5eead4;
+  font-size: 0.72rem;
   font-weight: 850;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
-.source-anchor strong {
+.source-card strong {
   display: block;
   margin-top: 0.25rem;
   color: var(--site-text-heading);
   line-height: 1.2;
 }
 
-.source-anchor p {
-  margin: 0.28rem 0 0;
-  color: rgba(207, 250, 254, 0.76);
-  line-height: 1.42;
+.source-card p {
+  margin: 0.25rem 0 0;
+  color: rgba(207, 250, 254, 0.72);
+  font-size: 0.82rem;
+  line-height: 1.3;
 }
 
-.tree-view {
+.tree-body {
   padding: 0 1rem 1rem;
 }
 
-.tree-root,
-.tree-branch {
+.root-node,
+.branch-node,
+.follow-up-path {
+  border: 1px solid rgba(94, 234, 212, 0.16);
+  border-radius: 8px;
+  background: rgba(5, 20, 28, 0.42);
+}
+
+.root-node {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   gap: 0.65rem;
-  padding: 0.78rem;
-}
-
-.tree-root {
+  padding: 0.8rem;
   border-color: rgba(94, 234, 212, 0.38);
 }
 
-.tree-root .q-icon,
-.tree-branch .q-icon,
-.follow-up .q-icon {
-  color: var(--site-text-muted);
-  font-size: 23px;
+.root-node .q-icon,
+.branch-node .q-icon,
+.follow-up-path .q-icon {
+  color: #5eead4;
+  font-size: 1.35rem;
 }
 
-.tree-root strong,
-.tree-branch strong {
+.root-node strong,
+.branch-node strong {
   display: block;
   color: var(--site-text-heading);
   line-height: 1.2;
 }
 
-.tree-root span,
-.tree-branch span,
-.follow-up span {
+.root-node span,
+.branch-node span,
+.follow-up-path span {
   display: block;
   margin-top: 0.22rem;
-  color: rgba(207, 250, 254, 0.75);
-  font-size: 16px;
-  line-height: 1.36;
+  color: rgba(207, 250, 254, 0.72);
+  font-size: 0.82rem;
+  line-height: 1.35;
 }
 
-.tree-branches {
+.branch-grid {
   position: relative;
   display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.55rem;
-  margin: 0.7rem 0 0.7rem 1.4rem;
-  padding-left: 0.8rem;
-  border-left: 1px solid rgba(94, 234, 212, 0.36);
+  margin: 0.75rem 0;
+  padding-left: 1rem;
+  border-left: 1px solid rgba(94, 234, 212, 0.35);
 }
 
-.follow-up {
+.branch-node {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.55rem;
+  min-height: 4.25rem;
+  padding: 0.7rem;
+}
+
+.follow-up-path {
   display: flex;
   align-items: center;
   gap: 0.55rem;
-  padding: 0.78rem;
+  padding: 0.75rem;
   border-color: rgba(216, 180, 254, 0.34);
   background: linear-gradient(135deg, rgba(11, 195, 171, 0.14), rgba(168, 85, 247, 0.16));
 }
 
-.compact-map {
+.value-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.75rem;
-  padding: 0.8rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
 }
 
-.map-node {
-  position: relative;
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: 0.75rem;
-  min-height: 7.2rem;
-  padding: 0.85rem;
-  border: 1px solid rgba(94, 234, 212, 0.14);
-  border-radius: 8px;
-  background: rgba(204, 251, 241, 0.055);
+.value-card {
+  padding: 1rem;
 }
 
-.map-node:not(:last-child)::after {
-  content: '';
-  position: absolute;
-  right: -0.75rem;
-  top: 50%;
-  width: 0.75rem;
-  height: 1px;
-  background: rgba(94, 234, 212, 0.45);
+.value-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.85rem;
 }
 
-.map-icon,
-.investor-icon {
-  width: 2.2rem;
-  height: 2.2rem;
+.value-head span {
+  color: var(--site-text-muted);
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+}
+
+.value-head .q-icon {
+  width: 2.25rem;
+  height: 2.25rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: 8px;
   color: var(--site-text-high);
-  font-size: 23px;
+  font-size: 1.25rem;
   background: linear-gradient(135deg, rgba(11, 195, 171, 0.95), rgba(3, 117, 204, 0.92));
 }
 
-.map-node h2,
-.investor-line h2 {
+.value-card h2,
+.compare-section h2 {
   margin: 0;
   color: var(--site-text-heading);
-  font-size: 20px;
+  font-size: 1.15rem;
   font-weight: 850;
-  line-height: 1.18;
+  line-height: 1.2;
   letter-spacing: 0;
 }
 
-.map-node p,
-.investor-line p {
-  margin: 0.34rem 0 0;
-  color: rgba(207, 250, 254, 0.76);
-  line-height: 1.42;
-  font-size: 17px;
+.value-card p,
+.compare-section p {
+  margin: 0.65rem 0 0;
+  color: rgba(207, 250, 254, 0.74);
+  font-size: 0.92rem;
+  line-height: 1.48;
 }
 
-.investor-line {
+.value-example {
+  margin-top: 0.9rem;
+  padding: 0.7rem;
+  border: 1px solid rgba(94, 234, 212, 0.14);
+  border-radius: 8px;
+  background: rgba(204, 251, 241, 0.055);
+}
+
+.value-example strong {
+  display: block;
+  color: #5eead4;
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.value-example span {
+  display: block;
+  margin-top: 0.28rem;
+  color: rgba(236, 254, 255, 0.84);
+  font-size: 0.84rem;
+  line-height: 1.35;
+}
+
+.compare-section {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: 0.85rem;
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.7fr);
+  gap: 1rem;
   align-items: center;
 }
 
+.compare-list {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.compare-item {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.65rem;
+  border: 1px solid rgba(94, 234, 212, 0.14);
+  border-radius: 8px;
+  color: rgba(236, 254, 255, 0.86);
+  font-size: 0.86rem;
+  font-weight: 750;
+  background: rgba(204, 251, 241, 0.055);
+}
+
+.compare-item .q-icon {
+  color: #5eead4;
+  font-size: 1.12rem;
+}
+
 @media (max-width: 920px) {
-  .hero-grid,
-  .difference-grid,
-  .compact-map {
+  .hero-section,
+  .value-grid,
+  .compare-section {
     grid-template-columns: 1fr;
   }
 
-  .map-node {
-    min-height: 0;
-  }
-
-  .map-node:not(:last-child)::after {
-    left: 1.9rem;
-    right: auto;
-    top: auto;
-    bottom: -0.75rem;
-    width: 1px;
-    height: 0.75rem;
+  .branch-grid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -445,6 +500,11 @@ const flow = [
   .tree-page {
     padding-left: 0.75rem;
     padding-right: 0.75rem;
+  }
+
+  .source-card {
+    align-items: stretch;
+    flex-direction: column;
   }
 }
 </style>

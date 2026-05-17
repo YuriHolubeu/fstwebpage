@@ -556,26 +556,26 @@ const aiToolsFeatures = [
     icon: 'auto_awesome',
     title: 'AI for finding extra connections between articles',
     description:
-      'Suppose, one has used our application for downloading 200 cited articles from 10 relevant papers. It would take some weeks to grasp main ideas of them to make sure that non if the relevant information would be missed. Our AI tool can analyse it and give proposals for relevant connections in minutes.'
+      'Suppose one has used our application for downloading 200 cited articles from 10 relevant papers. It would take some weeks to grasp the main ideas of them to make sure that none if the relevant information would be missed. Our AI tool can analyse it and give proposals for relevant connections in minutes.'
   },
   
   {
     icon: 'hub',
-    title: 'AI derivation guidence',
+    title: 'AI derivation guidance',
     description:
-      'Our application will provide not only answers to the questions, but will also highlight parts of a book in the project, which could be used by a reseracher to get this answer by themselves.'
+      'Our application will not only provide answers to the questions but also highlight parts of a book in the project that a researcher could use to find these answers on their own.'
   },
   {
     icon: 'hub',
     title: 'AI explanation tree',
     description:
-      'Format of chat is unusable for constant work with information because all information is stored just vertically. Our graphical envaironment provides a natural tool for storing inforamtion in a graph form, making way more comfortable to use AI.'
+      'The chat format is unusable for constant work with information because all information is stored vertically. Our graphical environment provides a natural tool for storing information in a graph form, making it way more comfortable to use AI.'
   },
   {
     icon: 'psychology',
     title: 'AI for supervising research',
     description:
-      'Currenlty, there are a lot of historical books how famous scientists worked, but since they are dead, there is no way to be supervised by them. We will provide a platform for developing AI agents of such scientists which will be guiding a researcher.'
+      'Currently, there are a lot of historical books about how famous scientists worked, but since they are dead, there is no way to be supervised by them. We will provide a platform for developing AI agents of such scientists which will be guiding a researcher.'
   }
 ]
 
@@ -885,7 +885,7 @@ onUnmounted(() => {
   margin: 0;
   padding: 2px 6px;
   max-width: 75%;
-  font-size: 14px;
+  font-size: 7px;
   line-height: 1.2;
   font-weight: 500;
   letter-spacing: 0.02em;
@@ -1032,6 +1032,7 @@ onUnmounted(() => {
 
 .workshop-image-caption {
   color: var(--pp-muted);
+  font-size: 0.5rem;
   line-height: 1.5;
   font-weight: 500;
   letter-spacing: 0.01em;
