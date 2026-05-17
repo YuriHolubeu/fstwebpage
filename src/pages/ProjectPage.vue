@@ -54,7 +54,7 @@
           Complete professional research environment
         </h2>
         <p class="workspace-section-lead workspace-feature__text text-caption pp-muted q-mt-none q-mb-md">
-          Our application has tools that make theoretical research faster and more efficient. We promise:
+          Our application makes theoretical research faster, more efficient, and more comfortable. We promise:
         </p>
 
         <ul class="workspace-features q-pl-none q-ma-none">
@@ -101,7 +101,7 @@
           </h2>
 
           <p class="workspace-section-lead workspace-feature__text text-caption pp-muted q-mt-none q-mb-md">
-            A special structure of the application is used to make such an environment possible. This format plays a key role in AI tools, as explained below.
+            A dedicated application structure makes this environment possible. This format is key to enabling the AI tools, as explained below.
           </p>
           <ul class="workspace-features q-pl-none q-ma-none">
             <li
@@ -131,7 +131,7 @@
             <figure class="application-screenshot-figure">
               <img
                 :src="applicationScreenshot.src"
-                alt="Focus Structure Tool workspace with structured outline and linked document views"
+                alt="Focus Structure Tool workspace with a structured outline and linked document views"
                 class="application-screenshot-img"
                 :width="applicationScreenshot.width"
                 :height="applicationScreenshot.height"
@@ -232,7 +232,12 @@
                 <div class="workspace-feature__title text-subtitle2 text-weight-medium pp-title q-mb-xs">
                   {{ feature.title }}
                 </div>
-                <p class="workspace-feature__text text-caption pp-muted q-mb-none">
+                <p
+                  v-if="feature.descriptionHtml"
+                  class="workspace-feature__text text-caption pp-muted q-mb-none"
+                  v-html="feature.descriptionHtml"
+                />
+                <p v-else class="workspace-feature__text text-caption pp-muted q-mb-none">
                   {{ feature.description }}
                 </p>
               </div>
@@ -242,10 +247,6 @@
       </div>
     </section>
 
-
-
-
-    
     <section ref="previewsEl" class="results-preview-block q-pt-xl q-mt-lg column items-center">
       <div
         class="gallery-heading text-center q-mb-lg reveal-on-scroll full-width"
@@ -489,7 +490,7 @@ const team = [
     {
     initials: 'JP',
     name: 'Jevgenij Posashkov',
-    role: 'Leader of AI developement',
+    role: 'Leader of AI development',
     photo: '/team/jevgenij-posashkov.png',
     bio: 'Master of Data Science '
   },
@@ -504,14 +505,14 @@ const team = [
 
 const workspaceFeatures = [
   {
-    icon: 'library_books',
-    title: 'Enhances focus on key information',
-    description: 'Focusing on a right topic is key in science. Our tools allows one to instantly extract key information from books and articles and to create notes with them without LaTeX struggles.'
-  },
+    icon: 'track_changes',
+    title: 'Enhanced focus on key information',
+    description: 'Focusing on the right topic is key in science. Our tools allow one to instantly extract key information from books and articles and to create notes with it without LaTeX struggles. An enviromnent with focus tools make possible to work with thousands of pages of informaion.'
+  },  
   {
     icon: 'account_tree',
-    title: 'Fast access and modification of information',
-    description: 'Storing hundhundreds of articles in one project in a structured way allows one to find any information inside of them in seconds.'
+    title: 'Inherent structing of information',
+    description: 'Structuring allows working with thousands of pages of informaion with comfort. This makes possible to access and modify informaion way faster.'
   },
   {
     icon: 'compare',
@@ -521,30 +522,30 @@ const workspaceFeatures = [
 ]
 
 const applicationFeatures = [
-    {
-    icon: 'library_books',
-    title: 'Format of advanced PDF file, which is accessed by special graphical tool',
-    description: 'Our tools can extract LaTeX code from books and articles in seconds and combine them into a single PDF. Access to its sections is accelerated through an improved structure panel.'
-  },     
   {
-    icon: 'library_books',
-    title: 'Tools for focusing and managing the project',
-    description: 'The PDF begins with a part of key information used to understand all other important content and solving problems for practice. After, there is a part with goals, progress, open questions, and ways forward to help avoid getting lost in information.'
-  },  
-  {
-    icon: 'library_books',
-    title: 'Tools for a really fast text modification',
-    description: 'Hotkeys for typical commands, addition comments in the graphical environment, extraction key information, restructuring books.'
-  },  
-  {
-    icon: 'library_books',
-    title: 'Downloading all cited papers',
-    description: 'It is impossible to fully understand a scientific paper without reading most of its cited works. Our tool lets one download them all at once, saving hours of time when studying only one article.'
+    icon: 'account_tree',
+    title: 'Advanced PDF format with fast graphical access',
+    description: 'Our tools extract LaTeX codes from books and articles in seconds and combine them into a single PDF. Access to its sections and modification are accelerated through an improved structure panel.'
   },
   {
-    icon: 'code',
+    icon: 'track_changes',
+    title: 'Tools for focusing and managing the project',
+    description: 'The PDF begins with a part of key information used to understand all other important content and solve problems for practice. After, there is a part with goals, progress, open questions, and ways forward to help avoid getting lost in information.'
+  },
+  {
+    icon: 'bolt',
+    title: 'Tools for a really fast text modification',
+    description: 'Hotkeys for common commands, adding comments in the graphical environment, extracting key information, and restructuring books.'
+  },
+  {
+    icon: 'download_for_offline',
+    title: 'Downloading all cited papers',
+    description: 'Understanding a scientific paper often requires reading most of its cited works. Our tool allows you to download all referenced papers at once, saving hours when studying a single article.'
+  },
+  {
+    icon: 'functions',
     title: 'Integrated LaTeX workflow',
-    description: 'All tools for LaTeX editing are profided, and tools for a fast work are added. Our tool can be used as the best PC LaTeX editor.'
+    description: 'All essential LaTeX editing tools are integrated for fast and efficient work. The system is designed to function as a full-featured desktop LaTeX editor.'
   }
 ]
 
@@ -553,29 +554,28 @@ const applicationFeatures = [
 
 const aiToolsFeatures = [
   {
-    icon: 'auto_awesome',
+    icon: 'hub',
     title: 'AI for finding extra connections between articles',
     description:
-      'Suppose one has used our application for downloading 200 cited articles from 10 relevant papers. It would take some weeks to grasp the main ideas of them to make sure that none if the relevant information would be missed. Our AI tool can analyse it and give proposals for relevant connections in minutes.'
+      'Suppose one has used our application for downloading 200 cited articles from 10 relevant papers. It would take some weeks to grasp the main ideas of them to make sure that none of the relevant information would be missed. Our AI tool can analyse it and give proposals for relevant connections in minutes.'
   },
-  
   {
-    icon: 'hub',
+    icon: 'highlight',
     title: 'AI derivation guidance',
     description:
       'Our application will not only provide answers to the questions but also highlight parts of a book in the project that a researcher could use to find these answers on their own.'
   },
   {
-    icon: 'hub',
+    icon: 'account_tree',
     title: 'AI explanation tree',
     description:
-      'The chat format is unusable for constant work with information because all information is stored vertically. Our graphical environment provides a natural tool for storing information in a graph form, making it way more comfortable to use AI.'
+      'Chat-based interfaces are inefficient for retrieving information because data is stored without structure. Our graphical environment provides a more natural way to access knowledge, making interaction with AI faster and significantly more productive.'
   },
   {
-    icon: 'psychology',
+    icon: 'supervisor_account',
     title: 'AI for supervising research',
-    description:
-      'Currently, there are a lot of historical books about how famous scientists worked, but since they are dead, there is no way to be supervised by them. We will provide a platform for developing AI agents of such scientists which will be guiding a researcher.'
+    descriptionHtml:
+      'Many researchers would value guidance from figures like Albert Einstein. Our AI tool analyzes the working styles and problem-solving approaches of Einstein and other prominent scientists to create an AI-driven representation of their methods, functioning as a virtual supervisor that suggests possible directions for solving a given problem.<br>Users can also ask why a suggestion was made, and the system will explain it by linking to similar decisions in the scientist’s past work and reasoning.'
   }
 ]
 
@@ -585,13 +585,13 @@ const aiToolsFeatures = [
 
 const keyTools = [
   {
-    title: 'A PDF viewer, Latex editor and file explorer in one application',
+    title: 'A PDF viewer, a LaTeX editor, and a file explorer in one application',
     src: `${import.meta.env.BASE_URL}screenshots/prv3.png`,
     width: 1917,
     height: 1132
   },
   {
-    title: 'Download tens of artciles and extract Latex in minutes',
+    title: 'Download tens of articles and extract Latex in minutes',
     src: `${import.meta.env.BASE_URL}screenshots/upl.png`,
     width: 1037,
     height: 627
@@ -601,7 +601,7 @@ const keyTools = [
     src: `${import.meta.env.BASE_URL}screenshots/cnn.png`
   },
   {
-    title: 'Research roademap and tips',
+    title: 'Research roadmap and tips',
     src: `${import.meta.env.BASE_URL}screenshots/guide.png`
   }
 ]

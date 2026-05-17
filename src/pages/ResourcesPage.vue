@@ -2,7 +2,7 @@
   <q-page class="resources-page q-pa-md q-pb-xl column items-center">
     <section class="resources-hero q-mb-xl text-center column items-center full-width">
       <h1 class="text-h4 text-weight-bold resources-hero__title q-mb-none">
-        Answers on other questions
+        Answers to other questions
       </h1>
     </section>
 

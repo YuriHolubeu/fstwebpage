@@ -1,0 +1,6 @@
+File: C:\Users\yurih\Downloads\fstwebpage\src\components\investor\GetInTouchSection.vue
+          Answers on other questions
+
+File: C:\Users\yurih\Downloads\fstwebpage\src\pages\ResourcesPage.vue
+        Answers on other questions
+

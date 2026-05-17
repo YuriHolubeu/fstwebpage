@@ -36,7 +36,7 @@
           :to="{ name: 'investor-resources' }"
           class="site-footer-menu__resources-link"
         >
-          Answers on other questions
+          Answers to other questions
         </router-link>
       </div>
     </div>
