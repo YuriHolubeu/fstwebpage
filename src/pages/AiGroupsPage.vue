@@ -76,8 +76,6 @@
       </article>
     </section>
 
-<<<<<<< HEAD
-=======
     <section class="investor-line q-pa-lg q-mb-lg">
       <q-icon name="insights" class="investor-icon" />
       <div>
@@ -91,11 +89,11 @@
     </section>
 
     <GetInTouchSection />
->>>>>>> d8bbf9a304df9ce12ed8fe155b38bd8a26d13dd4
   </q-page>
 </template>
 
 <script setup>
+import GetInTouchSection from 'src/components/investor/GetInTouchSection.vue'
 
 const heroPoints = [
   'group uploaded articles by research meaning',
