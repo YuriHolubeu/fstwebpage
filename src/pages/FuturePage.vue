@@ -58,13 +58,13 @@ const roadmap = [
   {
     title: 'Formulation of the project, formation of a  minimal team',
     window: 'October 2025 – April 2026',
-    detail: 'The project was written clearly, a social survey was made, minimal number of specialists were found.',
+    detail: 'The project was written clearly, a social survey was made, and a minimal number of specialists were found.',
     icon: 'edit_note',
     color: 'primary',
     tags: []
   },
   {
-    title: 'Start of the prototype developement',
+    title: 'Start of the prototype development',
     window: 'April 2026',
     detail: 'A small core team came together to build the first version.',
     icon: 'engineering',
@@ -80,9 +80,9 @@ const roadmap = [
     tags: []
   },
   {
-    title: 'Release with all promissed AI features',
-    window: '2026 · November - 2027 · Februaru',
-    detail: 'Creation of all AI features. Such a wide range is because the speed of the develoement strongly depends on funding.',
+    title: 'Release with all promised AI features',
+    window: '2026 · November – 2027 · February',
+    detail: 'Creation of all AI features. Such a wide range is because the speed of the develpment strongly depends on funding.',
     icon: 'auto_awesome',
     color: 'secondary',
     tags: []
@@ -90,7 +90,7 @@ const roadmap = [
   {
     title: 'Stable company with well-developed AI tools',
     window: '2027 · August',
-    detail: 'Have 10 000 active users, have a community of programmers who develop custom AI agents for the applicatoin, have own scientific conferences for answering purely scientific questions that were not touched before.',
+    detail: 'Have 10 000 active users, have a community of programmers who develop custom AI agents for the application, have our own scientific conferences for answering purely scientific questions that were not touched before.',
     icon: 'corporate_fare',
     color: 'accent',
     tags: []

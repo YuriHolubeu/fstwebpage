@@ -45,16 +45,13 @@
         (later, we'll add here screenshots of how it will work exactly for education)
       </p><br>
       <p class="education-preview__text text-body1 q-ma-none text-center">
-        This educational direction remains under active development. Our current priority is
-        the core research workflow; a dedicated offering for schools and universities will
-        follow in a later release.
+        This educational direction remains in our focus area. Our current priority is
+        the core research workflow; a dedicated offering for schools and universities will follow in a later release.
       </p>
       <p class="education-preview__text text-body1 q-mt-md q-mb-none text-center">
         If you represent an institution or are personally interested in the educational use of
         {{ SITE.projectName }}, we invite you to contact us at
         <a :href="contactMailto" class="education-preview__email">{{ SITE.contactEmail }}</a>.
-        We will review your inquiry with care and take it into account when planning future
-        development priorities.
       </p>
     </section>
   </q-page>
@@ -99,7 +96,7 @@ const particularRealizations = [
     iconColor: 'cyan-3',
     title: 'One PDF file for many years of study',
     text:
-      'Keep materials for a subject in a single workspace so progress accumulates across terms and topics remain easy to revisit. Each new year of studying a subject is an addition of a new book to this PDF file, which then the student can edit as they want to sharpen their knowledge. No more stored paper notebooks and mess in information.'
+      'Keep materials for a subject in a single workspace so progress accumulates across terms and topics remain easy to revisit. Each new year of studying a subject is an addition of a new book to this PDF file, which the student then can edit as they want to sharpen their knowledge. No more stored paper notebooks and mess in information.'
   },
   {
     icon: 'hub',

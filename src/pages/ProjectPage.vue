@@ -507,12 +507,12 @@ const workspaceFeatures = [
   {
     icon: 'track_changes',
     title: 'Enhanced focus on key information',
-    description: 'Focusing on the right topic is key in science. Our tools allow one to instantly extract key information from books and articles and to create notes with it without LaTeX struggles. An enviromnent with focus tools make possible to work with thousands of pages of informaion.'
+    description: 'Focusing on the right topic is key in science. Our tools allow one to instantly extract key information from books and articles and to create notes with it without LaTeX struggles. An environment with focus tools make possible to work with thousands of pages of information.'
   },  
   {
     icon: 'account_tree',
-    title: 'Inherent structing of information',
-    description: 'Structuring allows working with thousands of pages of informaion with comfort. This makes possible to access and modify informaion way faster.'
+    title: 'Inherent structuring of information',
+    description: 'Structuring allows working with thousands of pages of information with comfort. This makes it possible to access and modify information way faster.'
   },
   {
     icon: 'compare',
