@@ -21,15 +21,18 @@
         <article
           v-for="item in group.items"
           :key="item.title"
-          class="advantage-card row no-wrap items-start"
+          class="advantage-card"
         >
-          <div class="advantage-card__icon-wrap flex flex-center">
-            <q-icon :name="item.icon" size="26px" />
+          <div class="advantage-card__header row no-wrap items-center">
+            <div
+              class="advantage-card__icon-wrap flex flex-center"
+              :class="`advantage-card__icon-wrap--${item.tone}`"
+            >
+              <q-icon :name="item.icon" size="20px" :color="item.iconColor" />
+            </div>
+            <h3 class="advantage-card__title q-ma-none">{{ item.title }}</h3>
           </div>
-          <div class="advantage-card__copy">
-            <h3 class="advantage-card__title">{{ item.title }}</h3>
-            <p class="advantage-card__text q-mb-none">{{ item.text }}</p>
-          </div>
+          <p class="advantage-card__text q-mb-none">{{ item.text }}</p>
         </article>
       </div>
     </section>
@@ -64,19 +67,25 @@ const contactMailto = `mailto:${SITE.contactEmail}`
 
 const generalIdeas = [
   {
-    icon: 'school',
+    icon: 'view_module',
+    tone: 'teal',
+    iconColor: 'teal-3',
     title: 'Increasing motivation by reducing the mess in information',
     text:
       'Often, students can not work because all the information feels so dense that there is no way to understand in general what is going on. The structuring of information and the ability to fast edit it will increase motivation drastically.'
   },
   {
-    icon: 'lightbulb',
+    icon: 'work_outline',
+    tone: 'blue',
+    iconColor: 'light-blue-3',
     title: 'Studying within approach that will be really used after studies',
     text:
       'There is no sense in learning in school an approach of studies that is unusable in real life. We propose to instead use a format that is guaranteed to work for the hardest university subjects.'
   },
   {
-    icon: 'lightbulb',
+    icon: 'fact_check',
+    tone: 'mint',
+    iconColor: 'green-3',
     title: 'Make a real check of the progress easier',
     text:
       'One file with comments allows us to easily see if a student thought about some information or not. It will be easier not to fly in fantasies that there is progress, if actually there are only problems and imitation.'
@@ -85,19 +94,25 @@ const generalIdeas = [
 
 const particularRealizations = [
   {
-    icon: 'menu_book',
+    icon: 'picture_as_pdf',
+    tone: 'cyan',
+    iconColor: 'cyan-3',
     title: 'One PDF file for many years of study',
     text:
       'Keep materials for a subject in a single workspace so progress accumulates across terms and topics remain easy to revisit. Each new year of studying a subject is an addition of a new book to this PDF file, which then the student can edit as they want to sharpen their knowledge. No more stored paper notebooks and mess in information.'
   },
   {
-    icon: 'account_tree',
+    icon: 'hub',
+    tone: 'teal',
+    iconColor: 'teal-3',
     title: 'Graphical tool for restructuring and quick access',
     text:
       'Our application gives the key section of the book for finding answers way faster. Thus, students will save time and always be focused as much as they can.'
   },
   {
-    icon: 'account_tree',
+    icon: 'question_answer',
+    tone: 'blue',
+    iconColor: 'light-blue-3',
     title: 'Adding comments and questions to focus on',
     text:
       'Students often stop studying if they feel that there will be no answers to their questions. Here, one can add them and create a section for an answer in a few clicks.'
@@ -166,10 +181,6 @@ const previewGroups = [
   line-height: 1.62;
 }
 
-.advantage-card__copy {
-  text-align: left;
-}
-
 .education-group--green-answers .advantage-card__text {
   color: var(--site-text-muted);
 }
@@ -194,35 +205,55 @@ const previewGroups = [
 }
 
 .advantage-card {
-  padding: 1.15rem 1.25rem;
-  border-radius: 16px;
-  border: 1px solid rgba(11, 195, 171, 0.22);
-  background: rgba(26, 44, 51, 0.55);
-  transition:
-    border-color 0.25s ease,
-    background 0.25s ease,
-    transform 0.25s ease;
+  padding: 0.85rem 0;
+  border: none;
+  background: transparent;
+  text-align: left;
 }
 
-.advantage-card:hover {
-  border-color: rgba(94, 234, 212, 0.38);
-  background: rgba(26, 44, 51, 0.68);
-  transform: translateY(-2px);
+.advantage-card__header {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.35rem;
 }
 
 .advantage-card__icon-wrap {
   flex-shrink: 0;
-  width: 3rem;
-  height: 3rem;
-  margin-right: 1rem;
-  border-radius: 12px;
-  color: var(--site-text-accent);
-  background: rgba(3, 117, 204, 0.2);
-  border: 1px solid rgba(94, 234, 212, 0.2);
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  border: 1.5px solid transparent;
+}
+
+.advantage-card__icon-wrap--teal {
+  background: rgba(11, 195, 171, 0.22) !important;
+  border-color: #5eead4 !important;
+}
+
+.advantage-card__icon-wrap--blue {
+  background: rgba(3, 117, 204, 0.28) !important;
+  border-color: #7dd3fc !important;
+}
+
+.advantage-card__icon-wrap--mint {
+  background: rgba(125, 206, 184, 0.2) !important;
+  border-color: #7dceb8 !important;
+}
+
+.advantage-card__icon-wrap--cyan {
+  background: rgba(34, 211, 238, 0.18) !important;
+  border-color: #67e8f9 !important;
+}
+
+.advantage-card__icon-wrap :deep(.q-icon) {
+  color: inherit;
 }
 
 .advantage-card__title {
-  margin: 0 0 0.35rem;
+  flex: 1;
+  min-width: 0;
   color: var(--site-text-heading);
   font-size: 1.05rem;
   font-weight: 700;
@@ -230,20 +261,19 @@ const previewGroups = [
 }
 
 .advantage-card__text {
+  margin-left: calc(2.25rem + 0.75rem);
   color: var(--site-text-accent-soft);
   font-size: 18px;
   line-height: 1.55;
 }
 
 @media (max-width: 599px) {
-  .advantage-card__icon-wrap {
-    width: 2.5rem;
-    height: 2.5rem;
-    margin-right: 0.75rem;
-  }
-
   .advantage-card__title {
     font-size: 19px;
+  }
+
+  .advantage-card__text {
+    margin-left: calc(2.25rem + 0.75rem);
   }
 }
 </style>
