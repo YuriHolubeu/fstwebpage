@@ -334,20 +334,11 @@
         </h2>
       </div>
 
-      <q-list class="faq-list reveal-on-scroll" :class="{ 'is-visible': faqVisible }">
-        <q-expansion-item
-          v-for="item in faqs"
-          :key="item.question"
-          expand-separator
-          :label="item.question"
-          header-class="faq-item__header"
-          class="faq-item"
-        >
-          <div class="faq-item__answer pp-body text-body2">
-            {{ item.answer }}
-          </div>
-        </q-expansion-item>
-      </q-list>
+      <FaqList
+        class="reveal-on-scroll"
+        :class="{ 'is-visible': faqVisible }"
+        :items="FAQ_ITEMS"
+      />
     </section>
 
     <section ref="workshopEl" class="workshop-block q-pt-xl q-mt-lg column items-center">
@@ -372,33 +363,6 @@
             Real photo of Albert Einstein's office. Photographer: Ralph Morse
           </figcaption>
         </figure>
-      </div>
-    </section>
-
-    <section ref="contactsEl" class="contacts-block q-pt-xl q-mt-lg q-mb-md column items-center">
-      <div
-        class="gallery-heading text-center q-mb-lg reveal-on-scroll full-width"
-        :class="{ 'is-visible': contactsVisible }"
-      >
-        <h2 class="text-h5 text-weight-bold pp-heading q-mb-sm">
-          Get in touch
-        </h2>
-        <p class="text-caption pp-muted q-mb-none contacts-intro">
-          We welcome your questions, demo requests, and partnership inquiries.
-        </p>
-      </div>
-
-      <div
-        class="contacts-panel column items-center text-center reveal-on-scroll"
-        :class="{ 'is-visible': contactsVisible }"
-      >
-        <q-icon name="mail" size="28px" class="contacts-panel__icon q-mb-sm" />
-        <a
-          :href="contactMailto"
-          class="contacts-email text-body1 text-weight-medium"
-        >
-          {{ SITE.contactEmail }}
-        </a>
       </div>
     </section>
 
@@ -454,6 +418,8 @@
 import { onMounted, onUnmounted, ref } from 'vue'
 import heroWorkshopUrl from 'src/assets/hero-workshop.png'
 import heroTaglineVisualUrl from 'src/assets/hero-tagline-visual.png'
+import FaqList from 'src/components/investor/FaqList.vue'
+import { FAQ_ITEMS } from 'src/constants/faqs'
 import { SITE } from 'src/constants/site'
 import {
   BASIC_PHYSICS_PREVIEW_BASE,
@@ -494,7 +460,6 @@ const previewsVisible = ref(false)
 const teamVisible = ref(false)
 const faqVisible = ref(false)
 const workshopVisible = ref(false)
-const contactsVisible = ref(false)
 const selectedTool = ref(null)
 const toolPreviewOpen = ref(false)
 let toolPreviewScrollY = 0
@@ -507,9 +472,7 @@ const previewsEl = ref(null)
 const teamEl = ref(null)
 const faqEl = ref(null)
 const workshopEl = ref(null)
-const contactsEl = ref(null)
 
-const contactMailto = `mailto:${SITE.contactEmail}`
 
 function previewPdfUrl (pdf) {
   return `${BASIC_PHYSICS_PREVIEW_BASE}/${pdf.file}`
@@ -620,44 +583,6 @@ const aiToolsFeatures = [
 
 
 
-const faqs = [
-  {
-    question: `Why does a researcher in theoretical science needs ${SITE.projectName}?`,
-    answer:
-      'It makes work faster and much more comfortable.'
-  },
-  {
-    question: 'Will the application be free',
-    answer:
-      'Yes, but AI freatures will be paid.'
-  },
-  {
-    question: 'How did you get thus idea?',
-    answer:
-      'A deep research was done on how successful theoretical physicists work.'
-  },
-  {
-    question: 'Why does one need to work with thousands of page PDFs?',
-    answer:
-      'Because there is a lot of information in any research and some of them might be needed. It is not a problem to store all the potentially relevant information in one project and PDF can be viewed as just an outdated from of our project. We provide many tools to still be focused even in thousands of pages.'
-  },
-  {
-    question: 'Why will the project be successful?',
-    answer:
-      '1. without AI there are the top most needed tools, so the research will be x5 faster. 2. AI will make this app most used for researchers in the world.'
-  },
-  {
-    question: 'Can it be used by bachelor\'s students for preparation to an exam?',
-    answer:
-      'Yes, it will definetely be very helpful. But this application is created to be focused on understand and not for just passing exam and then forgetting everything. '
-  },
-  {
-    question: 'When your application be done?',
-    answer:
-      'It depends on how much funding will we have, but maybe it will be done by July 2026.'
-  },
-]
-
 const keyTools = [
   {
     title: 'A PDF viewer, Latex editor and file explorer in one application',
@@ -689,7 +614,6 @@ let previewsObserver
 let teamObserver
 let faqObserver
 let workshopObserver
-let contactsObserver
 
 function keyToolsDelay (index) {
   return `${120 + index * 100}ms`
@@ -846,19 +770,6 @@ onMounted(() => {
     workshopObserver.observe(workshopEl.value)
   }
 
-  contactsObserver = new IntersectionObserver(
-    (entries) => {
-      for (const e of entries) {
-        if (e.isIntersecting) {
-          contactsVisible.value = true
-        }
-      }
-    },
-    { threshold: 0.1, rootMargin: '0px 0px -32px 0px' }
-  )
-  if (contactsEl.value) {
-    contactsObserver.observe(contactsEl.value)
-  }
 })
 
 onUnmounted(() => {
@@ -870,7 +781,6 @@ onUnmounted(() => {
   teamObserver?.disconnect()
   faqObserver?.disconnect()
   workshopObserver?.disconnect()
-  contactsObserver?.disconnect()
 })
 </script>
 
@@ -1334,51 +1244,8 @@ onUnmounted(() => {
 }
 
 .team-block,
-.faq-block,
-.contacts-block {
+.faq-block {
   scroll-margin-top: 96px;
-}
-
-.contacts-block {
-  width: 100%;
-  max-width: 720px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.contacts-intro {
-  margin: 0 auto;
-  max-width: 100%;
-}
-
-@media (min-width: 640px) {
-  .contacts-intro {
-    white-space: nowrap;
-  }
-}
-
-.contacts-panel {
-  width: 100%;
-  padding: 1.5rem 1.75rem;
-  border-radius: 18px;
-  border: 1px solid rgba(11, 195, 171, 0.22);
-  background: rgba(26, 44, 51, 0.55);
-}
-
-.contacts-panel__icon {
-  color: var(--pp-soft);
-}
-
-.contacts-email {
-  color: var(--site-text-accent);
-  text-decoration: none;
-  word-break: break-word;
-  transition: color 0.2s ease;
-}
-
-.contacts-email:hover {
-  color: var(--site-text-accent-soft);
-  text-decoration: underline;
 }
 
 .team-grid {
@@ -1456,43 +1323,6 @@ onUnmounted(() => {
   max-width: 720px;
   margin-left: auto;
   margin-right: auto;
-}
-
-.faq-list {
-  width: 100%;
-  border-radius: 18px;
-  border: 1px solid rgba(11, 195, 171, 0.22);
-  background: rgba(26, 44, 51, 0.55);
-  overflow: hidden;
-}
-
-.faq-list :deep(.faq-item) {
-  color: var(--pp-body);
-}
-
-.faq-list :deep(.faq-item__header) {
-  color: var(--pp-heading);
-  font-weight: 600;
-  padding: 1rem 1.15rem;
-}
-
-.faq-list :deep(.q-item__label) {
-  line-height: 1.45;
-}
-
-.faq-list :deep(.q-expansion-item__toggle-icon) {
-  color: var(--pp-soft);
-}
-
-.faq-list :deep(.q-separator) {
-  background: rgba(11, 195, 171, 0.15);
-}
-
-.faq-item__answer {
-  padding: 0 1.15rem 1.1rem;
-  max-width: none;
-  margin: 0;
-  line-height: 1.65;
 }
 
 .reveal-on-scroll {

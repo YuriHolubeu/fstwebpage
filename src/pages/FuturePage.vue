@@ -40,13 +40,10 @@
       </q-card>
     </div>
 
-    <GetInTouchSection />
   </q-page>
 </template>
 
 <script setup>
-import GetInTouchSection from 'src/components/investor/GetInTouchSection.vue'
-
 const roadmap = [
   {
     title: 'The idea appeared',

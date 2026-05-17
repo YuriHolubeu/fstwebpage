@@ -83,12 +83,10 @@
       </div>
     </section>
 
-    <GetInTouchSection />
   </q-page>
 </template>
 
 <script setup>
-import GetInTouchSection from 'src/components/investor/GetInTouchSection.vue'
 
 const differences = [
   {

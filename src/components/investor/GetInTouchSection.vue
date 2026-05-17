@@ -1,79 +1,213 @@
 <template>
-  <section class="get-in-touch q-pt-xl q-mt-lg q-mb-md column items-center">
-    <div class="get-in-touch__heading text-center q-mb-lg full-width">
-      <h2 class="text-h5 text-weight-bold q-mb-sm">
-        Get in touch
-      </h2>
-      <p class="text-caption q-mb-none get-in-touch__intro">
-        Questions, demos, or partnership inquiries — we are happy to hear from you.
-      </p>
+  <footer class="site-footer-menu">
+    <div class="site-footer-menu__inner">
+      <router-link to="/project" class="site-footer-menu__brand row items-center no-wrap">
+        <img
+          class="site-footer-menu__emblem"
+          :src="brandIconUrl"
+          width="44"
+          height="44"
+          alt=""
+          decoding="async"
+        />
+        <span class="site-footer-menu__title">{{ SITE.projectName }}</span>
+      </router-link>
+
+      <div class="site-footer-menu__center column">
+        <p class="site-footer-menu__intro q-ma-none">
+          {{ SITE.contactIntro }}
+        </p>
+        <div class="site-footer-menu__links row items-center no-wrap">
+          <a
+            :href="contactMailto"
+            class="site-footer-menu__email"
+          >
+            {{ SITE.contactEmail }}
+          </a>
+          <slot name="actions" />
+        </div>
+      </div>
+
+      <div class="site-footer-menu__resources column">
+        <div class="site-footer-menu__resources-title">
+          Resources
+        </div>
+        <router-link
+          :to="{ name: 'investor-resources' }"
+          class="site-footer-menu__resources-link"
+        >
+          Answers on other questions
+        </router-link>
+      </div>
     </div>
 
-    <div class="get-in-touch__panel column items-center text-center">
-      <q-icon name="mail" size="28px" class="get-in-touch__icon q-mb-sm" />
-      <a
-        :href="contactMailto"
-        class="get-in-touch__email text-body1 text-weight-medium"
-      >
-        {{ SITE.contactEmail }}
-      </a>
-    </div>
-  </section>
+    <p class="site-footer-menu__copyright q-ma-none">
+      © 2026 Focus Structure Tool. All rights reserved.
+    </p>
+  </footer>
 </template>
 
 <script setup>
+import brandIconUrl from 'src/assets/app-icon.svg'
 import { SITE } from 'src/constants/site'
 
 const contactMailto = `mailto:${SITE.contactEmail}`
 </script>
 
 <style scoped>
-.get-in-touch {
+.site-footer-menu {
+  position: relative;
   width: 100%;
-  max-width: 720px;
-  margin-left: auto;
-  margin-right: auto;
-  scroll-margin-top: 96px;
+  flex-shrink: 0;
+  margin: 0;
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+  padding-right: max(12px, env(safe-area-inset-right, 0px));
+  padding-bottom: max(3cm, env(safe-area-inset-bottom, 0px));
+  padding-left: max(12px, env(safe-area-inset-left, 0px));
+  border-top: 1px solid rgba(11, 195, 171, 0.28);
+  background: rgba(8, 20, 26, 0.96);
 }
 
-.get-in-touch__overline {
+.site-footer-menu__copyright {
+  position: absolute;
+  left: max(12px, env(safe-area-inset-left, 0px));
+  bottom: max(12px, env(safe-area-inset-bottom, 0px));
+  font-size: 0.8rem;
+  line-height: 1.4;
   color: var(--site-text-soft);
-  letter-spacing: 0.12em;
+  opacity: 0.85;
 }
 
-.get-in-touch__heading h2 {
+.site-footer-menu__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: start;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  gap: 1.5rem 2rem;
+}
+
+.site-footer-menu__brand {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: start;
+  justify-self: start;
+  gap: 0.9rem;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.site-footer-menu__brand:hover {
+  opacity: 0.9;
+}
+
+.site-footer-menu__emblem {
+  flex-shrink: 0;
+  display: block;
+  border-radius: 10px;
+}
+
+.site-footer-menu__title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
   color: var(--site-text-heading);
 }
 
-.get-in-touch__intro {
-  max-width: 520px;
-  margin-left: auto;
-  margin-right: auto;
+.site-footer-menu__center {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: start;
+  align-items: flex-start;
+  text-align: left;
+  gap: 0.55rem;
+}
+
+.site-footer-menu__resources {
+  grid-column: 3;
+  grid-row: 1;
+  align-self: start;
+  justify-self: end;
+  align-items: flex-start;
+  text-align: left;
+  gap: 0.2rem;
+}
+
+.site-footer-menu__resources-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--site-text-heading);
+}
+
+.site-footer-menu__resources-link {
+  display: inline-block;
+  font-size: 0.9rem;
+  line-height: 1.4;
   color: var(--site-text-muted);
-  line-height: 1.5;
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
 
-.get-in-touch__panel {
-  width: 100%;
-  padding: 1.5rem 1.75rem;
-  border-radius: 18px;
-  border: 1px solid rgba(11, 195, 171, 0.22);
-  background: rgba(26, 44, 51, 0.55);
+.site-footer-menu__resources-link:hover {
+  color: var(--site-text-body);
 }
 
-.get-in-touch__icon {
-  color: var(--site-text-soft);
+.site-footer-menu__intro {
+  font-size: 1.05rem;
+  line-height: 1.45;
+  font-weight: 500;
+  color: var(--site-text-body);
 }
 
-.get-in-touch__email {
+.site-footer-menu__links {
+  gap: 0.85rem 1.25rem;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.site-footer-menu__email {
+  font-size: 1rem;
+  font-weight: 600;
   color: var(--site-text-accent);
   text-decoration: none;
   word-break: break-word;
   transition: color 0.2s ease;
 }
 
-.get-in-touch__email:hover {
+.site-footer-menu__email:hover {
   color: var(--site-text-accent-soft);
   text-decoration: underline;
+}
+
+@media (min-width: 900px) {
+  .site-footer-menu__intro {
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 699px) {
+  .site-footer-menu__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .site-footer-menu__brand,
+  .site-footer-menu__center,
+  .site-footer-menu__resources {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .site-footer-menu__resources {
+    justify-self: start;
+    align-items: flex-start;
+    text-align: left;
+  }
 }
 </style>

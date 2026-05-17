@@ -1,3 +1,0 @@
-File: C:\Users\yurih\Downloads\fstwebpage\src\pages\ProjectPage.vue
-    title: 'Side-by-side comparison',
-

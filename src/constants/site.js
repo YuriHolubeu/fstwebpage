@@ -12,6 +12,9 @@ export const SITE = {
   /** Full YouTube embed URL, e.g. https://www.youtube.com/embed/VIDEO_ID — leave empty for placeholder */
   projectDemoVideoEmbedUrl: '',
   contactEmail: 'focus.structure.tool@gmail.com',
+  /** Shown in the site footer on every page */
+  contactIntro:
+    'We welcome your questions, demo requests, and partnership inquiries.',
   social: {
     linkedin: 'https://www.linkedin.com/',
     x: 'https://twitter.com/'

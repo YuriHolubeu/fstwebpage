@@ -37,6 +37,11 @@ const routes = [
         path: 'future',
         name: 'investor-future',
         component: () => import('pages/FuturePage.vue')
+      },
+      {
+        path: 'resources',
+        name: 'investor-resources',
+        component: () => import('pages/ResourcesPage.vue')
       }
     ]
   },

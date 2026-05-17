@@ -1,15 +1,20 @@
 <template>
-  <q-layout view="hHh lpR fFf" class="investor-layout">
+  <q-layout view="hHh lpR lfr" class="investor-layout">
     <div class="digital-bg" aria-hidden="true" />
 
     <InvestorNavBar />
 
-    <q-page-container class="page-container layout-surface">
-      <router-view v-slot="{ Component }">
-        <transition name="fade-slide" mode="out-in">
-          <component :is="Component" />
-        </transition>
-      </router-view>
+    <q-page-container class="layout-surface">
+      <div class="site-page-shell column">
+        <main class="site-page-shell__main page-container">
+          <router-view v-slot="{ Component }">
+            <transition name="fade-slide" mode="out-in">
+              <component :is="Component" />
+            </transition>
+          </router-view>
+        </main>
+        <GetInTouchSection />
+      </div>
     </q-page-container>
 
     <div class="fab-contact-wrap row items-center no-wrap">
@@ -35,6 +40,7 @@
 
 <script setup>
 import { storeToRefs } from 'pinia'
+import GetInTouchSection from 'src/components/investor/GetInTouchSection.vue'
 import InvestorNavBar from 'src/components/investor/InvestorNavBar.vue'
 import ContactUsDialog from 'src/components/investor/ContactUsDialog.vue'
 import { useContactUiStore } from 'src/stores/contact-ui'
@@ -177,6 +183,17 @@ const { dialogOpen } = storeToRefs(contact)
   margin: 0 auto;
   width: 100%;
 }
+
+.site-page-shell {
+  width: 100%;
+  min-height: 100%;
+}
+
+.site-page-shell__main {
+  flex: 1 0 auto;
+  width: 100%;
+}
+
 .fab-contact {
   box-shadow: 0 12px 40px rgba(3, 117, 204, 0.45);
 }
