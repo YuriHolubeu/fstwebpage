@@ -1,7 +1,6 @@
 <template>
   <q-page class="future-page q-pa-md q-pb-xl">
     <section class="hero q-mb-xl text-center column items-center">
-      <div class="text-overline text-primary q-mb-sm">Roadmap</div>
       <h1 class="text-h3 text-weight-bold text-white q-mb-md">
         Where the product goes next
       </h1>
@@ -50,8 +49,32 @@ import GetInTouchSection from 'src/components/investor/GetInTouchSection.vue'
 
 const roadmap = [
   {
+    title: 'The idea appeared',
+    window: '2019',
+    detail: 'The concept for a structured research environment took shape.',
+    icon: 'lightbulb',
+    color: 'grey-5',
+    tags: ['Origin']
+  },
+  {
+    title: 'The project was formulated',
+    window: 'October 2025 – April 2026',
+    detail: 'Scope, goals, and product direction were defined for the first release.',
+    icon: 'description',
+    color: 'grey-5',
+    tags: ['Foundation']
+  },
+  {
+    title: 'Minimal team was found',
+    window: 'April 2026',
+    detail: 'A small core team came together to build the first version.',
+    icon: 'groups',
+    color: 'grey-5',
+    tags: ['Team']
+  },
+  {
     title: 'Enterprise controls',
-    window: 'Near term',
+    window: '2026 · Near term',
     detail: 'SSO, audit trails, and role-based access aligned to your buyer.',
     icon: 'verified_user',
     color: 'primary',
@@ -59,7 +82,7 @@ const roadmap = [
   },
   {
     title: 'Integrations hub',
-    window: 'Mid term',
+    window: '2028 · Mid term',
     detail: 'First-party connectors plus webhook platform for ecosystem pull-through.',
     icon: 'extension',
     color: 'secondary',
@@ -67,7 +90,7 @@ const roadmap = [
   },
   {
     title: 'Intelligence layer',
-    window: 'Longer arc',
+    window: '2030 · Longer arc',
     detail: 'Signals that compound with usage — the reason customers stay and expand.',
     icon: 'psychology',
     color: 'accent',

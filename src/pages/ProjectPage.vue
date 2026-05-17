@@ -180,27 +180,24 @@
             :class="{ 'is-visible': keyToolsVisible }"
             :style="{ transitionDelay: keyToolsDelay(i) }"
           >
-            <div class="tool-shot-card__shell">
             <button
               type="button"
-              class="tool-shot-trigger"
+              class="application-screenshot-trigger"
               :aria-label="`Open ${item.title} screenshot`"
               @click="openToolPreview(item)"
             >
-                <div class="tool-shot-card__viewport">
-                  <q-img
-                    :src="item.src"
-                    :ratio="item.ratio || 16 / 10"
-                    class="tool-shot-card__img"
-                    spinner-color="primary"
-                    loading="lazy"
-                  />
-                  <div class="tool-shot-overlay column items-center justify-center">
-                    <q-icon name="open_in_full" size="20px" />
-                  </div>
-                </div>
+              <figure class="application-screenshot-figure">
+                <img
+                  :src="item.src"
+                  :alt="item.title"
+                  class="application-screenshot-img"
+                  :width="item.width"
+                  :height="item.height"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
             </button>
-            </div>
             <div class="tool-shot-card__body">
               <h3 class="tool-shot-card__title">{{ item.title }}</h3>
             </div>
@@ -257,8 +254,8 @@
         <h2 class="text-h5 text-weight-bold pp-heading q-mb-sm">
           Examples of research environments 
         </h2>
-        <p class="text-caption pp-muted q-mb-none" style="max-width: 560px; margin: 0 auto">
-          The environments are simple to convert into PDFs compatible with all PDF readers.
+        <p class="text-caption pp-muted q-mb-none preview-env-intro">
+          Research environments can be exported as structured PDFs, making all information easy to access anywhere. Below are several examples.
         </p>
       </div>
 
@@ -630,9 +627,19 @@ const faqs = [
       'It makes work faster and much more comfortable.'
   },
   {
+    question: 'Will the application be free',
+    answer:
+      'Yes, but AI freatures will be paid.'
+  },
+  {
     question: 'How did you get thus idea?',
     answer:
       'A deep research was done on how successful theoretical physicists work.'
+  },
+  {
+    question: 'Why does one need to work with thousands of page PDFs?',
+    answer:
+      'Because there is a lot of information in any research and some of them might be needed. It is not a problem to store all the potentially relevant information in one project and PDF can be viewed as just an outdated from of our project. We provide many tools to still be focused even in thousands of pages.'
   },
   {
     question: 'Why will the project be successful?',
@@ -643,29 +650,34 @@ const faqs = [
     question: 'Can it be used by bachelor\'s students for preparation to an exam?',
     answer:
       'Yes, it will definetely be very helpful. But this application is created to be focused on understand and not for just passing exam and then forgetting everything. '
-  }
+  },
+  {
+    question: 'When your application be done?',
+    answer:
+      'It depends on how much funding will we have, but maybe it will be done by July 2026.'
+  },
 ]
 
 const keyTools = [
   {
     title: 'A PDF viewer, Latex editor and file explorer in one application',
     src: `${import.meta.env.BASE_URL}screenshots/prv3.png`,
-    ratio: 1917 / 1132
+    width: 1917,
+    height: 1132
   },
   {
     title: 'Download tens of artciles and extract Latex in minutes',
     src: `${import.meta.env.BASE_URL}screenshots/upl.png`,
-    ratio: 1037 / 627
+    width: 1037,
+    height: 627
   },
   {
-    title: 'Reusable project knowledge',
-    src: '/screenshots/screen4.png',
-    ratio: 16 / 10
+    title: 'Displaying connections between pieces of information',
+    src: `${import.meta.env.BASE_URL}screenshots/cnn.png`
   },
   {
-    title: 'Side-by-side comparison',
-    src: '/screenshots/screen5.png',
-    ratio: 16 / 10
+    title: 'Research roademap and tips',
+    src: `${import.meta.env.BASE_URL}screenshots/guide.png`
   }
 ]
 
@@ -685,7 +697,11 @@ function keyToolsDelay (index) {
 
 function openToolPreview (item) {
   toolPreviewScrollY = window.scrollY
-  selectedTool.value = item
+  selectedTool.value = {
+    ...item,
+    nativeWidth: item.nativeWidth ?? item.width,
+    nativeHeight: item.nativeHeight ?? item.height
+  }
   toolPreviewOpen.value = true
 }
 
@@ -1249,13 +1265,27 @@ onUnmounted(() => {
   line-height: 1.5;
 }
 
-.gallery-block,
-.results-preview-block {
+.gallery-block {
   scroll-margin-top: 96px;
   width: 100%;
   max-width: 420px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.results-preview-block {
+  scroll-margin-top: 96px;
+  width: 100%;
+  max-width: min(920px, 100%);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.preview-env-intro {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: min(882px, calc(100% - 38px));
+  text-align: center;
 }
 
 .gallery-block--tools {
@@ -1268,6 +1298,9 @@ onUnmounted(() => {
 
 .preview-pdf-list {
   width: 100%;
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
   border-radius: 16px;
   border: 1px solid rgba(11, 195, 171, 0.22);
   background: rgba(26, 44, 51, 0.45);
@@ -1484,93 +1517,6 @@ onUnmounted(() => {
   flex-direction: column;
 }
 
-.tool-shot-card__shell {
-  position: relative;
-  padding: 0.65rem;
-  border-radius: 20px;
-  background:
-    linear-gradient(155deg, rgba(26, 44, 51, 0.92), rgba(12, 28, 34, 0.98));
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.34);
-  transition:
-    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.35s ease;
-}
-
-.tool-shot-card.is-visible:hover .tool-shot-card__shell {
-  transform: translateY(-5px);
-  box-shadow: 0 26px 60px rgba(0, 0, 0, 0.42);
-}
-
-.tool-shot-trigger {
-  display: block;
-  width: 100%;
-  padding: 0;
-  border: 0;
-  color: inherit;
-  background: transparent;
-  cursor: zoom-in;
-  text-align: inherit;
-  border-radius: 14px;
-  overflow: hidden;
-}
-
-.tool-shot-trigger:focus-visible {
-  outline: 2px solid rgba(94, 234, 212, 0.9);
-  outline-offset: 3px;
-}
-
-.tool-shot-card__viewport {
-  position: relative;
-  overflow: hidden;
-  background: #060f14;
-}
-
-.tool-shot-card__img {
-  display: block;
-  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.tool-shot-card.is-visible:hover .tool-shot-card__img {
-  transform: scale(1.02);
-}
-
-.tool-shot-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  gap: 0.55rem;
-  color: var(--site-text-high);
-  background: rgba(6, 15, 20, 0.52);
-  backdrop-filter: blur(2px);
-  opacity: 0;
-  transition: opacity 0.28s ease;
-}
-
-.tool-shot-overlay .q-icon {
-  width: 2.75rem;
-  height: 2.75rem;
-  border: 1px solid rgba(204, 251, 241, 0.35);
-  border-radius: 999px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(10, 24, 28, 0.82);
-  box-shadow: 0 12px 28px rgba(3, 117, 204, 0.32);
-  transform: translateY(6px);
-  transition: transform 0.28s ease;
-}
-
-.tool-shot-card.is-visible:hover .tool-shot-overlay,
-.tool-shot-trigger:focus-visible .tool-shot-overlay {
-  opacity: 1;
-}
-
-.tool-shot-card.is-visible:hover .tool-shot-overlay .q-icon,
-.tool-shot-trigger:focus-visible .tool-shot-overlay .q-icon {
-  transform: translateY(0);
-}
-
 .tool-shot-card__body {
   padding: 1rem 0.35rem 0.25rem;
 }
@@ -1694,36 +1640,9 @@ onUnmounted(() => {
     filter: none;
   }
 
-  .tool-shot-card.is-visible:hover .tool-shot-card__shell {
-    transform: none;
-  }
-
-  .tool-shot-card.is-visible:hover .tool-shot-card__img {
-    transform: none;
-  }
-
-  .tool-shot-overlay,
-  .tool-shot-overlay .q-icon {
-    transition: none;
-  }
 }
 
 @media (max-width: 620px) {
-  .tool-shot-card__shell {
-    padding: 0.5rem;
-  }
-
-  .tool-shot-overlay {
-    opacity: 1;
-    background: linear-gradient(180deg, transparent 55%, rgba(6, 15, 20, 0.45));
-  }
-
-  .tool-shot-overlay .q-icon {
-    width: 2.35rem;
-    height: 2.35rem;
-    transform: none;
-  }
-
   .tool-preview-card {
     width: calc(100vw - 16px);
     max-height: calc(100vh - 16px);
