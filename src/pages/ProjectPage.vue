@@ -164,8 +164,8 @@
         <h2 class="text-h5 text-weight-bold pp-heading q-mb-xs">
           Product preview
         </h2>
-        <p class="text-caption pp-muted q-mb-none" style="max-width: 520px; margin: 0 auto">
-          Focused capabilities that keep context, speed synthesis, and make findings reusable.
+        <p class="text-caption pp-muted q-mb-none contacts-intro">
+          The product is still under development, but we can share screenshots of some of its components.
         </p>
       </div>
 
@@ -386,8 +386,8 @@
         <h2 class="text-h5 text-weight-bold pp-heading q-mb-sm">
           Get in touch
         </h2>
-        <p class="text-caption pp-muted q-mb-none" style="max-width: 520px; margin: 0 auto">
-          Questions, demos, or partnership inquiries — we are happy to hear from you.
+        <p class="text-caption pp-muted q-mb-none contacts-intro">
+          We welcome your questions, demo requests, and partnership inquiries.
         </p>
       </div>
 
@@ -625,42 +625,37 @@ const aiToolsFeatures = [
 
 const faqs = [
   {
-    question: `What is ${SITE.projectName}?`,
+    question: `Why does a researcher in theoretical science needs ${SITE.projectName}?`,
     answer:
-      'It is a research workspace that connects papers, PDFs, LaTeX, and project structure in one place, with AI to help you analyze and organize what you are working on.'
+      'It makes work faster and much more comfortable.'
   },
   {
-    question: 'What can I bring into a project?',
+    question: 'How did you get thus idea?',
     answer:
-      'You can work with common research materials such as PDFs, documents, and LaTeX sources. The workspace keeps them linked so you can move between reading, writing, and outlining without losing context.'
+      'A deep research was done on how successful theoretical physicists work.'
   },
   {
-    question: 'How does AI fit into the workflow?',
+    question: 'Why will the project be successful?',
     answer:
-      'AI helps surface themes, explain fragments, and connect related pieces of your project. You stay in control: outputs are tied to your sources so you can review, compare, and reuse them in your own work.'
+      '1. without AI there are the top most needed tools, so the research will be x5 faster. 2. AI will make this app most used for researchers in the world.'
   },
   {
-    question: 'Is my research data private?',
+    question: 'Can it be used by bachelor\'s students for preparation to an exam?',
     answer:
-      'Your project content is yours. We design the product so analysis and organization happen in your workspace; contact us if you need details on deployment, retention, or enterprise requirements.'
-  },
-  {
-    question: 'Who is this for?',
-    answer:
-      'Researchers, students, and teams who manage large or long-running projects and want one structured environment instead of scattered files and notes.'
+      'Yes, it will definetely be very helpful. But this application is created to be focused on understand and not for just passing exam and then forgetting everything. '
   }
 ]
 
 const keyTools = [
   {
-    title: 'Interactive knowledge maps',
-    src: '/screenshots/screen2.png',
-    ratio: 16 / 10
+    title: 'A PDF viewer, Latex editor and file explorer in one application',
+    src: `${import.meta.env.BASE_URL}screenshots/prv3.png`,
+    ratio: 1917 / 1132
   },
   {
-    title: 'AI research themes',
-    src: '/screenshots/screen3.png',
-    ratio: 16 / 10
+    title: 'Download tens of artciles and extract Latex in minutes',
+    src: `${import.meta.env.BASE_URL}screenshots/upl.png`,
+    ratio: 1037 / 627
   },
   {
     title: 'Reusable project knowledge',
@@ -1316,6 +1311,17 @@ onUnmounted(() => {
   max-width: 720px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.contacts-intro {
+  margin: 0 auto;
+  max-width: 100%;
+}
+
+@media (min-width: 640px) {
+  .contacts-intro {
+    white-space: nowrap;
+  }
 }
 
 .contacts-panel {

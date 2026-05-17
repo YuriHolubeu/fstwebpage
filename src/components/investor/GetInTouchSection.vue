@@ -1,7 +1,6 @@
 <template>
   <section class="get-in-touch q-pt-xl q-mt-lg q-mb-md column items-center">
     <div class="get-in-touch__heading text-center q-mb-lg full-width">
-      <div class="get-in-touch__overline text-overline q-mb-xs">Contact</div>
       <h2 class="text-h5 text-weight-bold q-mb-sm">
         Get in touch
       </h2>
