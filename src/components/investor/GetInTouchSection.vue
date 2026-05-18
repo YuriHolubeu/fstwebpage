@@ -137,6 +137,7 @@ const contactMailto = `mailto:${SITE.contactEmail}`
   align-items: flex-start;
   text-align: left;
   gap: 0.2rem;
+  margin-right: 3cm;
 }
 
 .site-footer-menu__resources-title {
@@ -208,6 +209,7 @@ const contactMailto = `mailto:${SITE.contactEmail}`
     justify-self: start;
     align-items: flex-start;
     text-align: left;
+    margin-right: 0;
   }
 }
 </style>

@@ -3,7 +3,7 @@
     <div class="header-glow" aria-hidden="true" />
 
     <q-toolbar class="toolbar-inner q-px-md q-py-sm">
-      <div class="toolbar-start row items-center no-wrap">
+      <div class="toolbar-start row items-center">
       <router-link to="/project" class="brand-link row items-center no-wrap">
         <img
           class="brand-icon"
@@ -62,7 +62,6 @@
               </q-item-section>
               <q-item-section>
                 <q-item-label>{{ item.label }}</q-item-label>
-                <q-item-label caption>{{ item.caption }}</q-item-label>
               </q-item-section>
             </q-item>
           </q-list>
@@ -106,22 +105,19 @@ const tailNav = [
 const aiFeatures = [
   {
     to: '/ai-groups',
-    label: 'AI Groups',
-    icon: 'hub',
-    caption: 'Semantic clustering for research themes'
+    label: 'AI grouping',
+    icon: 'hub'
   },
   {
     to: '/explain-fragment',
     matches: ['/explain-fragment', '/save-ai-note'],
-    label: 'Explanation Tree',
-    icon: 'psychology_alt',
-    caption: 'Source-anchored AI memory for formulas and follow-ups'
+    label: 'Tree of AI explanation',
+    icon: 'psychology_alt'
   },
   {
     to: '/research-mentor',
-    label: 'Research Mentor',
-    icon: 'school',
-    caption: 'AI suggests grounded next research moves'
+    label: 'AI research mentor',
+    icon: 'school'
   }
 ]
 
@@ -139,6 +135,7 @@ function isActive (path) {
 <style scoped>
 .investor-header {
   position: relative;
+  overflow-x: clip;
   background: linear-gradient(
     120deg,
     rgba(26, 44, 51, 0.98) 0%,
@@ -173,23 +170,31 @@ function isActive (path) {
 .toolbar-inner {
   position: relative;
   z-index: 1;
-  max-width: 1200px;
+  max-width: min(1200px, 100%);
   margin: 0 auto;
   width: 100%;
   justify-content: flex-start;
+  overflow-x: clip;
 }
 .toolbar-start {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   min-width: 0;
+  max-width: 100%;
   flex: 1 1 auto;
+  gap: 0.75rem 1rem;
 }
 .nav-pills {
-  margin-left: 11cm;
-  flex-shrink: 0;
+  margin-left: 0;
+  min-width: 0;
+  flex: 1 1 auto;
 }
 .brand-link {
   text-decoration: none;
   color: inherit;
   gap: 10px;
+  flex-shrink: 0;
 }
 .brand-icon {
   display: block;
@@ -250,17 +255,31 @@ function isActive (path) {
   background: rgba(11, 195, 171, 0.14);
 }
 
-:global(.ai-feature-item .q-item__label--caption) {
-  color: rgba(255, 255, 255, 0.72);
+@media (min-width: 1024px) {
+  .toolbar-start {
+    flex-wrap: nowrap;
+    gap: clamp(1rem, 6cm, 10vw);
+  }
+
+  .nav-pills {
+    flex: 0 1 auto;
+    flex-shrink: 1;
+  }
 }
 
-@media (max-width: 599px) {
+@media (max-width: 1023px) {
+  .toolbar-start {
+    gap: 0.75rem;
+  }
+
   .nav-pills {
     flex-wrap: wrap;
     justify-content: flex-start;
-    margin-left: 1rem;
-    max-width: none;
+    width: 100%;
   }
+}
+
+@media (max-width: 599px) {
   .nav-btn {
     font-size: 16px;
     padding: 4px 8px;

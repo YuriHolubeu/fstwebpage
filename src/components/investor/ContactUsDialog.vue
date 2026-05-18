@@ -82,7 +82,7 @@
             <q-checkbox
               v-model="selectedInterests"
               val="vip"
-              class="cd-checkbox subscription-option subscription-option--vip"
+              class="cd-checkbox subscription-option"
               color="primary"
               label="Become a VIP user"
             />
@@ -501,11 +501,6 @@ async function sendContactMessage () {
   width: calc(1.15rem * var(--cd-scale));
   min-width: calc(1.15rem * var(--cd-scale));
   height: calc(1.15rem * var(--cd-scale));
-}
-
-.subscription-option--vip {
-  border-color: rgba(216, 180, 254, 0.34);
-  background: linear-gradient(120deg, rgba(15, 118, 110, 0.16), rgba(88, 28, 135, 0.2));
 }
 
 .cd-checkbox :deep(.q-checkbox__label) {
