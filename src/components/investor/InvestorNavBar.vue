@@ -3,6 +3,7 @@
     <div class="header-glow" aria-hidden="true" />
 
     <q-toolbar class="toolbar-inner q-px-md q-py-sm">
+      <div class="toolbar-start row items-center no-wrap">
       <router-link to="/project" class="brand-link row items-center no-wrap">
         <img
           class="brand-icon"
@@ -14,8 +15,6 @@
         />
         <span class="brand-text text-weight-bold">{{ SITE.projectName }}</span>
       </router-link>
-
-      <q-space />
 
       <nav class="nav-pills row items-center no-wrap q-gutter-xs">
         <q-btn
@@ -84,18 +83,7 @@
           {{ item.label }}
         </q-btn>
       </nav>
-
-      <q-space class="gt-xs" />
-
-      <q-btn
-        round
-        flat
-        dense
-        icon="mail"
-        class="gt-xs mail-icon-btn"
-        aria-label="Contact"
-        @click="contact.openDialog()"
-      />
+      </div>
     </q-toolbar>
   </q-header>
 </template>
@@ -105,10 +93,8 @@ import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import brandIconUrl from 'src/assets/app-icon.svg'
 import { SITE } from 'src/constants/site'
-import { useContactUiStore } from 'src/stores/contact-ui'
 
 const route = useRoute()
-const contact = useContactUiStore()
 
 const nav = []
 
@@ -190,6 +176,15 @@ function isActive (path) {
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
+  justify-content: flex-start;
+}
+.toolbar-start {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+.nav-pills {
+  margin-left: 11cm;
+  flex-shrink: 0;
 }
 .brand-link {
   text-decoration: none;
@@ -231,10 +226,6 @@ function isActive (path) {
   background: linear-gradient(135deg, #ccfbf1 0%, #5eead4 100%) !important;
   box-shadow: 0 8px 28px rgba(3, 117, 204, 0.28);
 }
-.mail-icon-btn {
-  color: var(--site-text-accent-soft);
-}
-
 :global(.ai-features-menu) {
   border: 1px solid rgba(94, 234, 212, 0.24);
   border-radius: 8px;
@@ -266,8 +257,9 @@ function isActive (path) {
 @media (max-width: 599px) {
   .nav-pills {
     flex-wrap: wrap;
-    justify-content: flex-end;
-    max-width: 58vw;
+    justify-content: flex-start;
+    margin-left: 1rem;
+    max-width: none;
   }
   .nav-btn {
     font-size: 16px;

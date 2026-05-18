@@ -2,10 +2,18 @@
   <q-dialog
     :model-value="modelValue"
     class="contact-dlg"
+    no-refocus
     @update:model-value="$emit('update:modelValue', $event)"
+    @before-hide="contact.restorePageScroll()"
+    @hide="contact.restorePageScroll()"
   >
-    <q-card flat bordered class="contact-card column no-wrap">
-      <q-card-section class="contact-header row items-start no-wrap q-pa-lg q-pb-md">
+    <q-card
+      flat
+      bordered
+      class="contact-card column no-wrap"
+      :style="contactCardStyle"
+    >
+      <q-card-section class="contact-header row items-start no-wrap">
         <div class="col">
           <div class="cd-title text-h6 text-weight-bold">Contact us</div>
           <div class="cd-subtitle text-caption q-mt-xs">
@@ -25,12 +33,13 @@
 
       <q-separator class="cd-sep" />
 
-      <q-card-section class="contact-body q-px-lg q-pt-lg q-gutter-md">
+      <q-card-section class="contact-body">
+        <div class="contact-fields">
         <q-input
           v-model="name"
           outlined
           dense
-          label="Your name and surname"
+          label="Your name *"
           class="cd-field"
           color="primary"
           :error="Boolean(nameError)"
@@ -41,8 +50,7 @@
           outlined
           dense
           type="email"
-          label="Work email"
-          hint="yourmail@mail.com"
+          label="Email *"
           class="cd-field"
           color="primary"
           :error="Boolean(emailError)"
@@ -51,14 +59,16 @@
         <q-input
           v-model="message"
           outlined
+          dense
           type="textarea"
-          autogrow
-          label="How can we help? (optional if you only select options below)"
-          class="cd-field"
+          rows="3"
+          label="How can we help? *"
+          class="cd-field cd-field--message"
           color="primary"
           :error="Boolean(messageError)"
           :error-message="messageError"
         />
+        </div>
         <div class="subscription-panel">
           <div class="subscription-title">I also want to</div>
           <div class="subscription-options">
@@ -94,7 +104,7 @@
         </div>
       </q-card-section>
 
-      <q-card-actions align="right" class="contact-actions q-px-lg q-pb-lg q-pt-sm col-auto">
+      <q-card-actions align="right" class="contact-actions col-auto">
         <q-btn
           flat
           no-caps
@@ -132,6 +142,7 @@ import {
   notifyAudienceSignup,
   saveAudienceSubscriptions
 } from 'src/services/audience-subscriptions'
+import { useContactUiStore } from 'src/stores/contact-ui'
 
 function formatFailedInterests (errors) {
   return errors
@@ -146,18 +157,23 @@ defineProps({
 const emit = defineEmits(['update:modelValue'])
 
 const $q = useQuasar()
+const contact = useContactUiStore()
 
 const name = ref('')
 const email = ref('')
 const message = ref('')
-const selectedInterests = ref(['waitlist'])
+const selectedInterests = ref([])
 const nameError = ref('')
 const emailError = ref('')
 const messageError = ref('')
 const isSubmitting = ref(false)
 
+const contactCardStyle = {
+  width: 'min(calc(100vw - 32px), calc(616px + 2cm))',
+  maxWidth: 'min(calc(100vw - 32px), calc(616px + 2cm))'
+}
+
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-const fullNamePattern = /^[A-Za-z]+(?:[ '-][A-Za-z]+)*\s+[A-Za-z]+(?:[ '-][A-Za-z]+)*$/
 
 function validateForm () {
   nameError.value = ''
@@ -165,18 +181,16 @@ function validateForm () {
   messageError.value = ''
 
   if (!name.value.trim()) {
-    nameError.value = 'Name and surname are required.'
-  } else if (!fullNamePattern.test(name.value.trim())) {
-    nameError.value = 'Use Name Surname format.'
+    nameError.value = 'Name is required.'
   }
 
   if (!email.value.trim()) {
     emailError.value = 'Email is required.'
   } else if (!emailPattern.test(email.value.trim())) {
-    emailError.value = 'Use email format yourmail@mail.com.'
+    emailError.value = 'Use a valid email address.'
   }
 
-  if (!message.value.trim() && selectedInterests.value.length === 0) {
+  if (!message.value.trim()) {
     messageError.value = 'Message is required.'
   }
 
@@ -187,7 +201,7 @@ function resetForm () {
   name.value = ''
   email.value = ''
   message.value = ''
-  selectedInterests.value = ['waitlist']
+  selectedInterests.value = []
   nameError.value = ''
   emailError.value = ''
   messageError.value = ''
@@ -217,13 +231,11 @@ async function sendContactMessage () {
   isSubmitting.value = true
 
   try {
-    if (message.value.trim()) {
-      await saveContactMessage({
-        name: name.value,
-        email: email.value,
-        message: message.value
-      })
-    }
+    await saveContactMessage({
+      name: name.value,
+      email: email.value,
+      message: message.value
+    })
 
     let savedInterests = []
     let subscriptionErrors = []
@@ -240,9 +252,7 @@ async function sendContactMessage () {
       subscriptionErrors = result.errors
     }
 
-    const messageSaved = Boolean(message.value.trim())
-
-    if (subscriptionErrors.length > 0 && savedInterests.length === 0 && !messageSaved) {
+    if (subscriptionErrors.length > 0 && savedInterests.length === 0) {
       throw new Error(subscriptionErrors[0]?.message || 'Subscription save failed.')
     }
 
@@ -301,6 +311,7 @@ async function sendContactMessage () {
 
 <style scoped>
 .contact-card {
+  --cd-scale: 1.4;
   --cd-high: #ecfeff;
   --cd-body: var(--site-text-body);
   --cd-muted: #5eead4;
@@ -308,10 +319,13 @@ async function sendContactMessage () {
   --cd-field-bg: rgba(19, 48, 49, 0.55);
   --cd-border: rgba(11, 195, 171, 0.32);
   --cd-border-soft: rgba(3, 117, 204, 0.22);
+  --cd-pad-x: calc(1.5rem * var(--cd-scale));
+  --cd-pad-y: calc(0.5rem * var(--cd-scale));
 
-  width: min(100vw - 32px, 440px);
-  max-height: min(92vh, 640px);
-  border-radius: 18px;
+  width: min(calc(100vw - 32px), calc(616px + 2cm)) !important;
+  max-width: min(calc(100vw - 32px), calc(616px + 2cm)) !important;
+  max-height: none;
+  border-radius: calc(18px * var(--cd-scale));
   overflow: hidden;
   background: linear-gradient(
     165deg,
@@ -334,7 +348,31 @@ async function sendContactMessage () {
 .cd-subtitle {
   color: var(--cd-muted);
   line-height: 1.45;
-  max-width: 17rem;
+  white-space: nowrap;
+}
+
+@media (max-width: 380px) {
+  .cd-subtitle {
+    white-space: normal;
+    font-size: 0.72rem;
+  }
+}
+
+.contact-header {
+  padding: calc(1rem * var(--cd-scale)) var(--cd-pad-x) calc(0.5rem * var(--cd-scale));
+}
+
+.contact-body {
+  flex: 0 1 auto;
+  overflow: visible;
+  padding: var(--cd-pad-y) var(--cd-pad-x);
+}
+
+.contact-actions {
+  flex: 0 0 auto;
+  border-top: 1px solid rgba(11, 195, 171, 0.14);
+  background: rgba(19, 48, 49, 0.96);
+  padding: calc(0.35rem * var(--cd-scale)) var(--cd-pad-x) calc(1rem * var(--cd-scale));
 }
 
 .cd-close {
@@ -351,17 +389,15 @@ async function sendContactMessage () {
   opacity: 1;
 }
 
-.contact-body {
-  flex: 1 1 auto;
-  min-height: 0;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+.contact-fields {
+  display: flex;
+  flex-direction: column;
+  gap: calc(0.3rem * var(--cd-scale));
 }
 
-.contact-actions {
-  flex: 0 0 auto;
-  border-top: 1px solid rgba(11, 195, 171, 0.14);
-  background: rgba(19, 48, 49, 0.96);
+.contact-fields :deep(.q-field) {
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 
 /* ---- Form fields ---- */
@@ -410,28 +446,36 @@ async function sendContactMessage () {
   border-color: transparent !important;
 }
 
-.cd-field :deep(textarea.q-field__native) {
-  min-height: 88px;
+.cd-field--message :deep(textarea.q-field__native) {
+  min-height: calc(88px * var(--cd-scale));
+  line-height: 1.4;
+}
+
+.cd-field--message :deep(.q-field__control) {
+  min-height: calc(88px * var(--cd-scale));
+  align-items: flex-start;
 }
 
 .subscription-panel {
-  padding: 0.85rem;
-  border-radius: 12px;
+  margin-top: calc(0.65rem * var(--cd-scale));
+  padding: calc(0.75rem * var(--cd-scale)) calc(0.85rem * var(--cd-scale));
+  border-radius: calc(10px * var(--cd-scale));
   background: rgba(5, 20, 28, 0.28);
 }
 
 .subscription-title {
-  margin-bottom: 0.45rem;
+  margin-bottom: calc(0.55rem * var(--cd-scale));
   color: var(--cd-muted);
-  font-size: 12px;
+  font-size: calc(11px * var(--cd-scale));
   font-weight: 800;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .subscription-options {
   display: grid;
-  gap: 0.35rem;
+  grid-template-columns: 1fr 1fr;
+  gap: calc(0.5rem * var(--cd-scale));
 }
 
 .cd-checkbox {
@@ -440,11 +484,23 @@ async function sendContactMessage () {
 }
 
 .subscription-option {
-  min-height: 2.4rem;
-  padding: 0.25rem 0.45rem;
+  min-height: 0;
+  padding: calc(0.28rem * var(--cd-scale)) calc(0.42rem * var(--cd-scale));
   border: 1px solid rgba(94, 234, 212, 0.12);
-  border-radius: 10px;
+  border-radius: calc(8px * var(--cd-scale));
   background: rgba(204, 251, 241, 0.04);
+}
+
+.subscription-option :deep(.q-checkbox__label) {
+  font-size: calc(0.78rem * var(--cd-scale));
+  line-height: 1.3;
+}
+
+.subscription-option :deep(.q-checkbox__inner) {
+  font-size: calc(1.15rem * var(--cd-scale));
+  width: calc(1.15rem * var(--cd-scale));
+  min-width: calc(1.15rem * var(--cd-scale));
+  height: calc(1.15rem * var(--cd-scale));
 }
 
 .subscription-option--vip {
@@ -454,7 +510,6 @@ async function sendContactMessage () {
 
 .cd-checkbox :deep(.q-checkbox__label) {
   color: var(--cd-high);
-  line-height: 1.35;
 }
 
 .cd-checkbox :deep(.q-checkbox__inner) {
@@ -493,5 +548,17 @@ async function sendContactMessage () {
 
 .cd-btn-submit:hover :deep(.q-focus-helper) {
   opacity: 0.14 !important;
+}
+</style>
+
+<style>
+.contact-dlg .q-dialog__inner > div {
+  width: min(calc(100vw - 32px), calc(616px + 2cm)) !important;
+  max-width: min(calc(100vw - 32px), calc(616px + 2cm)) !important;
+}
+
+.contact-dlg .contact-card {
+  width: min(calc(100vw - 32px), calc(616px + 2cm)) !important;
+  max-width: min(calc(100vw - 32px), calc(616px + 2cm)) !important;
 }
 </style>

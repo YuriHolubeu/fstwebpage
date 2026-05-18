@@ -13,6 +13,7 @@
             <p class="tagline pp-body text-body1 q-ma-none">
               {{ SITE.tagline }}
             </p>
+            <HeroSignupActions />
           </div>
           <div class="col-12 col-md-6 flex flex-center">
             <figure class="hero-tagline-figure">
@@ -92,54 +93,57 @@
       class="screenshot-showcase q-pt-xl q-mt-lg"
     >
       <div
-        class="row q-col-gutter-lg items-start application-section-row workspace-row reveal-on-scroll"
+        class="application-section-inner workspace-row reveal-on-scroll"
         :class="{ 'is-visible': applicationVisible }"
       >
-        <div class="col-12 col-md-6 workspace-copy application-section-copy">
-          <h2 class="screenshot-title text-h4 text-weight-bold pp-heading q-mb-sm">
-            The application
-          </h2>
+        <h2 class="screenshot-title text-h4 text-weight-bold pp-heading q-mb-sm application-section-title">
+          The application
+        </h2>
 
-          <p class="workspace-section-lead workspace-feature__text text-caption pp-muted q-mt-none q-mb-md">
-            A dedicated application structure makes this environment possible. This format is key to enabling the AI tools, as explained below.
-          </p>
-          <ul class="workspace-features q-pl-none q-ma-none">
-            <li
-              v-for="feature in applicationFeatures"
-              :key="feature.title"
-              class="workspace-feature row no-wrap items-start"
-            >
-              <q-icon :name="feature.icon" size="22px" class="workspace-feature__icon q-mr-md" />
-              <div>
-                <div class="workspace-feature__title text-subtitle2 text-weight-medium pp-title q-mb-xs">
-                  {{ feature.title }}
+        <p class="application-section-lead workspace-section-lead workspace-feature__text text-caption pp-muted q-mt-none q-mb-md">
+          A dedicated application structure makes this environment possible. This format is key to enabling the AI tools, as explained below.
+        </p>
+
+        <div class="row q-col-gutter-lg items-start application-content-row">
+          <div class="col-12 col-md-6 application-features-col">
+            <ul class="workspace-features application-features-list q-pl-none q-ma-none">
+              <li
+                v-for="feature in applicationFeatures"
+                :key="feature.title"
+                class="workspace-feature row no-wrap items-start"
+              >
+                <q-icon :name="feature.icon" size="22px" class="workspace-feature__icon q-mr-md" />
+                <div>
+                  <div class="workspace-feature__title text-subtitle2 text-weight-medium pp-title q-mb-xs">
+                    {{ feature.title }}
+                  </div>
+                  <p class="workspace-feature__text text-caption pp-muted q-mb-none">
+                    {{ feature.description }}
+                  </p>
                 </div>
-                <p class="workspace-feature__text text-caption pp-muted q-mb-none">
-                  {{ feature.description }}
-                </p>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <div class="col-12 col-md-6 application-screenshot-col">
-          <button
-            type="button"
-            class="application-screenshot-trigger"
-            aria-label="Open full-size application screenshot"
-            @click="openApplicationPreview"
-          >
-            <figure class="application-screenshot-figure">
-              <img
-                :src="applicationScreenshot.src"
-                alt="Focus Structure Tool workspace with a structured outline and linked document views"
-                class="application-screenshot-img"
-                :width="applicationScreenshot.width"
-                :height="applicationScreenshot.height"
-                loading="lazy"
-                decoding="async"
-              />
-            </figure>
-          </button>
+              </li>
+            </ul>
+          </div>
+          <div class="col-12 col-md-6 application-screenshot-col">
+            <button
+              type="button"
+              class="application-screenshot-trigger"
+              aria-label="Open full-size application screenshot"
+              @click="openApplicationPreview"
+            >
+              <figure class="application-screenshot-figure">
+                <img
+                  :src="applicationScreenshot.src"
+                  alt="Focus Structure Tool workspace with a structured outline and linked document views"
+                  class="application-screenshot-img"
+                  :width="applicationScreenshot.width"
+                  :height="applicationScreenshot.height"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -419,6 +423,7 @@
 import { onMounted, onUnmounted, ref } from 'vue'
 import heroWorkshopUrl from 'src/assets/hero-workshop.png'
 import heroTaglineVisualUrl from 'src/assets/hero-tagline-visual.png'
+import HeroSignupActions from 'src/components/investor/HeroSignupActions.vue'
 import FaqList from 'src/components/investor/FaqList.vue'
 import { FAQ_ITEMS } from 'src/constants/faqs'
 import { SITE } from 'src/constants/site'
@@ -992,6 +997,10 @@ onUnmounted(() => {
     text-align: center;
   }
 
+  .hero-tagline-copy :deep(.hero-signup-actions) {
+    justify-content: center;
+  }
+
   .hero-headline-column .mega-title {
     text-align: center;
     width: 100%;
@@ -1077,19 +1086,70 @@ onUnmounted(() => {
   margin-right: auto;
 }
 
-.application-section-row .workspace-copy {
-  max-width: none;
-  margin-left: 0;
-  margin-right: 0;
+.application-section-inner {
+  text-align: left;
+  max-width: min(920px, 100%);
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.application-section-copy,
+.application-section-title {
+  max-width: none;
+}
+
+.application-section-lead {
+  max-width: none;
+  line-height: 1.65;
+  margin-bottom: calc(35px) !important;
+}
+
+.application-content-row {
+  align-items: stretch;
+}
+
+.application-features-col,
 .application-screenshot-col {
   min-width: 0;
 }
 
-.application-screenshot-col {
-  align-self: center;
+.application-features-list {
+  max-width: none;
+}
+
+@media (min-width: 1024px) {
+  .application-section-inner {
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .application-content-row {
+    align-items: stretch;
+  }
+
+  .application-screenshot-col {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .application-screenshot-trigger {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    height: 100%;
+  }
+
+  .application-screenshot-figure {
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    min-height: 0;
+  }
+
+  .application-screenshot-img {
+    max-height: 100%;
+    object-fit: contain;
+  }
 }
 
 .application-screenshot-trigger {
