@@ -35,7 +35,7 @@
     <section class="ai-feature-investor">
       <span class="ai-feature-investor__label">Investor signal</span>
       <p class="ai-feature-investor__text q-ma-none">
-        The product does not only store research files. It understands how the project is organized
+        The product not only stores research files. It understands how the project is organized
         and how papers, formulas and ideas are connected.
       </p>
     </section>
@@ -48,7 +48,7 @@ const featureRows = [
     icon: 'auto_awesome_mosaic',
     accent: 'mint',
     title: 'Group uploaded articles by research meaning',
-    text: 'Researchers can import papers from arXiv or upload their own PDFs, notes and LaTeX files. The AI analyzes titles, abstracts, sections, formulas and key terms, then organizes the material into meaningful themes such as core theory, methods, experiments, applications and open questions. Instead of manually creating folders, the user immediately sees what the project is about.',
+    text: 'Researchers can import papers from arXiv or upload PDFs, notes, and LaTeX files. AI analyzes the content and automatically organizes it into meaningful themes such as theory, methods, experiments, applications, and open questions, helping users instantly understand the structure of a project.',
     label: 'Why users need it',
     result: 'A growing research library stays readable even after weeks or months of work.'
   },
@@ -57,7 +57,7 @@ const featureRows = [
     accent: 'blue',
     title: 'Surface hidden links between formulas and papers',
     text: 'Important research connections are often invisible when papers are stored as separate files. AI Groups can suggest links between formulas, concepts, methods, claims and source papers. It can show where an idea appears, where it is reused, and which papers support or extend each other.',
-    label: 'Why it is attractive',
+    label: 'Why is it attractive?',
     result: 'The workspace becomes a knowledge map, not just another PDF reader or file manager.'
   },
   {

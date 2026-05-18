@@ -69,9 +69,9 @@
 
 .ai-feature-row__title {
   color: var(--site-text-heading);
-  font-size: 1.05rem;
+  font-size: 1.4rem;
   font-weight: 700;
-  line-height: 1.3;
+  line-height: 1.28;
 }
 
 .ai-feature-row__text {
@@ -142,9 +142,9 @@
   align-items: flex-start;
   gap: 0.5rem;
   color: var(--site-text-high);
-  font-size: 17px;
-  font-weight: 600;
-  line-height: 1.35;
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.28;
 }
 
 .ai-feature-point .q-icon {
@@ -172,7 +172,11 @@
 
 @media (max-width: 599px) {
   .ai-feature-row__title {
-    font-size: 19px;
+    font-size: 1.3rem;
+  }
+
+  .ai-feature-point {
+    font-size: 1.3rem;
   }
 
   .ai-feature-row {

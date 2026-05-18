@@ -73,7 +73,7 @@ const roadmap = [
   },
   {
     title: 'First release',
-    window: '2026 · August',
+    window: '2026 August',
     detail: 'The first release will have a fully functioning structure panel, all Latex tools, extraction of Latex from Arxiv and from scanned PDFs, downloading all cited articles, AI grouping feature.',
     icon: 'rocket_launch',
     color: 'secondary',
@@ -81,7 +81,7 @@ const roadmap = [
   },
   {
     title: 'Release with all promised AI features',
-    window: '2026 · November – 2027 · February',
+    window: '2026 November – 2027 February',
     detail: 'Creation of all AI features. Such a wide range is because the speed of the develpment strongly depends on funding.',
     icon: 'auto_awesome',
     color: 'secondary',
@@ -89,15 +89,15 @@ const roadmap = [
   },
   {
     title: 'Stable company with well-developed AI tools',
-    window: '2027 · August',
+    window: '2027 August',
     detail: 'Have 10 000 active users, have a community of programmers who develop custom AI agents for the application, have our own scientific conferences for answering purely scientific questions that were not touched before.',
     icon: 'corporate_fare',
     color: 'accent',
     tags: []
   },
   {
-    title: 'Become a strong player',
-    window: '2028 · August',
+    title: 'Best application for science in the world',
+    window: '2028 August',
     detail: 'Have 500 000 active users. Make science affordable for more people and become a table tool for the majority of scientists.',
     icon: 'public',
     color: 'accent',

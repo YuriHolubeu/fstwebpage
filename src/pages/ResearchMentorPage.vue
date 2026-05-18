@@ -35,7 +35,7 @@
 <script setup>
 const heroPoints = [
   'suggests concrete next steps from the current project state',
-  'explains the reason and project evidence behind each recommendation',
+  'explains the reason and provides evidence behind each recommendation',
   'supports different research styles: intuition, rigor, planning and review'
 ]
 </script>

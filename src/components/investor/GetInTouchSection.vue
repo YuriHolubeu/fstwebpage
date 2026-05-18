@@ -81,7 +81,7 @@ const contactMailto = `mailto:${SITE.contactEmail}`
 
 .site-footer-menu__inner {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  grid-template-columns: minmax(0, max-content) minmax(0, 1fr) minmax(0, max-content);
   align-items: start;
   width: 100%;
   max-width: none;
@@ -125,6 +125,7 @@ const contactMailto = `mailto:${SITE.contactEmail}`
   grid-row: 1;
   align-self: start;
   align-items: flex-start;
+  min-width: 0;
   text-align: left;
   gap: 0.55rem;
 }
@@ -161,10 +162,12 @@ const contactMailto = `mailto:${SITE.contactEmail}`
 }
 
 .site-footer-menu__intro {
+  max-width: 100%;
   font-size: 1.05rem;
   line-height: 1.45;
   font-weight: 500;
   color: var(--site-text-body);
+  overflow-wrap: anywhere;
 }
 
 .site-footer-menu__links {
@@ -187,13 +190,13 @@ const contactMailto = `mailto:${SITE.contactEmail}`
   text-decoration: underline;
 }
 
-@media (min-width: 900px) {
-  .site-footer-menu__intro {
-    white-space: nowrap;
+@media (max-width: 1099px) {
+  .site-footer-menu__resources {
+    margin-right: 0;
   }
 }
 
-@media (max-width: 699px) {
+@media (max-width: 899px) {
   .site-footer-menu__inner {
     grid-template-columns: 1fr;
   }
@@ -212,4 +215,5 @@ const contactMailto = `mailto:${SITE.contactEmail}`
     margin-right: 0;
   }
 }
+
 </style>

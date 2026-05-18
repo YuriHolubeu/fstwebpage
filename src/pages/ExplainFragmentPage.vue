@@ -6,9 +6,7 @@
         Explain Fragment: from copy-paste chat to source-anchored understanding
       </h1>
       <p class="text-body1 text-grey-4 ai-feature-hero__lead q-ma-none">
-        Users select a formula, paragraph or note inside the paper and ask the AI to explain it
-        right there. Every answer stays tied to the exact source, grows as a branching tree of
-        follow-ups, and becomes searchable project memory instead of disposable chat.
+        Users can select a formula, paragraph, or note and ask the AI to explain it in place. Answers stay linked to the source, form a branching tree of follow-ups, and become searchable project memory instead of temporary chat.
       </p>
     </section>
 
@@ -50,14 +48,14 @@ const featureRows = [
     title: 'Explain the exact formula or paragraph inside the paper',
     text: 'Researchers select a fragment in a PDF, LaTeX file or note and ask what it means without copying text into a separate chatbot. The AI already knows the paper title, section, page, surrounding notation and project context, so the explanation starts from the real source instead of a detached prompt.',
     label: 'Why users need it',
-    result: 'A week later they can jump back to the exact place where the question started.'
+    result: 'A week later, they can jump back to the exact place where the question started.'
   },
   {
     icon: 'account_tree',
     accent: 'blue',
     title: 'Follow-up questions grow as a tree, not a lost thread',
     text: 'Research thinking is branching: symbols, intuition, proof steps, connections to other papers. Explain Fragment lets users ask the next question on a specific branch instead of scrolling through a long linear chat that forgets what was selected.',
-    label: 'Why it is different',
+    label: 'Why is it different',
     result: 'The interface matches how people actually explore hard material, not how generic chat products are designed.'
   },
   {
