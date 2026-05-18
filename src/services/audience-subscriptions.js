@@ -4,13 +4,15 @@ const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY
 const TABLES = {
   waitlist: import.meta.env.VITE_SUPABASE_WAITLIST_TABLE || 'waitlist_subscriptions',
   vip: import.meta.env.VITE_SUPABASE_VIP_TABLE || 'vip_subscription_requests',
-  newsletter: import.meta.env.VITE_SUPABASE_NEWSLETTER_TABLE || 'newsletter_subscriptions'
+  newsletter: import.meta.env.VITE_SUPABASE_NEWSLETTER_TABLE || 'newsletter_subscriptions',
+  sponsor: import.meta.env.VITE_SUPABASE_SPONSOR_TABLE || 'sponsor_inquiries'
 }
 
-const LABELS = {
-  waitlist: 'app waitlist',
-  vip: 'VIP subscription request',
-  newsletter: 'newsletter subscription'
+export const INTEREST_LABELS = {
+  waitlist: 'Join the app waitlist',
+  vip: 'Become a VIP user',
+  newsletter: 'Subscribe to the newsletter',
+  sponsor: 'Sponsor project'
 }
 
 export function isAudienceStorageConfigured () {
@@ -51,24 +53,32 @@ export async function saveAudienceSubscriptions ({ name, email, message, sourceP
     status: 'active'
   }
 
-  const savedInterests = []
+  const saved = []
+  const errors = []
 
   for (const interest of interests) {
     const table = TABLES[interest]
     if (!table) continue
 
-    await insertSubscription({
-      table,
-      payload: {
-        ...basePayload,
-        message: message.trim() || null
-      }
-    })
-
-    savedInterests.push(interest)
+    try {
+      await insertSubscription({
+        table,
+        payload: {
+          ...basePayload,
+          message: message.trim() || null
+        }
+      })
+      saved.push(interest)
+    } catch (error) {
+      console.warn(`Subscription save failed for ${interest}`, error)
+      errors.push({
+        interest,
+        message: error?.message || `Failed to save ${interest}.`
+      })
+    }
   }
 
-  return savedInterests
+  return { saved, errors }
 }
 
 export async function notifyAudienceSignup ({ name, email, message, sourcePath, interests }) {
@@ -88,7 +98,7 @@ export async function notifyAudienceSignup ({ name, email, message, sourcePath, 
         email: email.trim().toLowerCase(),
         message: message.trim(),
         source_path: sourcePath || window.location.pathname,
-        interests: interests.map((interest) => LABELS[interest] || interest)
+        interests: interests.map((interest) => INTEREST_LABELS[interest] || interest)
       })
     })
   } catch (error) {

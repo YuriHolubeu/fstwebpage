@@ -4,7 +4,7 @@
     class="contact-dlg"
     @update:model-value="$emit('update:modelValue', $event)"
   >
-    <q-card flat bordered class="contact-card">
+    <q-card flat bordered class="contact-card column no-wrap">
       <q-card-section class="contact-header row items-start no-wrap q-pa-lg q-pb-md">
         <div class="col">
           <div class="cd-title text-h6 text-weight-bold">Contact us</div>
@@ -25,7 +25,7 @@
 
       <q-separator class="cd-sep" />
 
-      <q-card-section class="q-px-lg q-pt-lg q-gutter-md">
+      <q-card-section class="contact-body q-px-lg q-pt-lg q-gutter-md">
         <q-input
           v-model="name"
           outlined
@@ -53,14 +53,14 @@
           outlined
           type="textarea"
           autogrow
-          label="How can we help? (optional for newsletter)"
+          label="How can we help? (optional if you only select options below)"
           class="cd-field"
           color="primary"
           :error="Boolean(messageError)"
           :error-message="messageError"
         />
         <div class="subscription-panel">
-          <div class="subscription-title">I want to</div>
+          <div class="subscription-title">I also want to</div>
           <div class="subscription-options">
             <q-checkbox
               v-model="selectedInterests"
@@ -83,11 +83,18 @@
               color="primary"
               label="Subscribe to the newsletter"
             />
+            <q-checkbox
+              v-model="selectedInterests"
+              val="sponsor"
+              class="cd-checkbox subscription-option"
+              color="primary"
+              label="Sponsor project"
+            />
           </div>
         </div>
       </q-card-section>
 
-      <q-card-actions align="right" class="contact-actions q-px-lg q-pb-lg q-pt-sm">
+      <q-card-actions align="right" class="contact-actions q-px-lg q-pb-lg q-pt-sm col-auto">
         <q-btn
           flat
           no-caps
@@ -120,10 +127,17 @@ import {
   saveContactMessage
 } from 'src/services/contact-messages'
 import {
+  INTEREST_LABELS,
   isAudienceStorageConfigured,
   notifyAudienceSignup,
   saveAudienceSubscriptions
 } from 'src/services/audience-subscriptions'
+
+function formatFailedInterests (errors) {
+  return errors
+    .map((entry) => INTEREST_LABELS[entry.interest] || entry.interest)
+    .join(', ')
+}
 
 defineProps({
   modelValue: { type: Boolean, required: true }
@@ -211,15 +225,26 @@ async function sendContactMessage () {
       })
     }
 
-    const savedInterests = selectedInterests.value.length
-      ? await saveAudienceSubscriptions({
+    let savedInterests = []
+    let subscriptionErrors = []
+
+    if (selectedInterests.value.length > 0) {
+      const result = await saveAudienceSubscriptions({
         name: name.value,
         email: email.value,
         message: message.value,
         sourcePath: window.location.pathname,
         interests: selectedInterests.value
       })
-      : []
+      savedInterests = result.saved
+      subscriptionErrors = result.errors
+    }
+
+    const messageSaved = Boolean(message.value.trim())
+
+    if (subscriptionErrors.length > 0 && savedInterests.length === 0 && !messageSaved) {
+      throw new Error(subscriptionErrors[0]?.message || 'Subscription save failed.')
+    }
 
     await notifyAudienceSignup({
       name: name.value,
@@ -231,6 +256,27 @@ async function sendContactMessage () {
 
     resetForm()
     emit('update:modelValue', false)
+
+    if (subscriptionErrors.length > 0 && savedInterests.length > 0) {
+      $q.notify({
+        type: 'warning',
+        message: `Saved partially. Could not store: ${formatFailedInterests(subscriptionErrors)}.`,
+        position: 'top',
+        timeout: 8000
+      })
+      return
+    }
+
+    if (subscriptionErrors.length > 0) {
+      $q.notify({
+        type: 'warning',
+        message: `Message sent, but could not store: ${formatFailedInterests(subscriptionErrors)}.`,
+        position: 'top',
+        timeout: 8000
+      })
+      return
+    }
+
     $q.notify({
       type: 'positive',
       message: savedInterests.length
@@ -242,7 +288,9 @@ async function sendContactMessage () {
     console.error(error)
     $q.notify({
       type: 'negative',
-      message: 'Could not send your message. Please try again.',
+      message: error?.message?.includes('Failed')
+        ? 'Could not send your message. Please try again.'
+        : (error?.message || 'Could not send your message. Please try again.'),
       position: 'top'
     })
   } finally {
@@ -262,6 +310,7 @@ async function sendContactMessage () {
   --cd-border-soft: rgba(3, 117, 204, 0.22);
 
   width: min(100vw - 32px, 440px);
+  max-height: min(92vh, 640px);
   border-radius: 18px;
   overflow: hidden;
   background: linear-gradient(
@@ -302,9 +351,17 @@ async function sendContactMessage () {
   opacity: 1;
 }
 
+.contact-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .contact-actions {
+  flex: 0 0 auto;
   border-top: 1px solid rgba(11, 195, 171, 0.14);
-  background: rgba(19, 48, 49, 0.35);
+  background: rgba(19, 48, 49, 0.96);
 }
 
 /* ---- Form fields ---- */
