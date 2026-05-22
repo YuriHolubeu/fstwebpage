@@ -227,7 +227,7 @@ async function submitVip () {
 
   vipSubmitting.value = true
   try {
-    await saveVipSignup({
+    const { duplicate } = await saveVipSignup({
       name: vipName.value,
       email: vipEmail.value,
       message: vipMessage.value
@@ -235,10 +235,22 @@ async function submitVip () {
     vipName.value = ''
     vipEmail.value = ''
     vipMessage.value = ''
-    $q.notify({ type: 'positive', message: 'VIP request received. Thank you!', position: 'top' })
+    $q.notify({
+      type: duplicate ? 'info' : 'positive',
+      message: duplicate
+        ? 'This email is already registered for VIP. Thank you!'
+        : 'VIP request received. Thank you!',
+      position: 'top'
+    })
   } catch (error) {
     console.error(error)
-    $q.notify({ type: 'negative', message: 'Could not save your VIP request.', position: 'top' })
+    $q.notify({
+      type: 'negative',
+      message: 'Could not save your VIP request.',
+      caption: error?.message || 'Check Supabase RLS and table grants.',
+      position: 'top',
+      timeout: 8000
+    })
   } finally {
     vipSubmitting.value = false
   }
@@ -253,7 +265,7 @@ async function submitInvest () {
 
   investorSubmitting.value = true
   try {
-    await saveInvestorSignup({
+    const { duplicate } = await saveInvestorSignup({
       name: investorName.value,
       email: investorEmail.value,
       message: investorMessage.value
@@ -261,10 +273,22 @@ async function submitInvest () {
     investorName.value = ''
     investorEmail.value = ''
     investorMessage.value = ''
-    $q.notify({ type: 'positive', message: 'Investment interest received. Thank you!', position: 'top' })
+    $q.notify({
+      type: duplicate ? 'info' : 'positive',
+      message: duplicate
+        ? 'This email is already registered. Thank you!'
+        : 'Investment interest received. Thank you!',
+      position: 'top'
+    })
   } catch (error) {
     console.error(error)
-    $q.notify({ type: 'negative', message: 'Could not save your investment interest.', position: 'top' })
+    $q.notify({
+      type: 'negative',
+      message: 'Could not save your investment interest.',
+      caption: error?.message || 'Check Supabase RLS and table grants.',
+      position: 'top',
+      timeout: 8000
+    })
   } finally {
     investorSubmitting.value = false
   }

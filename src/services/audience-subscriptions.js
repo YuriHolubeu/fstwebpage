@@ -1,55 +1,43 @@
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY
+import {
+  SIGNUP_NOTIFICATION_FUNCTION,
+  SUPABASE_TABLES,
+  currentSourcePath,
+  insertRow,
+  invokeEdgeFunction,
+  isSupabaseConfigured,
+  normalizeEmail
+} from 'src/lib/supabase-client'
 
-const TABLES = {
-  waitlist: import.meta.env.VITE_SUPABASE_WAITLIST_TABLE || 'waitlist_subscriptions',
-  vip: import.meta.env.VITE_SUPABASE_VIP_TABLE || 'vip_subscription_requests',
-  newsletter: import.meta.env.VITE_SUPABASE_NEWSLETTER_TABLE || 'newsletter_subscriptions',
-  sponsor: import.meta.env.VITE_SUPABASE_SPONSOR_TABLE || 'sponsor_inquiries'
-}
+const INTEREST_TO_TABLE = Object.freeze({
+  waitlist: SUPABASE_TABLES.waitlist,
+  vip: SUPABASE_TABLES.vip,
+  newsletter: SUPABASE_TABLES.newsletter,
+  sponsor: SUPABASE_TABLES.sponsor
+})
 
-export const INTEREST_LABELS = {
+export const INTEREST_LABELS = Object.freeze({
   waitlist: 'Join the app waitlist',
   vip: 'Become a VIP user',
   newsletter: 'Subscribe to the newsletter',
   sponsor: 'Sponsor project'
-}
+})
 
 export function isAudienceStorageConfigured () {
-  return Boolean(SUPABASE_URL && SUPABASE_ANON_KEY)
+  return isSupabaseConfigured()
 }
 
-async function insertSubscription ({ table, payload }) {
-  const endpoint = `${SUPABASE_URL.replace(/\/$/, '')}/rest/v1/${table}`
-  const response = await fetch(endpoint, {
-    method: 'POST',
-    headers: {
-      apikey: SUPABASE_ANON_KEY,
-      Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-      'Content-Type': 'application/json',
-      Prefer: 'return=minimal'
-    },
-    body: JSON.stringify(payload)
-  })
-
-  if (response.status === 409) return
-
-  if (!response.ok) {
-    const details = await response.text()
-    throw new Error(details || `Failed to save subscription in ${table}.`)
-  }
-}
-
-export async function saveAudienceSubscriptions ({ name, email, message, sourcePath, interests }) {
-  if (!isAudienceStorageConfigured()) {
-    throw new Error('Supabase is not configured.')
-  }
-
-  const normalizedEmail = email.trim().toLowerCase()
+export async function saveAudienceSubscriptions ({
+  name,
+  email,
+  message,
+  sourcePath,
+  interests
+}) {
+  const normalizedEmail = normalizeEmail(email)
   const basePayload = {
     name: name.trim(),
     email: normalizedEmail,
-    source_path: sourcePath || window.location.pathname,
+    source_path: sourcePath || currentSourcePath(),
     status: 'active'
   }
 
@@ -57,16 +45,17 @@ export async function saveAudienceSubscriptions ({ name, email, message, sourceP
   const errors = []
 
   for (const interest of interests) {
-    const table = TABLES[interest]
+    const table = INTEREST_TO_TABLE[interest]
     if (!table) continue
 
     try {
-      await insertSubscription({
+      await insertRow({
         table,
         payload: {
           ...basePayload,
           message: message.trim() || null
-        }
+        },
+        treatConflictAsSuccess: true
       })
       saved.push(interest)
     } catch (error) {
@@ -81,25 +70,24 @@ export async function saveAudienceSubscriptions ({ name, email, message, sourceP
   return { saved, errors }
 }
 
-export async function notifyAudienceSignup ({ name, email, message, sourcePath, interests }) {
-  const functionName = import.meta.env.VITE_SUPABASE_SIGNUP_NOTIFICATION_FUNCTION
-  if (!functionName || !isAudienceStorageConfigured() || interests.length === 0) return
+export async function notifyAudienceSignup ({
+  name,
+  email,
+  message,
+  sourcePath,
+  interests
+}) {
+  if (!SIGNUP_NOTIFICATION_FUNCTION || !isSupabaseConfigured() || interests.length === 0) {
+    return
+  }
 
   try {
-    await fetch(`${SUPABASE_URL.replace(/\/$/, '')}/functions/v1/${functionName}`, {
-      method: 'POST',
-      headers: {
-        apikey: SUPABASE_ANON_KEY,
-        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        name: name.trim(),
-        email: email.trim().toLowerCase(),
-        message: message.trim(),
-        source_path: sourcePath || window.location.pathname,
-        interests: interests.map((interest) => INTEREST_LABELS[interest] || interest)
-      })
+    await invokeEdgeFunction(SIGNUP_NOTIFICATION_FUNCTION, {
+      name: name.trim(),
+      email: normalizeEmail(email),
+      message: message.trim(),
+      source_path: sourcePath || currentSourcePath(),
+      interests: interests.map((interest) => INTEREST_LABELS[interest] || interest)
     })
   } catch (error) {
     console.warn('Signup notification failed', error)

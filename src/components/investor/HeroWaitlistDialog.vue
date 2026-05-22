@@ -136,20 +136,28 @@ async function submit () {
 
   isSubmitting.value = true
   try {
-    await saveWaitlistSignup({
+    const { duplicate } = await saveWaitlistSignup({
       name: name.value,
       email: email.value,
       message: message.value
     })
     reset()
     emit('update:modelValue', false)
-    $q.notify({ type: 'positive', message: 'You are on the waitlist. Thank you!', position: 'top' })
+    $q.notify({
+      type: duplicate ? 'info' : 'positive',
+      message: duplicate
+        ? 'This email is already on the waitlist. Thank you!'
+        : 'You are on the waitlist. Thank you!',
+      position: 'top'
+    })
   } catch (error) {
     console.error(error)
     $q.notify({
       type: 'negative',
       message: 'Could not save your signup. Please try again.',
-      position: 'top'
+      caption: error?.message || 'Check Supabase RLS and table grants.',
+      position: 'top',
+      timeout: 8000
     })
   } finally {
     isSubmitting.value = false
