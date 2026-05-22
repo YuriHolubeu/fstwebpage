@@ -1,18 +1,14 @@
-# Production build for GitHub Pages (docs/).
-# Required repository secrets: VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY
+# Optional: manual production rebuild. Normal deploys use committed docs/ + GitHub Pages.
+#
+# To run: GitHub → Actions → Deploy GitHub Pages → Run workflow
+# Add repository secrets first: VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY
 name: Deploy GitHub Pages
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: write
-
-concurrency:
-  group: pages-${{ github.ref }}
-  cancel-in-progress: true
 
 jobs:
   build-and-publish:
