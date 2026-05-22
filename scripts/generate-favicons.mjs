@@ -12,7 +12,7 @@ const source = join(root, 'src/assets/app-icon.svg')
 const publicDir = join(root, 'public')
 const iconsDir = join(publicDir, 'icons')
 
-const sizes = [16, 32, 96, 128]
+const sizes = [16, 32, 48, 96, 128, 192, 512]
 const icoSizes = [16, 32, 48]
 
 mkdirSync(iconsDir, { recursive: true })
@@ -30,5 +30,22 @@ for (const size of sizes) {
 
 const icoBuffers = await Promise.all(icoSizes.map((size) => renderIcon(size).toBuffer()))
 writeFileSync(join(publicDir, 'favicon.ico'), await toIco(icoBuffers))
+
+const manifest = {
+  name: 'Focus Structure Tool',
+  short_name: 'Focus Structure',
+  icons: [
+    { src: '/icons/favicon-192x192.png', sizes: '192x192', type: 'image/png' },
+    { src: '/icons/favicon-512x512.png', sizes: '512x512', type: 'image/png' }
+  ],
+  theme_color: '#1a2c33',
+  background_color: '#1a2c33',
+  display: 'standalone'
+}
+
+writeFileSync(
+  join(publicDir, 'site.webmanifest'),
+  `${JSON.stringify(manifest, null, 2)}\n`
+)
 
 console.log('[favicons] Generated from src/assets/app-icon.svg')
