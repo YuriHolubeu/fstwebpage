@@ -1,0 +1,1 @@
+var e=0;function t(){e=window.scrollY}function n(){let t=e,n=document.documentElement,r=n.style.scrollBehavior;n.style.scrollBehavior=`auto`;let i=()=>window.scrollTo({left:0,top:t,behavior:`auto`});i(),requestAnimationFrame(()=>{i(),requestAnimationFrame(()=>{i(),n.style.scrollBehavior=r})})}function r(e){t(),e.value=!0}export{r as n,n as r,t};

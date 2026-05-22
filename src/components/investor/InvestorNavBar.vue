@@ -99,6 +99,7 @@ const nav = []
 
 const tailNav = [
   { to: '/education', label: 'Education', icon: 'school' },
+  { to: '/careers', label: 'Careers', icon: 'work' },
   { to: '/future', label: 'Roadmap', icon: 'map' }
 ]
 

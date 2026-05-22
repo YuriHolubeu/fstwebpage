@@ -10,6 +10,7 @@ export const SITEMAP_PATHS = [
   { path: '/explain-fragment', changefreq: 'monthly', priority: '0.8' },
   { path: '/research-mentor', changefreq: 'monthly', priority: '0.8' },
   { path: '/education', changefreq: 'monthly', priority: '0.7' },
+  { path: '/careers', changefreq: 'monthly', priority: '0.7' },
   { path: '/future', changefreq: 'monthly', priority: '0.6' },
   { path: '/resources', changefreq: 'monthly', priority: '0.6' }
 ]

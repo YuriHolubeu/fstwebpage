@@ -34,6 +34,11 @@ const routes = [
         component: () => import('pages/EducationPage.vue')
       },
       {
+        path: 'careers',
+        name: 'investor-careers',
+        component: () => import('pages/CareersPage.vue')
+      },
+      {
         path: 'future',
         name: 'investor-future',
         component: () => import('pages/FuturePage.vue')

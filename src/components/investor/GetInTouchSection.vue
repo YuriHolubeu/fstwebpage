@@ -33,6 +33,12 @@
           Resources
         </div>
         <router-link
+          :to="{ name: 'investor-careers' }"
+          class="site-footer-menu__resources-link"
+        >
+          Careers
+        </router-link>
+        <router-link
           :to="{ name: 'investor-resources' }"
           class="site-footer-menu__resources-link"
         >
