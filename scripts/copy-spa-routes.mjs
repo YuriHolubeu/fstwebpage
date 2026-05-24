@@ -1,11 +1,11 @@
 /**
- * GitHub Pages returns HTTP 404 for SPA history routes when only 404.html exists.
- * Copy index.html into each public route folder so /project/ etc. return 200 for Google.
+ * GitHub Pages returns HTTP 404 for SPA history routes unless each path has index.html.
+ * Copy the built index.html into every public route folder.
  */
 import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs'
-import { dirname, join } from 'node:path'
+import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { SITEMAP_PATHS } from '../src/constants/sitemap.js'
+import { SPA_ROUTE_PATHS } from '../src/constants/spa-paths.js'
 
 export function copySpaRoutes (dist = 'docs') {
   const indexPath = join(dist, 'index.html')
@@ -15,17 +15,20 @@ export function copySpaRoutes (dist = 'docs') {
   }
 
   const html = readFileSync(indexPath, 'utf8')
+  let written = 0
 
-  for (const routePath of [...SITEMAP_PATHS.map(({ path }) => path), '/project']) {
+  for (const routePath of SPA_ROUTE_PATHS) {
     const segments = routePath.replace(/^\//, '').split('/').filter(Boolean)
     if (segments.length === 0) continue
+
     const dir = join(dist, ...segments)
     mkdirSync(dir, { recursive: true })
     writeFileSync(join(dir, 'index.html'), html)
+    written += 1
   }
 
   console.log(
-    `[gh-pages] Wrote index.html for ${SITEMAP_PATHS.length + 1} routes (HTTP 200 for Search Console).`
+    `[gh-pages] Wrote index.html for ${written} routes (direct reloads return HTTP 200).`
   )
 }
 

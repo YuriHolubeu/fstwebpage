@@ -31,6 +31,17 @@
     <link rel="manifest" href="/site.webmanifest">
   </head>
   <body>
+    <!-- Restore deep links after GitHub Pages 404.html redirect (/?/careers → /careers) -->
+    <script type="text/javascript">
+      (function (locationRef) {
+        if (locationRef.search[1] === '/') {
+          var decoded = locationRef.search.slice(1).split('&').map(function (part) {
+            return part.replace(/~and~/g, '&')
+          }).join('?')
+          window.history.replaceState(null, null, decoded + locationRef.hash)
+        }
+      }(window.location))
+    </script>
     <!-- quasar:entry-point -->
   </body>
 </html>
