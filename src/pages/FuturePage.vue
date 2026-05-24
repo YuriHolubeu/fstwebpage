@@ -1,5 +1,29 @@
 <template>
   <q-page class="future-page q-pa-md q-pb-xl">
+    <section class="invest-reasons q-mb-xl column items-center">
+      <h2 class="invest-reasons__title text-h5 text-weight-bold q-mb-md text-center">
+        Why invest in us
+      </h2>
+      <div class="invest-reasons__list">
+        <article
+          v-for="item in investReasons"
+          :key="item.title"
+          class="invest-reason"
+        >
+          <div class="invest-reason__header row no-wrap items-center">
+            <div
+              class="invest-reason__icon-wrap flex flex-center"
+              :class="`invest-reason__icon-wrap-${item.tone}`"
+            >
+              <q-icon :name="item.icon" size="20px" :color="item.iconColor" />
+            </div>
+            <h3 class="invest-reason__title q-ma-none">{{ item.title }}</h3>
+          </div>
+          <p class="invest-reason__text q-mb-none">{{ item.text }}</p>
+        </article>
+      </div>
+    </section>
+
     <section class="hero q-mb-xl text-center column items-center">
       <h1 class="text-h3 text-weight-bold text-white q-mb-md">
         History of the project and plans for success
@@ -17,7 +41,7 @@
             <p class="roadmap-item__date q-ma-none">{{ item.window }}</p>
             <div
               class="roadmap-item__icon flex flex-center"
-              :class="`roadmap-item__icon--${item.color}`"
+              :class="`roadmap-item__icon-${item.color}`"
             >
               <q-icon :name="item.icon" size="20px" />
             </div>
@@ -46,6 +70,49 @@
 </template>
 
 <script setup>
+const investReasons = [
+  {
+    icon: 'science',
+    tone: 'teal',
+    iconColor: 'teal-3',
+    title: 'A large, underserved market',
+    text:
+      'Researchers still work across fragmented PDFs, notes, and chat tools. We target the core research workflow with a structure-first environment built for serious science.'
+  },
+  {
+    icon: 'speed',
+    tone: 'blue',
+    iconColor: 'light-blue-3',
+    title: 'Strong value even before full AI',
+    text:
+      'The core product already addresses the most needed tools and can make research roughly five times faster. AI features add a second layer of growth on top.'
+  },
+  {
+    icon: 'payments',
+    tone: 'cyan',
+    iconColor: 'cyan-3',
+    title: 'Clear monetization path',
+    text:
+      'The base application stays accessible, while advanced AI features - LaTeX extraction, connection tools, and supervision - provide a natural paid tier.'
+  },
+  {
+    icon: 'hub',
+    tone: 'mint',
+    iconColor: 'light-green-3',
+    title: 'Differentiated from generic AI tools',
+    text:
+      'The product understands project structure and how papers, formulas, and ideas connect - not another detached chat wrapper.'
+  },
+  {
+    icon: 'trending_up',
+    tone: 'violet',
+    iconColor: 'deep-purple-3',
+    title: 'Early-stage upside',
+    text:
+      'We are at prototype stage with a defined roadmap toward 10,000 and then 500,000 active users. Funding now directly accelerates delivery and scale.'
+  }
+]
+
 const roadmap = [
   {
     title: 'Appearance of a general idea',
@@ -113,6 +180,85 @@ const roadmap = [
   margin-right: auto;
 }
 
+.invest-reasons {
+  width: 100%;
+  max-width: 820px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.invest-reasons__title {
+  width: 100%;
+  color: var(-site-text-heading);
+  letter-spacing: -0.01em;
+}
+
+.invest-reasons__list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: left;
+}
+
+.invest-reason {
+  padding: 0.85rem 0;
+}
+
+.invest-reason__header {
+  gap: 0.75rem;
+  margin-bottom: 0.35rem;
+}
+
+.invest-reason__icon-wrap {
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  border: 1.5px solid transparent;
+}
+
+.invest-reason__icon-wrap-teal {
+  background: rgba(11, 195, 171, 0.22) !important;
+  border-color: #5eead4 !important;
+}
+
+.invest-reason__icon-wrap-blue {
+  background: rgba(3, 117, 204, 0.28) !important;
+  border-color: #7dd3fc !important;
+}
+
+.invest-reason__icon-wrap-mint {
+  background: rgba(125, 206, 184, 0.2) !important;
+  border-color: #7dceb8 !important;
+}
+
+.invest-reason__icon-wrap-cyan {
+  background: rgba(34, 211, 238, 0.18) !important;
+  border-color: #67e8f9 !important;
+}
+
+.invest-reason__icon-wrap-violet {
+  background: rgba(167, 139, 250, 0.2) !important;
+  border-color: #a78bfa !important;
+}
+
+.invest-reason__title {
+  flex: 1;
+  min-width: 0;
+  color: var(-site-text-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.invest-reason__text {
+  margin-left: calc(2.25rem + 0.75rem);
+  color: var(-site-text-muted);
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+
 .roadmap-wrap {
   width: 100%;
   max-width: calc(960px + 3cm);
@@ -162,33 +308,33 @@ const roadmap = [
   border: 2px solid transparent;
 }
 
-.roadmap-item__icon--primary {
+.roadmap-item__icon-primary {
   color: #5eead4;
   background: rgba(11, 195, 171, 0.22);
   border-color: #5eead4;
 }
 
-.roadmap-item__icon--primary :deep(.q-icon) {
+.roadmap-item__icon-primary :deep(.q-icon) {
   color: #5eead4 !important;
 }
 
-.roadmap-item__icon--secondary {
+.roadmap-item__icon-secondary {
   color: #7dd3fc;
   background: rgba(3, 117, 204, 0.26);
   border-color: #7dd3fc;
 }
 
-.roadmap-item__icon--secondary :deep(.q-icon) {
+.roadmap-item__icon-secondary :deep(.q-icon) {
   color: #7dd3fc !important;
 }
 
-.roadmap-item__icon--accent {
+.roadmap-item__icon-accent {
   color: #c4b5fd;
   background: rgba(167, 139, 250, 0.2);
   border-color: #a78bfa;
 }
 
-.roadmap-item__icon--accent :deep(.q-icon) {
+.roadmap-item__icon-accent :deep(.q-icon) {
   color: #c4b5fd !important;
 }
 
@@ -198,7 +344,7 @@ const roadmap = [
 }
 
 .roadmap-item__title {
-  color: var(--site-text-heading, #fff);
+  color: var(-site-text-heading, #fff);
   font-size: 1.55rem;
   font-weight: 700;
   line-height: 1.3;
@@ -207,12 +353,17 @@ const roadmap = [
 
 .roadmap-item__detail {
   margin-top: 0.35rem;
-  color: var(--site-text-muted, #7dceb8);
+  color: var(-site-text-muted, #7dceb8);
   font-size: 15px;
   line-height: 1.55;
 }
 
 @media (max-width: 599px) {
+  .invest-reason__text {
+    margin-left: calc(2.25rem + 0.75rem);
+    font-size: 1rem;
+  }
+
   .roadmap-item {
     grid-template-columns: 2.25rem minmax(0, 1fr);
     align-items: start;

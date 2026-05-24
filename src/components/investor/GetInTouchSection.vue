@@ -1,7 +1,7 @@
 <template>
   <footer class="site-footer-menu">
     <div class="site-footer-menu__inner">
-      <router-link to="/project" class="site-footer-menu__brand row items-center no-wrap">
+      <router-link to="/" class="site-footer-menu__brand row items-center no-wrap">
         <img
           class="site-footer-menu__emblem"
           :src="brandIconUrl"

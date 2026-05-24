@@ -3,11 +3,14 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', redirect: { name: 'investor-project' } },
       {
-        path: 'project',
+        path: '',
         name: 'investor-project',
         component: () => import('pages/ProjectPage.vue')
+      },
+      {
+        path: 'project',
+        redirect: { name: 'investor-project' }
       },
       {
         path: 'ai-groups',

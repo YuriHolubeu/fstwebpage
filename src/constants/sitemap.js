@@ -5,7 +5,7 @@
 export const SITE_URL = 'https://focusstructure.com'
 
 export const SITEMAP_PATHS = [
-  { path: '/project', changefreq: 'weekly', priority: '1.0' },
+  { path: '/', changefreq: 'weekly', priority: '1.0' },
   { path: '/ai-groups', changefreq: 'monthly', priority: '0.8' },
   { path: '/explain-fragment', changefreq: 'monthly', priority: '0.8' },
   { path: '/research-mentor', changefreq: 'monthly', priority: '0.8' },

@@ -4,7 +4,7 @@
 
     <q-toolbar class="toolbar-inner q-px-md q-py-sm">
       <div class="toolbar-start row items-center">
-      <router-link to="/project" class="brand-link row items-center no-wrap">
+      <router-link to="/" class="brand-link row items-center no-wrap">
         <img
           class="brand-icon"
           :src="brandIconUrl"
@@ -100,7 +100,7 @@ const nav = []
 const tailNav = [
   { to: '/education', label: 'Education', icon: 'school' },
   { to: '/careers', label: 'Careers', icon: 'work' },
-  { to: '/future', label: 'Roadmap', icon: 'map' }
+  { to: '/future', label: 'Invest in us', icon: 'savings' }
 ]
 
 const aiFeatures = [
