@@ -1,1 +1,0 @@
-import"./supabase-client-CCiArdK2.js";function e(e){return e}var t=e(()=>{});export{t as default};

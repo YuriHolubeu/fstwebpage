@@ -5,9 +5,69 @@
         Careers at {{ SITE.projectName }}
       </h1>
       <p class="text-body1 text-grey-4 careers-hero__lead">
-        We are building a professional research environment where structure, focus, and AI work
-        together. Join a small, ambitious team at an early stage and help shape how scientists
+        Join a small, ambitious team at an early stage and help shape how scientists
         work for the next decade.
+      </p>
+    </section>
+
+    <section class="careers-section careers-positions column items-center text-center q-mb-xl">
+      <h2 class="careers-section__title text-h5 text-weight-bold q-mb-md">
+        Open Positions
+      </h2>
+
+      <div class="careers-positions__list">
+        <article
+          v-for="position in openPositions"
+          :key="position.title"
+          class="careers-position-card"
+        >
+          <div class="careers-position-card__header row no-wrap items-center">
+            <div
+              class="careers-card__icon-wrap flex flex-center"
+              :class="`careers-card__icon-wrap--${position.tone}`"
+            >
+              <q-icon :name="position.icon" size="20px" :color="position.iconColor" />
+            </div>
+            <div class="careers-position-card__heading text-left">
+              <h3 class="careers-position-card__title q-ma-none">{{ position.title }}</h3>
+              <p class="careers-position-card__levels q-ma-none">{{ position.levelsLabel }}</p>
+            </div>
+          </div>
+          
+
+          <div class="careers-position-card__requirements row q-col-gutter-lg">
+            <div class="col-12 col-md-6">
+              <h4 class="careers-requirements__label q-ma-none">Must have</h4>
+              <ul class="careers-requirements__list q-pl-md q-ma-none">
+                <li
+                  v-for="item in position.mustHave"
+                  :key="item"
+                  class="careers-requirements__item"
+                >
+                  {{ item }}
+                </li>
+              </ul>
+            </div>
+            <div class="col-12 col-md-6">
+              <h4 class="careers-requirements__label careers-requirements__label--optional q-ma-none">
+                Nice to have
+              </h4>
+              <ul class="careers-requirements__list q-pl-md q-ma-none">
+                <li
+                  v-for="item in position.niceToHave"
+                  :key="item"
+                  class="careers-requirements__item"
+                >
+                  {{ item }}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <p class="careers-positions__note text-body1 q-mt-lg q-mb-none">
+        If you think that you can contribute to {{ SITE.projectName }} in another way that's not listed here, please reach out!
       </p>
     </section>
 
@@ -35,70 +95,12 @@
       </div>
     </section>
 
-    <section class="careers-section column items-center text-center q-mb-xl">
-      <h2 class="careers-section__title text-h5 text-weight-bold q-mb-md">
-        Areas we are growing in
-      </h2>
-      <p class="careers-section__intro text-body1 q-mb-lg">
-        We do not always have a fixed job post open. If your profile fits one of these areas,
-        send us a short note — we read every message.
-      </p>
-      <div class="careers-roles row wrap justify-center q-gutter-md">
-        <q-card
-          v-for="role in openAreas"
-          :key="role.title"
-          flat
-          bordered
-          class="careers-role-card"
-        >
-          <q-card-section class="column items-center text-center">
-            <q-icon :name="role.icon" size="32px" color="cyan-4" class="q-mb-sm" />
-            <div class="text-subtitle1 text-weight-bold careers-role-card__title">
-              {{ role.title }}
-            </div>
-            <p class="text-body2 text-grey-5 q-ma-none careers-role-card__text">
-              {{ role.summary }}
-            </p>
-            <q-chip dense outline color="cyan-4" text-color="grey-3" class="q-mt-sm">
-              {{ role.status }}
-            </q-chip>
-          </q-card-section>
-        </q-card>
-      </div>
-    </section>
-
     <section class="careers-cta column items-center text-center">
       <h2 class="careers-section__title text-h5 text-weight-bold q-mb-md">
         How to apply
       </h2>
       <p class="careers-cta__text text-body1 q-mb-md">
-        Email us your CV or LinkedIn, what you want to work on, and links to code or projects
-        (if any). Use the contact form and mention <strong>Careers</strong> in your message.
-      </p>
-      <div class="row q-gutter-sm justify-center">
-        <q-btn
-          unelevated
-          no-caps
-          color="primary"
-          icon="mail"
-          label="Contact us"
-          class="careers-cta__btn"
-          @click="contact.openDialog()"
-        />
-        <q-btn
-          outline
-          no-caps
-          color="cyan-4"
-          icon="send"
-          label="Email directly"
-          class="careers-cta__btn"
-          :href="contactMailto"
-          tag="a"
-          target="_blank"
-          rel="noopener noreferrer"
-        />
-      </div>
-      <p class="careers-cta__email text-body2 q-mt-md q-mb-none">
+        To apply, please send your resume, cover letter, portfolio (if applicable), and Github profile (if applicable) to 
         <a :href="contactMailto" class="careers-cta__link">{{ SITE.contactEmail }}</a>
       </p>
     </section>
@@ -117,60 +119,41 @@ const whyJoin = [
     icon: 'science',
     tone: 'teal',
     iconColor: 'teal-3',
-    title: 'Hard problems that matter',
+    title: 'Real improvement of science',
     text:
-      'Research workflows, LaTeX, citations, PDFs, and AI that respects structure — not another generic chat wrapper.'
-  },
-  {
-    icon: 'groups',
-    tone: 'blue',
-    iconColor: 'light-blue-3',
-    title: 'Small team, real ownership',
-    text:
-      'Early-stage means your decisions shape the product, stack, and culture — not a ticket queue in a giant org.'
-  },
-  {
-    icon: 'public',
-    tone: 'cyan',
-    iconColor: 'cyan-3',
-    title: 'Remote-friendly, mission-first',
-    text:
-      'We care about output and clarity. Location is flexible; communication and craft are not.'
+      'We have a clear plan to improve how science is done. Your work here will matter for researchers worldwide.'
   },
   {
     icon: 'trending_up',
     tone: 'mint',
     iconColor: 'light-green-3',
-    title: 'Room to grow with the company',
+    title: 'Fast growth for early joiners',
     text:
-      'As we ship releases and grow users, strong contributors can take on more scope and leadership.'
+      'We are still a small startup, and that is the opportunity. Join now and you can grow with the company quickly — within six months, strong contributors can move into leading, well-paid roles as we ship results and scale.'
   }
 ]
 
-const openAreas = [
+const openPositions = [
   {
-    icon: 'code',
-    title: 'Software engineering',
-    summary: 'Frontend (Vue/Quasar), backend, DevOps, and product-quality tooling.',
-    status: 'Open to inquiries'
-  },
-  {
-    icon: 'psychology',
-    title: 'AI / ML',
-    summary: 'LLM integrations, retrieval, and features that fit real research workflows.',
-    status: 'Open to inquiries'
-  },
-  {
-    icon: 'design_services',
-    title: 'Product & UX',
-    summary: 'Complex scientific UIs, onboarding, and clarity for power users.',
-    status: 'Open to inquiries'
-  },
-  {
-    icon: 'campaign',
-    title: 'Growth & partnerships',
-    summary: 'Research communities, universities, labs, and go-to-market experiments.',
-    status: 'Open to inquiries'
+    icon: 'web',
+    tone: 'teal',
+    iconColor: 'teal-3',
+    title: 'Front-end developer',
+    levelsLabel: 'Mid-level (3+ years) or senior (5+ years)',
+    mustHave: [
+      'Strong experience with modern front-end frameworks, especially React and Vue',
+      'Experience building desktop apps with Electron or a comparable cross-platform framework',
+      'Comfortable with mathematics at a basic level',
+      'Experience implementing graph and tree-based structures in application UI or logic',
+      'Knowledge of front-end performance optimization techniques',
+      'Fluent written and spoken English'
+    ],
+    niceToHave: [
+      'Russian language skills',
+      'Some backend development experience',
+      'Experience working alongside senior developers',
+      'Strong sense of visual design and UI polish'
+    ]
   }
 ]
 </script>
@@ -276,26 +259,82 @@ const openAreas = [
   line-height: 1.55;
 }
 
-.careers-roles {
-  width: 100%;
+.careers-positions__note {
+  max-width: 640px;
+  color: var(--site-text-muted);
+  line-height: 1.62;
+  text-align: center;
+}
+
+.careers-positions {
   max-width: 900px;
 }
 
-.careers-role-card {
+.careers-positions__list {
   width: 100%;
-  max-width: 260px;
-  background: rgba(8, 24, 30, 0.55);
-  border-color: rgba(94, 234, 212, 0.22) !important;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  text-align: left;
+}
+
+.careers-position-card {
+  width: 100%;
+  padding: 1.25rem 1.35rem;
   border-radius: 12px;
+  border: 1px solid rgba(94, 234, 212, 0.22);
+  background: rgba(8, 24, 30, 0.55);
 }
 
-.careers-role-card__title {
+.careers-position-card__header {
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.careers-position-card__heading {
+  flex: 1;
+  min-width: 0;
+}
+
+.careers-position-card__title {
   color: var(--site-text-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.3;
 }
 
-.careers-role-card__text {
-  line-height: 1.5;
-  min-height: 3.5rem;
+.careers-position-card__levels {
+  margin-top: 0.25rem;
+  color: var(--site-text-soft);
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.careers-position-card__requirements {
+  width: 100%;
+}
+
+.careers-requirements__label {
+  margin-bottom: 0.5rem;
+  color: var(--site-text-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.careers-requirements__label--optional {
+  color: var(--site-text-soft);
+}
+
+.careers-requirements__list {
+  color: var(--site-text-muted);
+  font-size: 1.02rem;
+  line-height: 1.55;
+}
+
+.careers-requirements__item + .careers-requirements__item {
+  margin-top: 0.35rem;
 }
 
 .careers-cta {
@@ -338,8 +377,8 @@ const openAreas = [
     font-size: 1rem;
   }
 
-  .careers-role-card {
-    max-width: 100%;
+  .careers-position-card {
+    padding: 1rem 1.05rem;
   }
 }
 </style>
