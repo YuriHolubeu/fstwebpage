@@ -154,6 +154,26 @@ const openPositions = [
       'Experience working alongside senior developers',
       'Strong sense of visual design and UI polish'
     ]
+  },
+  {
+    icon: 'manage_accounts',
+    tone: 'blue',
+    iconColor: 'light-blue-3',
+    title: 'Project manager',
+    levelsLabel: '3+ years of startup management experience',
+    mustHave: [
+      '3+ years of experience managing startups',
+      'Proven ability to scale a startup through growth stages',
+      'Experience hiring, onboarding, and managing new programmers',
+      'Strong planning, prioritization, and delivery skills',
+      'Fluent written and spoken English'
+    ],
+    niceToHave: [
+      'Experience in early-stage product or SaaS companies',
+      'Technical background or strong comfort working with engineering teams',
+      'Russian language skills',
+      'Experience coordinating remote or distributed teams'
+    ]
   }
 ]
 </script>
