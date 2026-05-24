@@ -189,7 +189,7 @@ const roadmap = [
 
 .invest-reasons__title {
   width: 100%;
-  color: var(-site-text-heading);
+  color: var(--site-text-heading);
   letter-spacing: -0.01em;
 }
 
@@ -246,7 +246,7 @@ const roadmap = [
 .invest-reason__title {
   flex: 1;
   min-width: 0;
-  color: var(-site-text-heading);
+  color: var(--site-text-heading);
   font-size: 1.05rem;
   font-weight: 700;
   line-height: 1.3;
@@ -254,7 +254,7 @@ const roadmap = [
 
 .invest-reason__text {
   margin-left: calc(2.25rem + 0.75rem);
-  color: var(-site-text-muted);
+  color: var(--site-text-muted);
   font-size: 1.05rem;
   line-height: 1.55;
 }
@@ -344,7 +344,7 @@ const roadmap = [
 }
 
 .roadmap-item__title {
-  color: var(-site-text-heading, #fff);
+  color: var(--site-text-heading, #fff);
   font-size: 1.55rem;
   font-weight: 700;
   line-height: 1.3;
@@ -353,7 +353,7 @@ const roadmap = [
 
 .roadmap-item__detail {
   margin-top: 0.35rem;
-  color: var(-site-text-muted, #7dceb8);
+  color: var(--site-text-muted, #7dceb8);
   font-size: 15px;
   line-height: 1.55;
 }

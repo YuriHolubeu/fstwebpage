@@ -10,7 +10,7 @@ const routes = [
       },
       {
         path: 'project',
-        redirect: { name: 'investor-project' }
+        redirect: '/'
       },
       {
         path: 'ai-groups',
@@ -45,6 +45,11 @@ const routes = [
         path: 'future',
         name: 'investor-future',
         component: () => import('pages/FuturePage.vue')
+      },
+      {
+        path: 'science-plan',
+        name: 'investor-science-plan',
+        component: () => import('pages/SciencePlanPage.vue')
       },
       {
         path: 'resources',

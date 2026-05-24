@@ -39,6 +39,12 @@
           Careers
         </router-link>
         <router-link
+          :to="{ name: 'investor-science-plan' }"
+          class="site-footer-menu__resources-link"
+        >
+          Plan to improve science
+        </router-link>
+        <router-link
           :to="{ name: 'investor-resources' }"
           class="site-footer-menu__resources-link"
         >

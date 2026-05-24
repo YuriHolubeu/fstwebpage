@@ -16,15 +16,16 @@ export function copySpaRoutes (dist = 'docs') {
 
   const html = readFileSync(indexPath, 'utf8')
 
-  for (const { path: routePath } of SITEMAP_PATHS) {
+  for (const routePath of [...SITEMAP_PATHS.map(({ path }) => path), '/project']) {
     const segments = routePath.replace(/^\//, '').split('/').filter(Boolean)
+    if (segments.length === 0) continue
     const dir = join(dist, ...segments)
     mkdirSync(dir, { recursive: true })
     writeFileSync(join(dir, 'index.html'), html)
   }
 
   console.log(
-    `[gh-pages] Wrote index.html for ${SITEMAP_PATHS.length} routes (HTTP 200 for Search Console).`
+    `[gh-pages] Wrote index.html for ${SITEMAP_PATHS.length + 1} routes (HTTP 200 for Search Console).`
   )
 }
 
