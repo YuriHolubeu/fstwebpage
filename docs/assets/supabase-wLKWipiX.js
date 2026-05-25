@@ -1,1 +1,0 @@
-import"./supabase-client-DfVE_3no.js";function e(e){return e}var t=e(()=>{});export{t as default};

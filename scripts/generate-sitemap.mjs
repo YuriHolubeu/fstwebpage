@@ -12,7 +12,7 @@ const baseUrl = (process.env.SITEMAP_BASE_URL || SITE_URL).replace(/\/$/, '')
 const lastmod = new Date().toISOString().slice(0, 10)
 
 const urlEntries = SITEMAP_PATHS.map(({ path, changefreq, priority }) => {
-  const loc = `${baseUrl}${path}`
+  const loc = path === '/' ? `${baseUrl}/` : `${baseUrl}${path}/`
   return `  <url>
     <loc>${loc}</loc>
     <lastmod>${lastmod}</lastmod>
