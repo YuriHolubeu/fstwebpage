@@ -27,11 +27,23 @@ export default defineRouter((/* { store, ssrContext } */) => {
       return { left: 0, top: 0 }
     },
     routes,
+    strict: false,
 
     // Leave this as is and make changes in quasar.conf.js instead!
     // quasar.conf.js -> build -> vueRouterMode
     // quasar.conf.js -> build -> publicPath
     history: createHistory(process.env.VUE_ROUTER_BASE)
+  })
+
+  Router.beforeEach((to) => {
+    if (to.path.length > 1 && to.path.endsWith('/')) {
+      return {
+        path: to.path.replace(/\/+$/, '') || '/',
+        query: to.query,
+        hash: to.hash,
+        replace: true
+      }
+    }
   })
 
   return Router
