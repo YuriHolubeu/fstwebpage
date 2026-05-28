@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title><%= productName %></title>
 
@@ -9,6 +9,23 @@
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width<% if (ctx.mode.cordova || ctx.mode.capacitor) { %>, viewport-fit=cover<% } %>">
 
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#133031">
+    <link rel="canonical" href="https://focusstructure.com/project">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="<%= productName %>">
+    <meta property="og:title" content="<%= productName %>">
+    <meta property="og:description" content="<%= productDescription %>">
+    <meta property="og:url" content="https://focusstructure.com/project">
+    <meta property="og:image" content="https://focusstructure.com/icons/favicon-512x512.png">
+    <meta property="og:locale" content="en_US">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<%= productName %>">
+    <meta name="twitter:description" content="<%= productDescription %>">
+    <meta name="twitter:image" content="https://focusstructure.com/icons/favicon-512x512.png">
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0HHE6C7WWG"></script>
     <script>
@@ -17,6 +34,28 @@
       gtag('js', new Date());
 
       gtag('config', 'G-0HHE6C7WWG');
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "name": "<%= productName %>",
+            "url": "https://focusstructure.com/",
+            "description": "<%= productDescription %>",
+            "inLanguage": "en"
+          },
+          {
+            "@type": "Organization",
+            "name": "<%= productName %>",
+            "url": "https://focusstructure.com/",
+            "email": "focus.structure.tool@gmail.com",
+            "logo": "https://focusstructure.com/icons/favicon-512x512.png"
+          }
+        ]
+      }
     </script>
 
     <link rel="icon" href="/favicon.ico" sizes="any">
@@ -31,14 +70,30 @@
     <link rel="manifest" href="/site.webmanifest">
   </head>
   <body>
-    <!-- Restore deep links after GitHub Pages 404.html redirect (/?/careers → /careers) -->
+    <!-- GitHub Pages: restore deep links from 404.html (/?/careers) and strip trailing slashes (/education/ → /education) -->
     <script type="text/javascript">
       (function (locationRef) {
-        if (locationRef.search[1] === '/') {
-          var decoded = locationRef.search.slice(1).split('&').map(function (part) {
+        var pathname = locationRef.pathname
+        var search = locationRef.search
+        var hash = locationRef.hash
+
+        if (search[1] === '/') {
+          var decoded = search.slice(1).split('&').map(function (part) {
             return part.replace(/~and~/g, '&')
           }).join('?')
-          window.history.replaceState(null, null, decoded + locationRef.hash)
+          var qIndex = decoded.indexOf('?')
+          pathname = qIndex === -1 ? decoded : decoded.slice(0, qIndex)
+          search = qIndex === -1 ? '' : decoded.slice(qIndex)
+        }
+
+        if (pathname.length > 1 && pathname.endsWith('/')) {
+          pathname = pathname.slice(0, -1)
+        }
+
+        var next = pathname + search + hash
+        var current = locationRef.pathname + locationRef.search + locationRef.hash
+        if (next !== current) {
+          window.history.replaceState(null, null, next)
         }
       }(window.location))
     </script>

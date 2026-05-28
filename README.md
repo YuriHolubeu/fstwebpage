@@ -92,6 +92,10 @@ npm run dev
 
 Full setup, table map, CI secrets, and troubleshooting: **[supabase/README.md](./supabase/README.md)**.
 
+## Search engines (Google / Bing)
+
+Sitemap, robots, meta tags, and Search Console steps: **[SEARCH_ENGINE_SETUP.md](./SEARCH_ENGINE_SETUP.md)**.
+
 ## More documentation
 
 - [Quasar Framework v2](https://v2.quasar.dev/)  
