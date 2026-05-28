@@ -559,6 +559,12 @@ const applicationFeatures = [
 
 const aiToolsFeatures = [
   {
+    icon: 'build',
+    title: 'AI fix of latex errors',
+    descriptionHtml:
+      'Right now, AI agents are already powerful enough to automatically fix most LaTeX bugs. In the near future, such agents will be integrated into our research environment, so researchers will no longer need to waste time dealing with LaTeX-related issues.'
+  },
+  {
     icon: 'hub',
     title: 'AI for finding extra connections between articles',
     description:
