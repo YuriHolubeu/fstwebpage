@@ -50,6 +50,12 @@
         >
           Answers to other questions
         </router-link>
+        <router-link
+          :to="{ name: 'investor-gallery' }"
+          class="site-footer-menu__resources-link"
+        >
+          Gallery
+        </router-link>
       </div>
     </div>
 

@@ -11,5 +11,6 @@ export const SPA_ROUTE_PATHS = [
   '/future',
   '/science-plan',
   '/resources',
+  '/gallery',
   '/project' // legacy URL
 ]

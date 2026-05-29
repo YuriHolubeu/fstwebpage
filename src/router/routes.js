@@ -55,6 +55,11 @@ const routes = [
         path: 'resources',
         name: 'investor-resources',
         component: () => import('pages/ResourcesPage.vue')
+      },
+      {
+        path: 'gallery',
+        name: 'investor-gallery',
+        component: () => import('pages/GalleryPage.vue')
       }
     ]
   },

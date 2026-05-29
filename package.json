@@ -10,7 +10,7 @@
   "scripts": {
     "test": "echo \"No test specified\" && exit 0",
     "dev": "quasar dev",
-    "prebuild": "node scripts/generate-favicons.mjs && node scripts/generate-sitemap.mjs && node scripts/sync-basic-physics-previews.mjs && node scripts/check-supabase-env.mjs",
+    "prebuild": "node scripts/convert-gallery-image.mjs && node scripts/generate-favicons.mjs && node scripts/generate-sitemap.mjs && node scripts/sync-basic-physics-previews.mjs && node scripts/check-supabase-env.mjs",
     "build": "quasar build",
     "postbuild": "node scripts/copy-spa-404.mjs && node scripts/copy-spa-routes.mjs && node scripts/verify-spa-routes.mjs",
     "postinstall": "quasar prepare"
@@ -25,6 +25,7 @@
   "devDependencies": {
     "@quasar/app-vite": "^2.5.1",
     "autoprefixer": "^10.4.27",
+    "heic-convert": "^2.1.0",
     "postcss": "^8.5.8",
     "sharp": "^0.34.5",
     "to-ico": "^1.1.5"
