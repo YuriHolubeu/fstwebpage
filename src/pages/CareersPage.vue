@@ -135,6 +135,21 @@ const whyJoin = [
 
 const openPositions = [
   {
+    icon: 'videocam',
+    tone: 'cyan',
+    iconColor: 'cyan-3',
+    title: 'Content creator',
+    levelsLabel: 'Video production and project promotion',
+    mustHave: [
+      'Experience creating videos for products, brands, or projects',
+      'Experience promoting projects through social media, communities, or other channels',
+      'Fluent written and spoken English'
+    ],
+    niceToHave: [
+      'Portfolio of published video or marketing work',
+      'Experience in science, research tools, or B2B SaaS']
+  },
+  {
     icon: 'web',
     tone: 'teal',
     iconColor: 'teal-3',
