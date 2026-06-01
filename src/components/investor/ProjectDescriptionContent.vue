@@ -62,7 +62,7 @@
 
         <ul class="workspace-features q-pl-none q-ma-none">
           <li
-            v-for="feature in workspaceFeatures"
+            v-for="feature in displayedWorkspaceFeatures"
             :key="feature.title"
             class="workspace-feature row no-wrap items-start"
           >
@@ -136,7 +136,36 @@
           A dedicated application structure makes this environment possible. This format is key to enabling the AI tools, as explained below.
         </p>
 
-        <div class="row q-col-gutter-lg application-content-row">
+        <div v-if="showFeaturedProductPreview" class="application-subsections">
+          <div
+            v-for="group in applicationFeatureGroups"
+            :key="group.title"
+            class="application-subsection"
+          >
+            <h3 class="application-subsection__title text-h5 text-weight-bold pp-heading q-mb-sm">
+              {{ group.title }}
+            </h3>
+            <ul class="workspace-features application-features-list q-pl-none q-ma-none">
+              <li
+                v-for="feature in group.features"
+                :key="feature.title"
+                class="workspace-feature row no-wrap items-start"
+              >
+                <q-icon :name="feature.icon" size="22px" class="workspace-feature__icon q-mr-md" />
+                <div>
+                  <div class="workspace-feature__title text-subtitle2 text-weight-medium pp-title q-mb-xs">
+                    {{ feature.title }}
+                  </div>
+                  <p class="workspace-feature__text text-caption pp-muted q-mb-none">
+                    {{ feature.description }}
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div v-else class="row q-col-gutter-lg application-content-row">
           <div class="col-12 col-md-6 application-features-col">
             <ul class="workspace-features application-features-list q-pl-none q-ma-none">
               <li
@@ -626,6 +655,14 @@ const workspaceFeatures = [
   }
 ]
 
+const projectDescriptionWorkspaceFeatures = [
+  {
+    icon: 'keyboard',
+    title: 'A lot of hotkeys',
+    description: 'The platform will provide many keyboard shortcuts so common actions can be performed quickly.'
+  }
+]
+
 const reasonsWithoutAiFeatures = [
   {
     icon: 'psychology',
@@ -641,16 +678,19 @@ const reasonsWithoutAiFeatures = [
   }
 ]
 
-const applicationFeatures = [
-  {
-    icon: 'account_tree',
-    title: 'Advanced PDF format with fast graphical access',
-    description: 'Our tools extract LaTeX codes from books and articles in seconds and combine them into a single PDF. Access to its sections and modification are accelerated through an improved structure panel.'
-  },
+const applicationFocusFeatures = [
   {
     icon: 'track_changes',
     title: 'Tools for focusing and managing the project',
     description: 'The PDF begins with a part of key information used to understand all other important content and solve problems for practice. After, there is a part with goals, progress, open questions, and ways forward to help avoid getting lost in information.'
+  }
+]
+
+const applicationStructuringFeatures = [
+  {
+    icon: 'account_tree',
+    title: 'Advanced PDF format with fast graphical access',
+    description: 'Our tools extract LaTeX codes from books and articles in seconds and combine them into a single PDF. Access to its sections and modification are accelerated through an improved structure panel.'
   },
   {
     icon: 'bolt',
@@ -662,6 +702,35 @@ const applicationFeatures = [
     title: 'Integrated LaTeX workflow',
     description: 'All essential LaTeX editing tools are integrated for fast and efficient work. The system is designed to function as a full-featured desktop LaTeX editor.'
   }
+]
+
+const applicationFeatureGroups = [
+  {
+    title: 'Tools for focus',
+    features: [
+      ...applicationFocusFeatures,
+      {
+        icon: 'calculate',
+        title: 'Fast extraction of key formulas',
+        description: 'Key formulas from books and articles are extracted quickly and placed in the focused overview section of the project.'
+      },
+      {
+        icon: 'link',
+        title: 'Key links always under hand',
+        description: 'One can save all pages of articles into a list of key links and then open them in one click.'
+      }
+    ]
+  },
+  {
+    title: 'Tools for structuring information',
+    features: applicationStructuringFeatures
+  }
+]
+
+const applicationFeatures = [
+  applicationStructuringFeatures[0],
+  ...applicationFocusFeatures,
+  ...applicationStructuringFeatures.slice(1)
 ]
 
 
@@ -740,8 +809,14 @@ const featuredProductPreview = computed(() => ({
 
 const workspaceSectionTitle = computed(() =>
   props.showFeaturedProductPreview
-    ? 'Description of the main features of the platform'
+    ? 'Main general features of the platform'
     : 'Complete professional research environment'
+)
+
+const displayedWorkspaceFeatures = computed(() =>
+  props.showFeaturedProductPreview
+    ? [...workspaceFeatures, ...projectDescriptionWorkspaceFeatures]
+    : workspaceFeatures
 )
 
 const featuredProductPreviewHighlights = [
@@ -1256,6 +1331,17 @@ onUnmounted(() => {
   max-width: none;
   line-height: 1.65;
   margin-bottom: calc(35px) !important;
+}
+
+.application-subsections {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.application-subsection__title {
+  letter-spacing: 0;
+  line-height: 1.2;
 }
 
 .application-content-row {
