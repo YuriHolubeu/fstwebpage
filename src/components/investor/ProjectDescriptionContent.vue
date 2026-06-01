@@ -1,6 +1,7 @@
 <template>
   <div class="project-page q-pa-md q-pb-xl">
     <section
+      v-if="!showFeaturedProductPreview"
       class="hero-stack text-center q-pt-lg q-pb-md column items-center"
       :class="{ 'hero-stack--ready': heroEntered }"
     >
@@ -44,7 +45,8 @@
 
     <section
       ref="screenshotsEl"
-      class="screenshot-showcase q-pt-xl q-mt-lg"
+      class="screenshot-showcase q-mt-lg"
+      :class="showFeaturedProductPreview ? 'q-pt-md' : 'q-pt-xl'"
     >
       <div
         class="row q-col-gutter-xl items-center workspace-row reveal-on-scroll"
@@ -52,7 +54,7 @@
       >
         <div class="col-12 workspace-copy">
         <h2 class="screenshot-title text-h4 text-weight-bold pp-heading q-mb-sm">
-          Complete professional research environment
+          {{ workspaceSectionTitle }}
         </h2>
         <p class="workspace-section-lead workspace-feature__text text-caption pp-muted q-mt-none q-mb-md">
           Our application makes theoretical research faster, more efficient, and more comfortable. We promise:
@@ -245,7 +247,7 @@
 
       <div class="tool-shot-grid row q-col-gutter-xl justify-center full-width">
         <div
-          v-for="(item, i) in displayedKeyTools"
+          v-for="(item, i) in keyTools"
           :key="item.title"
           class="col-12 col-sm-6"
         >
@@ -362,7 +364,11 @@
       </q-list>
     </section>
 
-    <section ref="teamEl" class="team-block q-pt-xl q-mt-lg column items-center">
+    <section
+      v-if="!showFeaturedProductPreview"
+      ref="teamEl"
+      class="team-block q-pt-xl q-mt-lg column items-center"
+    >
       <div
         class="gallery-heading text-center q-mb-lg reveal-on-scroll full-width"
         :class="{ 'is-visible': teamVisible }"
@@ -394,6 +400,15 @@
             <div class="team-member__name text-weight-medium">{{ member.name }}</div>
             <div class="team-member__role text-caption q-mb-sm">{{ member.role }}</div>
             <p class="team-member__bio text-caption q-mb-none">{{ member.bio }}</p>
+            <a
+              v-if="member.link"
+              :href="member.link.href"
+              class="team-member__link text-caption q-mt-xs"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {{ member.link.label }}
+            </a>
           </div>
         </div>
       </div>
@@ -571,7 +586,11 @@ const team = [
     name: 'Yury Holubeu',
     role: 'Founder / CEO',
     photo: '/team/yury-holubeu.png',
-    bio: 'Master of Physics'
+    bio: 'Master of Physics',
+    link: {
+      href: 'https://yuriholubeu.github.io/',
+      label: 'https://yuriholubeu.github.io/'
+    }
   },
     {
     initials: 'JP',
@@ -617,8 +636,8 @@ const reasonsWithoutAiFeatures = [
     text: 'It makes one feel comfortable while working with information'
   },
   {
-    icon: 'help_outline',
-    text: 'It immediately makes one immediatly focused'
+    icon: 'center_focus_strong',
+    text: 'The application\'s design inherently helps users maintain focus.'
   }
 ]
 
@@ -688,9 +707,9 @@ const aiToolsFeatures = [
 const keyTools = [
   {
     title: 'Graph display and structural storage of AI answers',
-    src: `${import.meta.env.BASE_URL}screenshots/prv3.png`,
-    width: 1917,
-    height: 1132
+    src: graphPreviewSrc,
+    width: 1918,
+    height: 1138
   },
   {
     title: 'Download tens of articles and extract Latex in minutes',
@@ -712,26 +731,18 @@ const keyTools = [
   }
 ]
 
-const featuredProductPreview = computed(() => keyTools[0])
+const featuredProductPreview = computed(() => ({
+  title: keyTools[0].title,
+  src: `${import.meta.env.BASE_URL}screenshots/prv3.png`,
+  width: 1917,
+  height: 1132
+}))
 
-const displayedKeyTools = computed(() => {
-  if (props.showFeaturedProductPreview) {
-    return keyTools
-  }
-
-  return keyTools.map((item, index) => {
-    if (index !== 0) {
-      return item
-    }
-
-    return {
-      ...item,
-      src: graphPreviewSrc,
-      width: 1918,
-      height: 1138
-    }
-  })
-})
+const workspaceSectionTitle = computed(() =>
+  props.showFeaturedProductPreview
+    ? 'Description of the main features of the platform'
+    : 'Complete professional research environment'
+)
 
 const featuredProductPreviewHighlights = [
   'Key formulas extracted from the source material',
@@ -886,7 +897,7 @@ onMounted(() => {
     },
     { threshold: 0.1, rootMargin: '0px 0px -32px 0px' }
   )
-  if (teamEl.value) {
+  if (!props.showFeaturedProductPreview && teamEl.value) {
     teamObserver.observe(teamEl.value)
   }
 
@@ -1612,6 +1623,20 @@ onUnmounted(() => {
   font-size: clamp(15px, 1.35vw, 16px);
   line-height: 1.45;
   text-shadow: 0 1px 10px rgba(3, 117, 204, 0.35);
+}
+
+.team-member__link {
+  color: var(--site-text-accent);
+  font-size: clamp(15px, 1.35vw, 16px);
+  line-height: 1.45;
+  text-decoration: none;
+  text-shadow: 0 1px 10px rgba(3, 117, 204, 0.35);
+  transition: color 0.2s ease;
+}
+
+.team-member__link:hover {
+  color: #5eead4;
+  text-decoration: underline;
 }
 
 .team-avatar {
