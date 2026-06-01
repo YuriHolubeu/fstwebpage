@@ -3,6 +3,7 @@
  * Keep in sync with src/router/routes.js (exclude redirects and the root path).
  */
 export const SPA_ROUTE_PATHS = [
+  '/project-description',
   '/ai-groups',
   '/explain-fragment',
   '/research-mentor',

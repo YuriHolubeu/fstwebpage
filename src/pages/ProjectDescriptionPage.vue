@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <ProjectDescriptionContent />
+    <ProjectDescriptionContent show-featured-product-preview />
   </q-page>
 </template>
 

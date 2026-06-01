@@ -13,6 +13,11 @@ const routes = [
         redirect: '/'
       },
       {
+        path: 'project-description',
+        name: 'investor-project-description',
+        component: () => import('pages/ProjectDescriptionPage.vue')
+      },
+      {
         path: 'ai-groups',
         name: 'investor-ai-groups',
         component: () => import('pages/AiGroupsPage.vue')
