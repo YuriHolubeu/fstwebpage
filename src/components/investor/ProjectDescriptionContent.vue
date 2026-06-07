@@ -674,7 +674,7 @@ const reasonsWithoutAiFeatures = [
   },
   {
     icon: 'center_focus_strong',
-    text: 'The application\'s design inherently helps users maintain focus.'
+    text: 'The application\'s design inherently helps users maintain focus'
   }
 ]
 
@@ -682,7 +682,7 @@ const applicationFocusFeatures = [
   {
     icon: 'track_changes',
     title: 'Tools for focusing and managing the project',
-    description: 'The PDF begins with a part of key information used to understand all other important content and solve problems for practice. After, there is a part with goals, progress, open questions, and ways forward to help avoid getting lost in information.'
+    description: 'The PDF begins with a part of key information used to understand all other important content and solve problems for practice. After that, there is a part with goals, progress, open questions, and ways forward to help avoid getting lost in information.'
   }
 ]
 
@@ -690,7 +690,7 @@ const applicationStructuringFeatures = [
   {
     icon: 'account_tree',
     title: 'Advanced PDF format with fast graphical access',
-    description: 'Our tools extract LaTeX codes from books and articles in seconds and combine them into a single PDF. Access to its sections and modification are accelerated through an improved structure panel.'
+    description: 'Our tools extract LaTeX codes from books and articles in seconds and combine them into a single PDF. Access to its sections and modification is accelerated through an improved structure panel.'
   },
   {
     icon: 'bolt',
@@ -701,6 +701,24 @@ const applicationStructuringFeatures = [
     icon: 'functions',
     title: 'Integrated LaTeX workflow',
     description: 'All essential LaTeX editing tools are integrated for fast and efficient work. The system is designed to function as a full-featured desktop LaTeX editor.'
+  }
+]
+
+const applicationFastWorkFeatures = [
+  {
+    icon: 'keyboard',
+    title: 'Hotkeys for the extraction of all main formulas',
+    description: 'All main formulas from the project can be extracted instantly with keyboard shortcuts, without touching LaTeX.'
+  },
+  {
+    icon: 'menu_book',
+    title: 'Quick access to the most used original articles and books for the research',
+    description: 'The most frequently used original articles and books are saved in a quick-access list and can be opened in one click during working with notes.'
+  },
+  {
+    icon: 'format_indent_increase',
+    title: 'Adding indents in a click',
+    description: 'If a book is dense, adding indentation makes it much easier to read. Further, comments to indent sentences can be added quickly by inserting indents with a single click in a PDF.'
   }
 ]
 
@@ -716,7 +734,7 @@ const applicationFeatureGroups = [
       },
       {
         icon: 'link',
-        title: 'Key links always under hand',
+        title: 'Key links always at your fingertips',
         description: 'One can save all pages of articles into a list of key links and then open them in one click.'
       }
     ]
@@ -724,6 +742,10 @@ const applicationFeatureGroups = [
   {
     title: 'Tools for structuring information',
     features: applicationStructuringFeatures
+  },
+  {
+    title: 'Tools for fast work with information',
+    features: applicationFastWorkFeatures
   }
 ]
 
@@ -739,7 +761,7 @@ const applicationFeatures = [
 const aiToolsFeatures = [
   {
     icon: 'build',
-    title: 'AI fix of latex errors',
+    title: 'AI fix of LaTeX errors',
     descriptionHtml:
       'Right now, AI agents are already powerful enough to automatically fix most LaTeX bugs. In the near future, such agents will be integrated into our research environment, so researchers will no longer need to waste time dealing with LaTeX-related issues.'
   },
