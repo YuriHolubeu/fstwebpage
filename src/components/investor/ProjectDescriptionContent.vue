@@ -718,7 +718,7 @@ const applicationFastWorkFeatures = [
   {
     icon: 'format_indent_increase',
     title: 'Adding indents in a click',
-    description: 'If a book is dense, adding indentation makes it much easier to read. Further, comments to indent sentences can be added quickly by inserting indents with a single click in a PDF.'
+    description: 'If a book is dense, adding indentation makes it much easier to read. Further, comments to indent sentences can be added quickly by inserting them with a single click in a PDF.'
   }
 ]
 

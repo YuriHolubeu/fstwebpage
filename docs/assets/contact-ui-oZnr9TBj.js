@@ -1,0 +1,1 @@
+import{nt as e}from"./render-UnnarnGF.js";import{a as t}from"./index-8N0Z9a_x.js";import{r as n,t as r}from"./useDialogScrollRestore-C-XQ_6YQ.js";var i=t(`contact-ui`,()=>{let t=e(!1);function i(){r(),t.value=!0}function a(){t.value=!1}return{dialogOpen:t,openDialog:i,closeDialog:a,restorePageScroll:n}});export{i as t};
