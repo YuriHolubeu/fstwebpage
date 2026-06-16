@@ -613,7 +613,7 @@ const team = [
   {
     initials: 'YH',
     name: 'Yury Holubeu',
-    role: 'Founder / CEO',
+    role: 'Founder / CEO/ Frontend Developer',
     photo: '/team/yury-holubeu.png',
     bio: 'Master of Physics',
     link: {
@@ -627,13 +627,6 @@ const team = [
     role: 'Leader of AI development',
     photo: '/team/jevgenij-posashkov.png',
     bio: 'Master of Data Science '
-  },
-  {
-    initials: 'ER',
-    name: 'Egor Riter',
-    role: 'Main Software Engineer',
-    photo: '/team/egor-riter.png',
-    bio: 'Experienced backend and frontend specialist'
   }
 ]
 
