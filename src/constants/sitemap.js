@@ -15,5 +15,6 @@ export const SITEMAP_PATHS = [
   { path: '/future', changefreq: 'monthly', priority: '0.6' },
   { path: '/science-plan', changefreq: 'monthly', priority: '0.6' },
   { path: '/resources', changefreq: 'monthly', priority: '0.6' },
-  { path: '/gallery', changefreq: 'monthly', priority: '0.5' }
+  { path: '/gallery', changefreq: 'monthly', priority: '0.5' },
+  { path: '/preorder', changefreq: 'weekly', priority: '0.95' }
 ]

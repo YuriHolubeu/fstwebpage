@@ -14,13 +14,12 @@
       no-caps
       padding="sm lg"
       class="hero-cta-btn hero-cta-btn--alt"
-      label="VIP or invest"
-      icon="diamond"
-      @click="openVipInvest"
+      label="Pre-order $5"
+      icon="payments"
+      to="/preorder"
     />
 
     <HeroWaitlistDialog v-model="waitlistOpen" />
-    <HeroVipInvestDialog v-model="vipInvestOpen" />
   </div>
 </template>
 
@@ -28,17 +27,11 @@
 import { ref } from 'vue'
 import { openDialogWithScroll } from 'src/composables/useDialogScrollRestore'
 import HeroWaitlistDialog from 'src/components/investor/HeroWaitlistDialog.vue'
-import HeroVipInvestDialog from 'src/components/investor/HeroVipInvestDialog.vue'
 
 const waitlistOpen = ref(false)
-const vipInvestOpen = ref(false)
 
 function openWaitlist () {
   openDialogWithScroll(waitlistOpen)
-}
-
-function openVipInvest () {
-  openDialogWithScroll(vipInvestOpen)
 }
 </script>
 

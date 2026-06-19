@@ -65,6 +65,16 @@ const routes = [
         path: 'gallery',
         name: 'investor-gallery',
         component: () => import('pages/GalleryPage.vue')
+      },
+      {
+        path: 'preorder',
+        name: 'investor-preorder',
+        component: () => import('pages/PreorderPage.vue')
+      },
+      {
+        path: 'preorder/success',
+        name: 'investor-preorder-success',
+        component: () => import('pages/PreorderSuccessPage.vue')
       }
     ]
   },
