@@ -130,7 +130,7 @@ function reset () {
 async function submit () {
   if (!validate()) return
   if (!isHeroSignupStorageConfigured()) {
-    $q.notify({ type: 'negative', message: 'Supabase is not configured yet.', position: 'top' })
+    $q.notify({ type: 'negative', message: 'Form API is not configured yet.', position: 'top' })
     return
   }
 
@@ -155,7 +155,7 @@ async function submit () {
     $q.notify({
       type: 'negative',
       message: 'Could not save your signup. Please try again.',
-      caption: error?.message || 'Check Supabase RLS and table grants.',
+      caption: error?.message || 'Please try again later.',
       position: 'top',
       timeout: 8000
     })

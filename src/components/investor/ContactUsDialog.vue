@@ -213,7 +213,7 @@ async function sendContactMessage () {
   if (!isContactStorageConfigured()) {
     $q.notify({
       type: 'negative',
-      message: 'Supabase is not configured yet.',
+      message: 'Form API is not configured yet.',
       position: 'top'
     })
     return

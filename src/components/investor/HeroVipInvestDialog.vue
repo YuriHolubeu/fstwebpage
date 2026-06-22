@@ -221,7 +221,7 @@ function validatePair (name, email, nameError, emailError) {
 async function submitVip () {
   if (!validatePair(vipName, vipEmail, vipNameError, vipEmailError)) return
   if (!isHeroSignupStorageConfigured()) {
-    $q.notify({ type: 'negative', message: 'Supabase is not configured yet.', position: 'top' })
+    $q.notify({ type: 'negative', message: 'Form API is not configured yet.', position: 'top' })
     return
   }
 
@@ -247,7 +247,7 @@ async function submitVip () {
     $q.notify({
       type: 'negative',
       message: 'Could not save your VIP request.',
-      caption: error?.message || 'Check Supabase RLS and table grants.',
+      caption: error?.message || 'Please try again later.',
       position: 'top',
       timeout: 8000
     })
@@ -259,7 +259,7 @@ async function submitVip () {
 async function submitInvest () {
   if (!validatePair(investorName, investorEmail, investorNameError, investorEmailError)) return
   if (!isHeroSignupStorageConfigured()) {
-    $q.notify({ type: 'negative', message: 'Supabase is not configured yet.', position: 'top' })
+    $q.notify({ type: 'negative', message: 'Form API is not configured yet.', position: 'top' })
     return
   }
 
@@ -285,7 +285,7 @@ async function submitInvest () {
     $q.notify({
       type: 'negative',
       message: 'Could not save your investment interest.',
-      caption: error?.message || 'Check Supabase RLS and table grants.',
+      caption: error?.message || 'Please try again later.',
       position: 'top',
       timeout: 8000
     })

@@ -1,40 +1,43 @@
 import {
-  SUPABASE_TABLES,
   currentSourcePath,
-  insertRow,
-  isSupabaseConfigured,
-  normalizeEmail
-} from 'src/lib/supabase-client'
+  isApiConfigured,
+  normalizeEmail,
+  postJson
+} from 'src/lib/api-client'
+
+const HERO_ROLE_TO_KIND = Object.freeze({
+  waitlist: 'hero_waitlist',
+  vip: 'hero_vip',
+  investor: 'hero_investor'
+})
 
 export function isHeroSignupStorageConfigured () {
-  return isSupabaseConfigured()
+  return isApiConfigured()
 }
 
-function heroPayload ({ name, email, message }) {
+async function saveHeroSignup (role, fields) {
+  const kind = HERO_ROLE_TO_KIND[role]
+  const result = await postJson('/api/leads/signups/', {
+    name: fields.name.trim(),
+    email: normalizeEmail(fields.email),
+    message: fields.message?.trim() || '',
+    source_path: currentSourcePath(),
+    kinds: [kind]
+  })
+
   return {
-    name: name.trim(),
-    email: normalizeEmail(email),
-    message: message?.trim() || null,
-    source_path: currentSourcePath()
+    duplicate: (result.duplicates || []).includes(kind)
   }
 }
 
-async function saveHeroSignup (table, fields) {
-  return insertRow({
-    table,
-    payload: heroPayload(fields),
-    treatConflictAsSuccess: true
-  })
-}
-
 export function saveWaitlistSignup (fields) {
-  return saveHeroSignup(SUPABASE_TABLES.waiters, fields)
+  return saveHeroSignup('waitlist', fields)
 }
 
 export function saveVipSignup (fields) {
-  return saveHeroSignup(SUPABASE_TABLES.heroVip, fields)
+  return saveHeroSignup('vip', fields)
 }
 
 export function saveInvestorSignup (fields) {
-  return saveHeroSignup(SUPABASE_TABLES.potInvestors, fields)
+  return saveHeroSignup('investor', fields)
 }
