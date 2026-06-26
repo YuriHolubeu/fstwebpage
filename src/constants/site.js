@@ -18,7 +18,7 @@ export const SITE = {
   /** Founder pre-order landing (/preorder) */
   preorder: {
     headline: 'Founder pre-order',
-    priceLabel: '$5',
+    priceLabel: '€5',
     subtitle:
       'Reserve early access to Focus Structure Tool with AI — before public launch.',
     benefits: [
@@ -28,9 +28,9 @@ export const SITE = {
     ],
     disclaimer:
       'The product is in active development. Pre-order secures founder access at launch. Refund before beta opens — email us.',
-    cta: 'Pre-order for $5',
+    cta: 'Pre-order for €5',
     waitlistCta: 'Or join the free waitlist',
-    emailLabel: 'Email (optional — Stripe will ask at checkout too)',
+    emailLabel: 'Email (optional — pre-filled at checkout)',
     successTitle: 'Thank you — you are in!',
     successBody:
       'Your founder pre-order is confirmed. We will email you when beta access opens.',

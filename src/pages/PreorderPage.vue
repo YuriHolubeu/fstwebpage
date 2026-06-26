@@ -19,7 +19,7 @@
       </ul>
 
       <q-input
-        v-if="isApiConfigured()"
+        v-if="isPreorderConfigured()"
         v-model="email"
         outlined
         dense
@@ -41,9 +41,9 @@
         @click="onPreorder"
       />
 
-      <p v-if="!isApiConfigured()" class="preorder-api-hint text-center q-mb-md">
-        Payment API is not configured in this build. Set
-        <code>VITE_API_BASE_URL</code> and redeploy.
+      <p v-if="!isPreorderConfigured()" class="preorder-api-hint text-center q-mb-md">
+        Payment is not configured in this build. Set
+        <code>VITE_GUMROAD_PREORDER_URL</code> or <code>VITE_API_BASE_URL</code> and redeploy.
       </p>
 
       <p class="preorder-disclaimer text-center q-mb-lg">
@@ -71,7 +71,15 @@ import { useQuasar } from 'quasar'
 import HeroWaitlistDialog from 'src/components/investor/HeroWaitlistDialog.vue'
 import { SITE } from 'src/constants/site'
 import { isApiConfigured } from 'src/lib/api-client'
+import {
+  buildGumroadCheckoutUrl,
+  isGumroadPreorderConfigured
+} from 'src/services/preorder-gumroad'
 import { PreorderCheckoutError, startPreorderCheckout } from 'src/services/preorder-checkout'
+
+function isPreorderConfigured () {
+  return isGumroadPreorderConfigured() || isApiConfigured()
+}
 
 const $q = useQuasar()
 const email = ref('')
@@ -79,6 +87,11 @@ const submitting = ref(false)
 const waitlistOpen = ref(false)
 
 async function onPreorder () {
+  if (isGumroadPreorderConfigured()) {
+    window.location.href = buildGumroadCheckoutUrl({ email: email.value })
+    return
+  }
+
   if (!isApiConfigured()) {
     $q.notify({
       type: 'warning',
