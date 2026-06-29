@@ -18,22 +18,27 @@ export const SITE = {
   /** Founder pre-order landing (/preorder) */
   preorder: {
     headline: 'Founder pre-order',
-    priceLabel: '€5',
+    priceLabel: '€5 + VAT',
+    priceTotalHint: 'From ~€6.10 total in the EU',
+    priceNote:
+      'VAT applies where required. The exact total is always shown on the checkout page before you pay.',
     subtitle:
-      'Reserve early access to Focus Structure Tool with AI — before public launch.',
+      'One payment now — 3 months of Pro access with AI when we launch. Public pricing will be €10/month (€30 for three months).',
     benefits: [
-      'Priority access to the closed beta',
-      'Founder pricing on your first month with AI tools',
-      'Direct line for feedback while we ship'
+      '3 months Pro — AI workspace, quotas, and progress analytics',
+      'Founder rate: €5 once instead of €30 at public pricing',
+      'We email the address you use at checkout when your access is ready'
     ],
+    checkoutNote:
+      'Checkout shows the final price (including VAT if applicable) before you confirm payment.',
     disclaimer:
-      'The product is in active development. Pre-order secures founder access at launch. Refund before beta opens — email us.',
-    cta: 'Pre-order for €5',
+      'Product in active development. Pre-order secures your founder access at launch. Full refund before access opens — email focus.structure.tool@gmail.com.',
+    cta: 'Continue to checkout',
     waitlistCta: 'Or join the free waitlist',
-    emailLabel: 'Email (optional — pre-filled at checkout)',
+    emailLabel: 'Email (optional — passed to checkout if filled)',
     successTitle: 'Thank you — you are in!',
     successBody:
-      'Your founder pre-order is confirmed. We will email you when beta access opens.',
+      'Your founder pre-order is confirmed. We will email you when your 3 months of Pro access are ready.',
     successPending:
       'Payment is processing. If you completed checkout, we will confirm by email shortly.'
   },

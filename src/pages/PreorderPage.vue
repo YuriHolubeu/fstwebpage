@@ -5,7 +5,15 @@
       <h1 class="preorder-title text-h4 text-weight-bold q-mb-sm">
         {{ SITE.preorder.headline }}
       </h1>
-      <div class="preorder-price q-mb-md">{{ SITE.preorder.priceLabel }}</div>
+      <div class="preorder-price-block q-mb-md column items-center">
+        <div class="preorder-price">{{ SITE.preorder.priceLabel }}</div>
+        <p v-if="SITE.preorder.priceTotalHint" class="preorder-price-hint q-mb-xs">
+          {{ SITE.preorder.priceTotalHint }}
+        </p>
+        <p v-if="SITE.preorder.priceNote" class="preorder-price-note">
+          {{ SITE.preorder.priceNote }}
+        </p>
+      </div>
       <p class="preorder-subtitle q-mb-lg">
         {{ SITE.preorder.subtitle }}
       </p>
@@ -28,6 +36,10 @@
         :label="SITE.preorder.emailLabel"
         color="primary"
       />
+
+      <p v-if="SITE.preorder.checkoutNote" class="preorder-checkout-note text-center q-mb-md">
+        {{ SITE.preorder.checkoutNote }}
+      </p>
 
       <q-btn
         unelevated
@@ -144,6 +156,28 @@ async function onPreorder () {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+.preorder-price-hint {
+  color: var(--site-text-body, #c5d4e3);
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0.35rem 0 0;
+}
+
+.preorder-price-note,
+.preorder-checkout-note {
+  color: var(--site-text-muted, #8aa0b5);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  max-width: 34rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.preorder-checkout-note {
+  font-size: 0.85rem;
 }
 
 .preorder-subtitle {
