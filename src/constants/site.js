@@ -20,22 +20,8 @@ export const SITE = {
     headline: 'Founder pre-order',
     priceLabel: '€5 + VAT',
     priceTotalHint: 'From ~€6.10 total in the EU',
-    priceNote:
-      'VAT applies where required. The exact total is always shown on the checkout page before you pay.',
-    subtitle:
-      'One payment now — 3 months of Pro access with AI when we launch. Public pricing will be €10/month (€30 for three months).',
-    benefits: [
-      '3 months Pro — AI workspace, quotas, and progress analytics',
-      'Founder rate: €5 once instead of €30 at public pricing',
-      'We email the address you use at checkout when your access is ready'
-    ],
-    checkoutNote:
-      'Checkout shows the final price (including VAT if applicable) before you confirm payment.',
-    disclaimer:
-      'Product in active development. Pre-order secures your founder access at launch. Full refund before access opens — email focus.structure.tool@gmail.com.',
+    priceNote: 'Exact total shown at checkout.',
     cta: 'Continue to checkout',
-    waitlistCta: 'Or join the free waitlist',
-    emailLabel: 'Email (optional — passed to checkout if filled)',
     successTitle: 'Thank you — you are in!',
     successBody:
       'Your founder pre-order is confirmed. We will email you when your 3 months of Pro access are ready.',

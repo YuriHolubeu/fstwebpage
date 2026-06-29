@@ -1,0 +1,1 @@
+import{O as e}from"./render-UnnarnGF.js";function t(){return e(`_q_`)}export{t};

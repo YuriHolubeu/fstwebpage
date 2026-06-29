@@ -57,7 +57,7 @@ export const SEO_BY_ROUTE = {
   'investor-preorder': {
     title: `Founder pre-order — ${SITE.projectName}`,
     description:
-      '3 months Pro with AI for €5 + VAT (from ~€6.10 in the EU). Public price €10/month. Founder pre-order before public launch.',
+      'Founder pre-order €5 + VAT. From ~€6.10 total in the EU. Exact price at checkout.',
     path: '/preorder'
   },
   'investor-preorder-success': {
