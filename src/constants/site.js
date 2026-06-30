@@ -19,7 +19,7 @@ export const SITE = {
   preorder: {
     headline: 'Founder pre-order',
     priceLabel: '$7 + VAT',
-    priceTotalHint: 'From ~$8.50 total in the EU',
+    priceTotalHint: '',
     priceNote: 'Exact total shown before you pay.',
     cta: 'Continue to checkout',
     successTitle: 'Thank you — you are in!',
