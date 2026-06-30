@@ -2,19 +2,15 @@
   <q-btn
     unelevated
     no-caps
-    tag="a"
-    class="gumroad-button"
-    :class="btnClass"
     :padding="padding"
-    :href="checkoutHref"
+    :class="btnClass"
     :label="label"
     :icon="icon"
-    data-gumroad-single-product="true"
+    @click="openCheckout"
   />
 </template>
 
 <script setup>
-import { computed } from 'vue'
 import { buildGumroadCheckoutUrl } from 'src/services/preorder-gumroad'
 
 defineProps({
@@ -24,5 +20,7 @@ defineProps({
   padding: { type: String, default: 'sm lg' }
 })
 
-const checkoutHref = computed(() => buildGumroadCheckoutUrl())
+function openCheckout () {
+  window.location.assign(buildGumroadCheckoutUrl())
+}
 </script>
