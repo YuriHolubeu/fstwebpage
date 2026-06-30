@@ -9,7 +9,13 @@
       icon="how_to_reg"
       @click="openWaitlist"
     />
+    <GumroadPreorderButton
+      v-if="isGumroadPreorderConfigured()"
+      class="hero-cta-btn hero-cta-btn--alt"
+      label="Pre-order $7 + VAT"
+    />
     <q-btn
+      v-else
       unelevated
       no-caps
       padding="sm lg"
@@ -27,6 +33,8 @@
 import { ref } from 'vue'
 import { openDialogWithScroll } from 'src/composables/useDialogScrollRestore'
 import HeroWaitlistDialog from 'src/components/investor/HeroWaitlistDialog.vue'
+import GumroadPreorderButton from 'src/components/investor/GumroadPreorderButton.vue'
+import { isGumroadPreorderConfigured } from 'src/services/preorder-gumroad'
 
 const waitlistOpen = ref(false)
 

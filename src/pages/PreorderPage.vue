@@ -15,7 +15,14 @@
         </p>
       </div>
 
+      <GumroadPreorderButton
+        v-if="isGumroadPreorderConfigured()"
+        class="preorder-cta full-width"
+        :label="SITE.preorder.cta"
+      />
+
       <q-btn
+        v-else
         unelevated
         no-caps
         padding="sm lg"
@@ -24,7 +31,7 @@
         icon="payments"
         :loading="submitting"
         :disable="submitting"
-        @click="onPreorder"
+        @click="onStripePreorder"
       />
 
       <p v-if="!isPreorderConfigured()" class="preorder-api-hint text-center q-mt-md">
@@ -41,9 +48,9 @@ import { useQuasar } from 'quasar'
 import { SITE } from 'src/constants/site'
 import { isApiConfigured } from 'src/lib/api-client'
 import {
-  buildGumroadCheckoutUrl,
   isGumroadPreorderConfigured
 } from 'src/services/preorder-gumroad'
+import GumroadPreorderButton from 'src/components/investor/GumroadPreorderButton.vue'
 import { PreorderCheckoutError, startPreorderCheckout } from 'src/services/preorder-checkout'
 
 function isPreorderConfigured () {
@@ -53,12 +60,7 @@ function isPreorderConfigured () {
 const $q = useQuasar()
 const submitting = ref(false)
 
-async function onPreorder () {
-  if (isGumroadPreorderConfigured()) {
-    window.location.href = buildGumroadCheckoutUrl()
-    return
-  }
-
+async function onStripePreorder () {
   if (!isApiConfigured()) {
     $q.notify({
       type: 'warning',

@@ -52,6 +52,7 @@ export function buildGumroadCheckoutUrl ({ email } = {}) {
     checkout.searchParams.set('product', productCode)
     checkout.searchParams.set('price', priceCents)
     checkout.searchParams.set('rent', 'false')
+    checkout.searchParams.set('wanted', 'true')
 
     if (email?.trim()) {
       checkout.searchParams.set('email', email.trim())
