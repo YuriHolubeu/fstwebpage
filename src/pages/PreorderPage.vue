@@ -17,7 +17,7 @@
 
       <GumroadPreorderButton
         v-if="isGumroadPreorderConfigured()"
-        class="preorder-cta full-width"
+        class="full-width"
         :label="SITE.preorder.cta"
       />
 

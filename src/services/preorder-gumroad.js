@@ -27,7 +27,29 @@ function parsePermalink (raw) {
 }
 
 /**
- * Direct Gumroad checkout URL — skips the product landing page entirely.
+ * Overlay checkout link — product URL with ?wanted=true (gumroad.js opens modal on site).
+ * @param {{ email?: string }} options
+ */
+export function buildGumroadOverlayUrl ({ email } = {}) {
+  const raw = getGumroadPreorderUrl()
+  if (!raw) {
+    return raw
+  }
+
+  try {
+    const url = new URL(raw)
+    url.searchParams.set('wanted', 'true')
+    if (email?.trim()) {
+      url.searchParams.set('email', email.trim())
+    }
+    return url.toString()
+  } catch {
+    return raw
+  }
+}
+
+/**
+ * Direct Gumroad checkout URL — full-page redirect fallback.
  * @param {{ email?: string }} options — Gumroad pre-fills checkout email when supported
  */
 export function buildGumroadCheckoutUrl ({ email } = {}) {
