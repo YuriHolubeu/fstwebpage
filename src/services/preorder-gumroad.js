@@ -19,6 +19,9 @@ export function buildGumroadCheckoutUrl ({ email } = {}) {
   const raw = getGumroadPreorderUrl()
   try {
     const url = new URL(raw)
+    // Skip Gumroad product landing page → open payment form directly.
+    // https://gumroad.com/help/article/144-send-customers-directly-to-your-payment-form
+    url.searchParams.set('wanted', 'true')
     if (email?.trim()) {
       url.searchParams.set('email', email.trim())
     }
