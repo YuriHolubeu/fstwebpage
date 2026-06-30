@@ -57,7 +57,7 @@ export const SEO_BY_ROUTE = {
   'investor-preorder': {
     title: `Founder pre-order — ${SITE.projectName}`,
     description:
-      'Founder pre-order €5 + VAT. From ~€6.10 total in the EU. Exact price at checkout.',
+      'Founder pre-order $7. Tax may apply at checkout. Exact total shown before you pay.',
     path: '/preorder'
   },
   'investor-preorder-success': {

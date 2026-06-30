@@ -18,9 +18,9 @@ export const SITE = {
   /** Founder pre-order landing (/preorder) */
   preorder: {
     headline: 'Founder pre-order',
-    priceLabel: '€5 + VAT',
-    priceTotalHint: 'From ~€6.10 total in the EU',
-    priceNote: 'Exact total shown at checkout.',
+    priceLabel: '$7',
+    priceTotalHint: 'Tax may apply at checkout',
+    priceNote: 'Exact total shown before you pay.',
     cta: 'Continue to checkout',
     successTitle: 'Thank you — you are in!',
     successBody:

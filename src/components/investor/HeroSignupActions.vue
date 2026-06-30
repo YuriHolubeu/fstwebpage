@@ -14,7 +14,7 @@
       no-caps
       padding="sm lg"
       class="hero-cta-btn hero-cta-btn--alt"
-      label="Pre-order €5 + VAT"
+      label="Pre-order $7"
       icon="payments"
       to="/preorder"
     />

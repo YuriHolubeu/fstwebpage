@@ -10,7 +10,7 @@ export class PreorderCheckoutError extends Error {
 }
 
 /**
- * Start founder pre-order ($5) — returns Stripe Checkout URL.
+ * Start founder pre-order ($7) — returns Stripe Checkout URL.
  * @param {{ email?: string }} options
  */
 export async function startPreorderCheckout ({ email } = {}) {
