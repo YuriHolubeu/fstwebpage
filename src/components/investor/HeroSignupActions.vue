@@ -11,7 +11,7 @@
     />
     <GumroadPreorderButton
       v-if="isGumroadPreorderConfigured()"
-      variant="hero"
+      class="hero-cta-btn hero-cta-btn--alt"
       label="Pre-order $7 + VAT"
     />
     <q-btn
