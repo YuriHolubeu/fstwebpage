@@ -2,7 +2,7 @@
  * Founder pre-order via Gumroad (real payments without own Stripe Live account).
  *
  * Env:
- * - VITE_GUMROAD_PREORDER_URL — product link (permalink in path), e.g. …/l/founder-preorder
+ * - VITE_GUMROAD_PREORDER_URL — product link (permalink in path), e.g. …/l/focus-preorder
  * - VITE_GUMROAD_PRODUCT_CODE — optional short product id from Gumroad (often differs from permalink)
  * - VITE_GUMROAD_PREORDER_PRICE_CENTS — optional, default 700 ($7)
  */
