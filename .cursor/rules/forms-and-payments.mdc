@@ -7,6 +7,21 @@ alwaysApply: true
 
 This site is deployed as static files from `docs/` (GitHub Pages). **Env vars are baked in at build time.** Do not ship changes that leave forms or checkout disconnected.
 
+## Do not delete or weaken this configuration
+
+When refactoring, cleaning up, or "simplifying" env handling, **leave the working setup intact**. Do not remove, empty, or bypass any of the following unless the user explicitly asks to replace them with an equivalent:
+
+- `SITE.apiBaseUrl` and `SITE.preorder.gumroadUrl` in `src/constants/site.js`
+- `SITE` fallbacks in `src/lib/api-client.js` and `src/services/preorder-gumroad.js`
+- Localhost guard in `getApiBaseUrl()` (production must not bake `127.0.0.1` from `.env.local`)
+- `isApiConfigured()` / `isGumroadPreorderConfigured()` / `isHeroSignupStorageConfigured()` wiring
+- `scripts/verify-production-config.mjs` and its invocation in `package.json` `postbuild`
+- `quasar.config.js` → `distDir: 'docs'`
+- Form services that POST to Django (`hero-signups.js`, `contact-messages.js`, `audience-subscriptions.js`)
+- Gumroad checkout path in `GumroadPreorderButton.vue` and `PreorderPage.vue`
+
+**Never** delete `docs/` or skip rebuilding it after source changes that affect forms or checkout.
+
 ## Critical user flows (never break)
 
 | Flow | UI | Must work without extra deploy secrets |
@@ -26,7 +41,7 @@ Keep these in `src/constants/site.js` (do not remove or empty):
 
 Clients must fall back to `SITE` when env is unset:
 
-- `src/lib/api-client.js` → `VITE_API_BASE_URL || SITE.apiBaseUrl`
+- `src/lib/api-client.js` → `VITE_API_BASE_URL || SITE.apiBaseUrl` (ignore localhost in production)
 - `src/services/preorder-gumroad.js` → `VITE_GUMROAD_PREORDER_URL || SITE.preorder.gumroadUrl`
 
 **Never** make `isApiConfigured()` or `isGumroadPreorderConfigured()` depend only on `import.meta.env` without a `SITE` fallback.
@@ -48,4 +63,4 @@ When touching forms, billing, env, build scripts, `site.js`, `api-client`, preor
 
 - Forms: `src/services/hero-signups.js`, `src/components/investor/HeroWaitlistDialog.vue`, `ContactUsDialog.vue`, `HeroVipInvestDialog.vue`
 - Payments: `src/pages/PreorderPage.vue`, `src/services/preorder-checkout.js`, `src/services/preorder-gumroad.js`
-- Build: `scripts/check-api-env.mjs`, `.github/workflows/deploy-pages.yml`
+- Build: `scripts/check-api-env.mjs`, `scripts/verify-production-config.mjs`, `.github/workflows/deploy-pages.yml`
