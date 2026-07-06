@@ -1,15 +1,21 @@
 /**
  * Founder pre-order via Gumroad (real payments without own Stripe Live account).
  *
- * Env:
+ * Env (optional overrides):
  * - VITE_GUMROAD_PREORDER_URL — product link (permalink in path), e.g. …/l/focus-preorder
  * - VITE_GUMROAD_PRODUCT_CODE — optional short product id from Gumroad (often differs from permalink)
  * - VITE_GUMROAD_PREORDER_PRICE_CENTS — optional, default 700 ($7)
  */
+import { SITE } from 'src/constants/site'
+
 const GUMROAD_CHECKOUT_ORIGIN = 'https://gumroad.com'
 
 export function getGumroadPreorderUrl () {
-  return (import.meta.env.VITE_GUMROAD_PREORDER_URL || '').trim()
+  return (
+    import.meta.env.VITE_GUMROAD_PREORDER_URL ||
+    SITE.preorder.gumroadUrl ||
+    ''
+  ).trim()
 }
 
 export function isGumroadPreorderConfigured () {

@@ -1,0 +1,53 @@
+---
+description: Keep waitlist, contact, and pre-order checkout working in production builds
+alwaysApply: true
+---
+
+# Forms and payments must stay working
+
+This site is deployed as static files from `docs/` (GitHub Pages). **Env vars are baked in at build time.** Do not ship changes that leave forms or checkout disconnected.
+
+## Critical user flows (never break)
+
+| Flow | UI | Must work without extra deploy secrets |
+|------|-----|----------------------------------------|
+| Join waitlist | `HeroWaitlistDialog.vue` | Yes — posts to Django API |
+| Contact us | `ContactUsDialog.vue` | Yes — posts to Django API |
+| Pre-order | `GumroadPreorderButton.vue`, `/preorder` | Yes — redirects to Gumroad |
+
+If users see **"Form API is not configured yet."** or **"Checkout is not connected yet."**, production `docs/` was built without API/Gumroad config.
+
+## Required production defaults
+
+Keep these in `src/constants/site.js` (do not remove or empty):
+
+- `SITE.apiBaseUrl` — `https://api.focusstructure.com` (forms + billing fallback)
+- `SITE.preorder.gumroadUrl` — `https://structfocus.gumroad.com/l/focus-preorder` (pre-order)
+
+Clients must fall back to `SITE` when env is unset:
+
+- `src/lib/api-client.js` → `VITE_API_BASE_URL || SITE.apiBaseUrl`
+- `src/services/preorder-gumroad.js` → `VITE_GUMROAD_PREORDER_URL || SITE.preorder.gumroadUrl`
+
+**Never** make `isApiConfigured()` or `isGumroadPreorderConfigured()` depend only on `import.meta.env` without a `SITE` fallback.
+
+## Before finishing any change
+
+When touching forms, billing, env, build scripts, `site.js`, `api-client`, preorder services, or `docs/`:
+
+1. Confirm defaults above are still present and wired.
+2. Do not remove `SITE` fallbacks to "clean up" env handling.
+3. After build-impacting changes, run `npm run build` and verify `docs/assets/` bundles include:
+   - `apiBaseUrl` in the site chunk
+   - `gumroadUrl` in the site chunk
+4. If you changed source, remind the user to redeploy `docs/` to the server.
+
+## Local dev override
+
+`.env.local` may set `VITE_API_BASE_URL=http://127.0.0.1:8000` — that overrides production API only locally. Do not commit `.env.local`.
+
+## Related files
+
+- Forms: `src/services/hero-signups.js`, `src/components/investor/HeroWaitlistDialog.vue`, `ContactUsDialog.vue`, `HeroVipInvestDialog.vue`
+- Payments: `src/pages/PreorderPage.vue`, `src/services/preorder-checkout.js`, `src/services/preorder-gumroad.js`
+- Build: `scripts/check-api-env.mjs`, `.github/workflows/deploy-pages.yml`

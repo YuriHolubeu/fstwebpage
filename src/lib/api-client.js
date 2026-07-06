@@ -1,9 +1,15 @@
 /**
  * Django API client for focusstructure.com (forms, billing).
- * Set VITE_API_BASE_URL in .env.local and GitHub Actions secrets.
+ * Set VITE_API_BASE_URL in .env.local to override the production default.
  */
+import { SITE } from 'src/constants/site'
+
 export function getApiBaseUrl () {
-  return (import.meta.env.VITE_API_BASE_URL || '').trim().replace(/\/$/, '')
+  return (
+    import.meta.env.VITE_API_BASE_URL ||
+    SITE.apiBaseUrl ||
+    ''
+  ).trim().replace(/\/$/, '')
 }
 
 export function isApiConfigured () {

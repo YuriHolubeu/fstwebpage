@@ -3,6 +3,8 @@
  */
 export const SITE = {
   projectName: 'Focus Structure Tool',
+  /** Django API for forms and billing — override with VITE_API_BASE_URL if needed */
+  apiBaseUrl: 'https://api.focusstructure.com',
   /** Main headline on the Project page hero */
   heroHeadline: 'Environment for Real Breakthroughs',
   tagline: 'The application keeps researchers focused, structures information, and uses AI for deeper insights',
@@ -22,6 +24,8 @@ export const SITE = {
     priceTotalHint: '',
     priceNote: 'Exact total shown before you pay.',
     cta: 'Continue to checkout',
+    /** Public Gumroad product link — override with VITE_GUMROAD_PREORDER_URL if needed */
+    gumroadUrl: 'https://structfocus.gumroad.com/l/focus-preorder',
     successTitle: 'Thank you — you are in!',
     successBody:
       'Your founder pre-order is confirmed. We will email you when your 3 months of Pro access are ready.',
