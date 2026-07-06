@@ -96,7 +96,8 @@ import { SITE } from 'src/constants/site'
 const route = useRoute()
 
 const nav = [
-  { to: '/project-description', label: 'Project Description', icon: 'description' }
+  { to: '/project-description', label: 'Project Description', icon: 'description' },
+  { to: '/community', label: 'Community', icon: 'groups' }
 ]
 
 const tailNav = [

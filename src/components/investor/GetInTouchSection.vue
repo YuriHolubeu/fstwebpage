@@ -17,13 +17,14 @@
         <p class="site-footer-menu__intro q-ma-none">
           {{ SITE.contactIntro }}
         </p>
-        <div class="site-footer-menu__links row items-center no-wrap">
+        <div class="site-footer-menu__links row items-center">
           <a
             :href="contactMailto"
             class="site-footer-menu__email"
           >
             {{ SITE.contactEmail }}
           </a>
+          <SocialChannelButtons />
           <slot name="actions" />
         </div>
       </div>
@@ -67,6 +68,7 @@
 
 <script setup>
 import brandIconUrl from 'src/assets/app-icon.svg'
+import SocialChannelButtons from 'src/components/investor/SocialChannelButtons.vue'
 import { SITE } from 'src/constants/site'
 
 const contactMailto = `mailto:${SITE.contactEmail}`
@@ -192,6 +194,7 @@ const contactMailto = `mailto:${SITE.contactEmail}`
   gap: 0.85rem 1.25rem;
   flex-wrap: wrap;
   justify-content: flex-start;
+  align-items: center;
 }
 
 .site-footer-menu__email {

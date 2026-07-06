@@ -4,6 +4,7 @@
  */
 export const SPA_ROUTE_PATHS = [
   '/project-description',
+  '/community',
   '/ai-groups',
   '/explain-fragment',
   '/research-mentor',

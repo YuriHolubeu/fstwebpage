@@ -12,7 +12,8 @@
         <div class="col">
           <div class="hs-title text-h6 text-weight-bold">Join waitlist</div>
           <div class="hs-subtitle text-caption">
-            Be first to know when the app launches.
+            Be first to know when the app launches.<br /><br />
+            We'll keep you updated with our latest news and product updates.
           </div>
         </div>
         <q-btn
@@ -46,7 +47,7 @@
             dense
             type="email"
             label="Email *"
-            hint="yourmail@mail.com"
+            hint=""
             class="hs-field"
             color="primary"
             required

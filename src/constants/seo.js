@@ -39,6 +39,12 @@ export const SEO_BY_ROUTE = {
     description: 'Structured learning for students and schools with the same research-grade workflow.',
     path: '/education'
   },
+  'investor-community': {
+    title: `Community — ${SITE.projectName}`,
+    description:
+      'Join a growing community of researchers who love science. Follow us and contribute to the project.',
+    path: '/community'
+  },
   'investor-careers': {
     title: `Careers — ${SITE.projectName}`,
     description: 'Join the team building the research environment of the future. Engineering, AI, UX, and growth.',

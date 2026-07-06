@@ -352,6 +352,40 @@
       </div>
     </section>
 
+    <section
+      ref="pricesEl"
+      class="screenshot-showcase q-pt-xl q-mt-lg"
+    >
+      <div
+        class="row q-col-gutter-xl items-center workspace-row reveal-on-scroll"
+        :class="{ 'is-visible': pricesVisible }"
+      >
+        <div class="col-12 workspace-copy">
+          <h2 class="screenshot-title text-h4 text-weight-bold pp-heading q-mb-sm">
+            Prices
+          </h2>
+
+          <ul class="workspace-features q-pl-none q-ma-none">
+            <li
+              v-for="tier in pricingTiers"
+              :key="tier.title"
+              class="workspace-feature row no-wrap items-start"
+            >
+              <q-icon :name="tier.icon" size="22px" class="workspace-feature__icon q-mr-md" />
+              <div>
+                <div class="workspace-feature__title text-subtitle2 text-weight-medium pp-title q-mb-xs">
+                  {{ tier.title }}
+                </div>
+                <p class="workspace-feature__text text-caption pp-muted q-mb-none">
+                  {{ tier.description }}
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
     <section ref="previewsEl" class="results-preview-block q-pt-xl q-mt-lg column items-center">
       <div
         class="gallery-heading text-center q-mb-lg reveal-on-scroll full-width"
@@ -585,6 +619,7 @@ const screenshotsVisible = ref(false)
 const reasonsWithoutAiVisible = ref(false)
 const applicationVisible = ref(false)
 const aiToolsVisible = ref(false)
+const pricesVisible = ref(false)
 const keyToolsVisible = ref(false)
 const previewsVisible = ref(false)
 const teamVisible = ref(false)
@@ -598,6 +633,7 @@ const screenshotsEl = ref(null)
 const reasonsWithoutAiEl = ref(null)
 const applicationEl = ref(null)
 const aiToolsEl = ref(null)
+const pricesEl = ref(null)
 const keyToolsEl = ref(null)
 const previewsEl = ref(null)
 const teamEl = ref(null)
@@ -748,8 +784,26 @@ const applicationFeatures = [
   ...applicationStructuringFeatures.slice(1)
 ]
 
-
-
+const pricingTiers = [
+  {
+    icon: 'savings',
+    title: 'Free',
+    description:
+      'A free version of the app will be available. It will not include AI tools or one-click article downloads, but it will still offer what we aim to make the best LaTeX editor and PDF previewer for research.'
+  },
+  {
+    icon: 'workspace_premium',
+    title: 'Pro — $10 + VAT per month',
+    description:
+      'Includes unlimited one-click downloads of articles from arXiv, LaTeX extraction from up to 5,000 PDF pages per month, and full access to every AI tool built for the application.'
+  },
+  {
+    icon: 'all_inclusive',
+    title: 'Lifetime — $60',
+    description:
+      'Pay once for lifetime access at the lowest sustainable price we can offer. If the app uses paid third-party services, any additional charges cover only those costs—we do not take a margin on them. Every six months, lifetime members pay a small renewal fee equal to the price of a McDonald\'s hamburger in the capital of their country. That keeps the platform sustainable while ensuring the real cost of lifetime access never rises above that amount.'
+  }
+]
 
 const aiToolsFeatures = [
   {
@@ -845,6 +899,7 @@ let screenshotsObserver
 let reasonsWithoutAiObserver
 let applicationObserver
 let aiToolsObserver
+let pricesObserver
 let previewsObserver
 let teamObserver
 let faqObserver
@@ -949,6 +1004,20 @@ onMounted(() => {
     aiToolsObserver.observe(aiToolsEl.value)
   }
 
+  pricesObserver = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) {
+          pricesVisible.value = true
+        }
+      }
+    },
+    { threshold: 0.12, rootMargin: '0px 0px -32px 0px' }
+  )
+  if (pricesEl.value) {
+    pricesObserver.observe(pricesEl.value)
+  }
+
   keyToolsObserver = new IntersectionObserver(
     (entries) => {
       for (const e of entries) {
@@ -1026,6 +1095,7 @@ onUnmounted(() => {
   reasonsWithoutAiObserver?.disconnect()
   applicationObserver?.disconnect()
   aiToolsObserver?.disconnect()
+  pricesObserver?.disconnect()
   keyToolsObserver?.disconnect()
   previewsObserver?.disconnect()
   teamObserver?.disconnect()

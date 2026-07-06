@@ -18,6 +18,11 @@ const routes = [
         component: () => import('pages/ProjectDescriptionPage.vue')
       },
       {
+        path: 'community',
+        name: 'investor-community',
+        component: () => import('pages/CommunityPage.vue')
+      },
+      {
         path: 'ai-groups',
         name: 'investor-ai-groups',
         component: () => import('pages/AiGroupsPage.vue')
