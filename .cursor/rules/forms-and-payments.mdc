@@ -37,9 +37,7 @@ When touching forms, billing, env, build scripts, `site.js`, `api-client`, preor
 
 1. Confirm defaults above are still present and wired.
 2. Do not remove `SITE` fallbacks to "clean up" env handling.
-3. After build-impacting changes, run `npm run build` and verify `docs/assets/` bundles include:
-   - `apiBaseUrl` in the site chunk
-   - `gumroadUrl` in the site chunk
+3. After build-impacting changes, run `npm run build` and confirm postbuild prints `[verify-production-config] API and Gumroad URLs present`.
 4. If you changed source, remind the user to redeploy `docs/` to the server.
 
 ## Local dev override

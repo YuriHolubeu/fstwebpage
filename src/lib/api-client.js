@@ -4,12 +4,19 @@
  */
 import { SITE } from 'src/constants/site'
 
+function isLocalApiUrl (url) {
+  return /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?(\/|$)/i.test(url)
+}
+
 export function getApiBaseUrl () {
-  return (
-    import.meta.env.VITE_API_BASE_URL ||
-    SITE.apiBaseUrl ||
-    ''
-  ).trim().replace(/\/$/, '')
+  const fromEnv = (import.meta.env.VITE_API_BASE_URL || '').trim()
+  const fromSite = (SITE.apiBaseUrl || '').trim()
+  const chosen =
+    import.meta.env.PROD && fromEnv && isLocalApiUrl(fromEnv)
+      ? fromSite
+      : fromEnv || fromSite
+
+  return chosen.replace(/\/$/, '')
 }
 
 export function isApiConfigured () {
