@@ -140,7 +140,7 @@ const roadmap = [
   },
   {
     title: 'First release',
-    window: '2026 August',
+    window: '2026 October',
     detail: 'The first release will have a fully functioning structure panel, all Latex tools, extraction of Latex from Arxiv and from scanned PDFs, downloading all cited articles, AI grouping feature.',
     icon: 'rocket_launch',
     color: 'secondary',
