@@ -124,7 +124,7 @@ const roadmap = [
   },
   {
     title: 'Formulation of the project, formation of a  minimal team',
-    window: 'October 2025 – April 2026',
+    window: '2025 October – 2026 April',
     detail: 'The project was written clearly, a social survey was made, and a minimal number of specialists were found.',
     icon: 'edit_note',
     color: 'primary',
@@ -132,7 +132,7 @@ const roadmap = [
   },
   {
     title: 'Start of the prototype development',
-    window: 'April 2026',
+    window: '2026 April',
     detail: 'A small core team came together to build the first version.',
     icon: 'engineering',
     color: 'primary',
