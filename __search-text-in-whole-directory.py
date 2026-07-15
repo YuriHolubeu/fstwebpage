@@ -9,7 +9,7 @@ import os
 import fnmatch
 
 
-search_text = r"tructure Tool helps student"
+search_text = r"YouTube"
 
 def search_in_file(file_path, search_text, search_output_lines):
     """Search for search_text in the specified file and collect lines containing the search_text."""

@@ -36,6 +36,6 @@ export const SITE = {
     linkedin: 'https://www.linkedin.com/',
     x: 'https://twitter.com/',
     instagram: 'https://www.instagram.com/focus.structure/',
-    youtube: 'https://www.youtube.com/@focusstructure'
+    youtube: 'https://www.youtube.com/@focusstructure?sub_confirmation=1'
   }
 }
