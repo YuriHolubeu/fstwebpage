@@ -656,13 +656,6 @@ const team = [
       href: 'https://yuriholubeu.github.io/',
       label: 'https://yuriholubeu.github.io/'
     }
-  },
-    {
-    initials: 'JP',
-    name: 'Jevgenij Posashkov',
-    role: 'Leader of AI development',
-    photo: '/team/jevgenij-posashkov.png',
-    bio: 'Master of Data Science '
   }
 ]
 
