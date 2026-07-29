@@ -24,6 +24,8 @@ export const SITE = {
     priceTotalHint: '',
     priceNote: 'Exact total shown before you pay.',
     cta: 'Continue to checkout',
+    /** Set true to show the hero "Pre-order $7 + VAT" button again */
+    heroCtaVisible: false,
     /** Public Gumroad product link — override with VITE_GUMROAD_PREORDER_URL if needed */
     gumroadUrl: 'https://structfocus.gumroad.com/l/focus-preorder',
     successTitle: 'Thank you — you are in!',
