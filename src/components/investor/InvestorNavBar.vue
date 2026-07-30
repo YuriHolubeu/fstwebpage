@@ -1,5 +1,10 @@
 <template>
-  <q-header class="investor-header" elevated reveal :reveal-offset="80">
+  <q-header
+    class="investor-header"
+    :elevated="!isDonatePage"
+    reveal
+    :reveal-offset="80"
+  >
     <div class="header-glow" aria-hidden="true" />
 
     <q-toolbar class="toolbar-inner q-px-md q-py-sm">
@@ -94,6 +99,7 @@ import brandIconUrl from 'src/assets/app-icon.svg'
 import { SITE } from 'src/constants/site'
 
 const route = useRoute()
+const isDonatePage = computed(() => route.name === 'investor-donate')
 
 const nav = [
   { to: '/project-description', label: 'Project Description', icon: 'description' },

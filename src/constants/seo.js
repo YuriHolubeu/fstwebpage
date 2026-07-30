@@ -70,6 +70,12 @@ export const SEO_BY_ROUTE = {
     title: `Pre-order confirmed — ${SITE.projectName}`,
     description: 'Thank you for your founder pre-order.',
     path: '/preorder/success'
+  },
+  'investor-donate': {
+    title: `Donate — ${SITE.projectName}`,
+    description:
+      'Support Focus Structure Tool. Donations of at least $1 unlock a 70% discount on the first 3 months of the app.',
+    path: '/donate'
   }
 }
 

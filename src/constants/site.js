@@ -39,5 +39,26 @@ export const SITE = {
     x: 'https://twitter.com/',
     instagram: 'https://www.instagram.com/focus.structure/',
     youtube: 'https://www.youtube.com/@focusstructure?sub_confirmation=1'
+  },
+  donate: {
+    title: 'Donate to our Revolut',
+    intro:
+      'Your donation supports the project and helps us finish Focus Structure Tool faster.',
+    reward:
+      'Everyone who donates at least $1 will later receive a 70% discount on the first 3 months of the app.',
+    recipientName: 'Yury Holubeu',
+    street: 'Jamova cesta 97',
+    city: 'Ljubljana',
+    country: 'Slovenia',
+    revolutMeUrl: 'https://revolut.me/yholubeu',
+    bankName: 'Revolut Bank UAB',
+    bic: 'REVOLT21',
+    bankAddress: 'Konstitucijos pr. 21B, LT-08130 Vilnius, Lithuania',
+    iban: 'LT46 3250 0683 4431 2882',
+    ibanCopyValue: 'LT463250068344312882',
+    transferReference: 'FST support',
+    purposeCode: 'OTHR',
+    purposeCodeLabel: 'Other',
+    purposeHelpLabel: 'Problems with donation?'
   }
 }

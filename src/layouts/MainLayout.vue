@@ -1,12 +1,33 @@
 <template>
-  <q-layout view="hHh lpR lfr" class="investor-layout">
-    <div class="digital-bg" aria-hidden="true" />
+  <q-layout
+    view="hHh lpR lfr"
+    class="investor-layout"
+    :class="{
+      'investor-layout--donate': isDonatePage,
+      'investor-layout--home': isHomePage
+    }"
+  >
+    <div
+      v-if="isHomePage"
+      class="home-loop-bg"
+      aria-hidden="true"
+    >
+      <div
+        class="home-loop-bg__image"
+        :style="{ backgroundImage: `url(${homeBgUrl})` }"
+      />
+      <div class="home-loop-bg__scrim" />
+    </div>
+    <div v-else-if="!isDonatePage" class="digital-bg" aria-hidden="true" />
 
     <InvestorNavBar />
 
-    <q-page-container class="layout-surface">
+    <q-page-container class="layout-surface" :class="{ 'layout-surface--donate': isDonatePage }">
       <div class="site-page-shell column">
-        <main class="site-page-shell__main page-container">
+        <main
+          class="site-page-shell__main"
+          :class="{ 'page-container': !isDonatePage }"
+        >
           <router-view v-slot="{ Component }">
             <transition name="fade-slide" mode="out-in">
               <component :is="Component" />
@@ -39,11 +60,18 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
+import homeBgUrl from 'src/assets/home-bg-loop.png'
 import GetInTouchSection from 'src/components/investor/GetInTouchSection.vue'
 import InvestorNavBar from 'src/components/investor/InvestorNavBar.vue'
 import ContactUsDialog from 'src/components/investor/ContactUsDialog.vue'
 import { useContactUiStore } from 'src/stores/contact-ui'
+
+const route = useRoute()
+const isDonatePage = computed(() => route.name === 'investor-donate')
+const isHomePage = computed(() => route.name === 'investor-project')
 
 const contact = useContactUiStore()
 const { dialogOpen } = storeToRefs(contact)
@@ -70,6 +98,57 @@ const { dialogOpen } = storeToRefs(contact)
       var(--site-bg-deep) 100%
     );
   min-height: 100vh;
+}
+
+.investor-layout--donate {
+  background: #05080c;
+}
+
+.investor-layout--home {
+  background: #05080c;
+}
+
+.home-loop-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.home-loop-bg__image {
+  position: absolute;
+  /* Extra bleed so blur does not show hard edges */
+  inset: -24px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  /* ~20% soft blur */
+  filter: blur(6px);
+  transform: scale(1.02);
+}
+
+.home-loop-bg__scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(8, 16, 24, 0.42) 0%,
+      rgba(8, 16, 24, 0.28) 40%,
+      rgba(8, 16, 24, 0.5) 100%
+    );
+}
+
+.investor-layout--donate :deep(.q-header),
+.investor-layout--donate :deep(.investor-header) {
+  background: transparent !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
+.investor-layout--donate :deep(.header-glow) {
+  display: none;
 }
 
 /* Full-viewport tech grid behind content (pointer-events none) */
@@ -169,6 +248,27 @@ const { dialogOpen } = storeToRefs(contact)
 .layout-surface {
   position: relative;
   z-index: 1;
+}
+
+.layout-surface--donate {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.layout-surface--donate .site-page-shell {
+  min-height: 0;
+}
+
+.layout-surface--donate .site-page-shell__main {
+  flex: 0 0 auto;
+}
+
+.layout-surface--donate :deep(.q-page) {
+  min-height: 0 !important;
+}
+
+.layout-surface--donate :deep(.site-footer-menu) {
+  margin-top: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {

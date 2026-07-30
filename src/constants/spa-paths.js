@@ -16,5 +16,6 @@ export const SPA_ROUTE_PATHS = [
   '/gallery',
   '/preorder',
   '/preorder/success',
+  '/donate',
   '/project' // legacy URL
 ]

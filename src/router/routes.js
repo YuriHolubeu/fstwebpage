@@ -80,6 +80,11 @@ const routes = [
         path: 'preorder/success',
         name: 'investor-preorder-success',
         component: () => import('pages/PreorderSuccessPage.vue')
+      },
+      {
+        path: 'donate',
+        name: 'investor-donate',
+        component: () => import('pages/DonatePage.vue')
       }
     ]
   },

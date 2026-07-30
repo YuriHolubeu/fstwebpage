@@ -519,6 +519,18 @@
       </div>
     </section>
 
+    <section class="donate-block q-pt-xl q-pb-md q-mt-lg column items-center">
+      <q-btn
+        unelevated
+        no-caps
+        padding="sm lg"
+        class="donate-cta-btn"
+        label="Donate"
+        icon="volunteer_activism"
+        to="/donate"
+      />
+    </section>
+
     <q-dialog
       v-model="toolPreviewOpen"
       no-refocus
@@ -1318,6 +1330,26 @@ onUnmounted(() => {
 .workshop-block {
   scroll-margin-top: 96px;
   width: 100%;
+}
+
+.donate-block {
+  width: 100%;
+}
+
+.donate-cta-btn {
+  border-radius: 12px;
+  font-weight: 600;
+  color: var(--site-text-high) !important;
+  background: linear-gradient(135deg, #0bc3ab 0%, #0375cc 48%, #0660a8 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 4px 16px rgba(3, 117, 204, 0.4);
+}
+
+.donate-cta-btn :deep(.q-btn__wrapper),
+.donate-cta-btn :deep(.q-icon) {
+  color: var(--site-text-high) !important;
 }
 
 .workshop-block__inner {
