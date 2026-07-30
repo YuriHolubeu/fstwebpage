@@ -221,6 +221,18 @@
 
 
 
+    <section class="donate-block q-pt-xl q-pb-md q-mt-lg column items-center">
+      <q-btn
+        unelevated
+        no-caps
+        padding="sm lg"
+        class="donate-cta-btn"
+        label="Donate"
+        icon="volunteer_activism"
+        to="/donate"
+      />
+    </section>
+
     <section
       ref="keyToolsEl"
       class="gallery-block gallery-block--tools q-pt-xl q-mt-lg column items-center"
@@ -517,18 +529,6 @@
           </figcaption>
         </figure>
       </div>
-    </section>
-
-    <section class="donate-block q-pt-xl q-pb-md q-mt-lg column items-center">
-      <q-btn
-        unelevated
-        no-caps
-        padding="sm lg"
-        class="donate-cta-btn"
-        label="Donate"
-        icon="volunteer_activism"
-        to="/donate"
-      />
     </section>
 
     <q-dialog
