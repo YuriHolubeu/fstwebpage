@@ -268,7 +268,9 @@ const { dialogOpen } = storeToRefs(contact)
 }
 
 .layout-surface--donate :deep(.site-footer-menu) {
-  margin-top: 0;
+  margin-top: 2.5rem;
+  position: relative;
+  z-index: 2;
 }
 
 @media (prefers-reduced-motion: reduce) {

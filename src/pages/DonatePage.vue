@@ -1,19 +1,32 @@
 <template>
   <q-page class="donate-page" :style-fn="donatePageStyle">
     <div class="donate-page__stage">
-      <img
-        class="donate-page__bg"
-        :src="donateBgUrl"
-        alt=""
-        decoding="async"
-      />
-      <img
-        class="donate-page__bg donate-page__bg--blur"
-        :src="donateBgUrl"
-        alt=""
-        aria-hidden="true"
-        decoding="async"
-      />
+      <div class="donate-page__media">
+        <picture>
+          <source
+            media="only screen and (max-width: 600px) and (hover: none)"
+            :srcset="donateBgMobileUrl"
+          />
+          <img
+            class="donate-page__bg"
+            :src="donateBgDesktopUrl"
+            alt=""
+            decoding="async"
+          />
+        </picture>
+        <picture class="donate-page__blur-picture" aria-hidden="true">
+          <source
+            media="only screen and (max-width: 600px) and (hover: none)"
+            :srcset="donateBgMobileUrl"
+          />
+          <img
+            class="donate-page__bg donate-page__bg--blur"
+            :src="donateBgDesktopUrl"
+            alt=""
+            decoding="async"
+          />
+        </picture>
+      </div>
 
       <section class="donate-content column items-center">
         <h1 class="donate-title text-weight-bold q-mb-sm">
@@ -136,7 +149,8 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { copyToClipboard, useQuasar } from 'quasar'
-import donateBgUrl from 'src/assets/donate-thank-you.png'
+import donateBgDesktopUrl from 'src/assets/donate-thank-you.png'
+import donateBgMobileUrl from 'src/assets/donate-thank-you-mobile.png'
 import { SITE } from 'src/constants/site'
 
 const $q = useQuasar()
@@ -201,9 +215,38 @@ async function copyField (label, value) {
 
 .donate-page__stage {
   position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
   width: 100%;
+  min-height: 100svh;
   overflow: hidden;
+  /* Typical dark tone from the artwork — fills space below the full image */
+  background: #050b14;
+}
+
+.donate-page__media {
+  grid-area: 1 / 1;
+  position: relative;
+  align-self: start;
+  width: 100%;
   line-height: 0;
+}
+
+.donate-page__media picture {
+  display: block;
+  width: 100%;
+}
+
+.donate-page__blur-picture {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.donate-page__blur-picture .donate-page__bg--blur {
+  width: 100%;
+  height: 100%;
 }
 
 .donate-page__bg {
@@ -219,8 +262,7 @@ async function copyField (label, value) {
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center top;
+  object-fit: fill;
   filter: blur(1.75px);
   transform: scale(1.02);
   transform-origin: center top;
@@ -239,12 +281,13 @@ async function copyField (label, value) {
 }
 
 .donate-content {
-  position: absolute;
-  left: 50%;
-  top: calc(var(--q-header-height, 64px) + 0.5cm);
+  grid-area: 1 / 1;
+  position: relative;
   z-index: 1;
+  align-self: start;
+  justify-self: center;
   width: min(calc(100% - 2.5rem), 420px);
-  transform: translateX(-50%);
+  margin: calc(var(--q-header-height, 64px) + 0.5cm) auto 2rem;
   line-height: normal;
   padding: 0 0 1.5rem;
 }
