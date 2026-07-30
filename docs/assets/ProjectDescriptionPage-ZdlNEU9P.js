@@ -1,1 +1,0 @@
-import{L as e,S as t,_ as n,q as r}from"./render-UnnarnGF.js";import{t as i}from"./QPage-C4G8scqO.js";import{t as a}from"./ProjectDescriptionContent-B8NyD4Kh.js";var o={__name:`ProjectDescriptionPage`,setup(o){return(o,s)=>(e(),n(i,null,{default:r(()=>[t(a,{"show-featured-product-preview":``})]),_:1}))}};export{o as default};
