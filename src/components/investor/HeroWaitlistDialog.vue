@@ -142,6 +142,9 @@ async function submit () {
       email: email.value,
       message: message.value
     })
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'generate_lead')
+    }
     reset()
     emit('update:modelValue', false)
     $q.notify({
