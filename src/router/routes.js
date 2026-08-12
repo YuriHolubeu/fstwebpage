@@ -111,6 +111,28 @@ const routes = [
     }
   },
   {
+    path: '/instagram-donate',
+    redirect: {
+      path: '/donate',
+      query: {
+        utm_source: 'instagram',
+        utm_medium: 'social',
+        utm_campaign: 'donate'
+      }
+    }
+  },
+  {
+    path: '/youtube-donate',
+    redirect: {
+      path: '/donate',
+      query: {
+        utm_source: 'youtube',
+        utm_medium: 'social',
+        utm_campaign: 'donate'
+      }
+    }
+  },
+  {
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue')
   }
