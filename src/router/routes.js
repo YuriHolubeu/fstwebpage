@@ -89,6 +89,28 @@ const routes = [
     ]
   },
   {
+    path: '/instagram',
+    redirect: {
+      path: '/',
+      query: {
+        utm_source: 'instagram',
+        utm_medium: 'social',
+        utm_campaign: 'profile'
+      }
+    }
+  },
+  {
+    path: '/youtube',
+    redirect: {
+      path: '/',
+      query: {
+        utm_source: 'youtube',
+        utm_medium: 'social',
+        utm_campaign: 'channel'
+      }
+    }
+  },
+  {
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue')
   }
